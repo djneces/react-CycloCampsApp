@@ -15,7 +15,23 @@ passport.deserializeUser((id, done) => {
 });
 
 // ***** USE LOCAL STRATEGY *****
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      //password added to the query (needed to compare passwords)
+      const user = await User.findOne({ username }).select('+password');
+      if (!user) return done(null, false);
+
+      const passwordMatch = await user.comparePassword(password);
+
+      if (!passwordMatch) return done(null, false);
+
+      return done(null, user);
+    } catch (err) {
+      return done(err);
+    }
+  })
+);
 
 // passport.use(
 //   new GoogleStrategy(

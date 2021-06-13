@@ -86,14 +86,14 @@ app.use((req, res, next) => {
 });
 
 // 404 Page not found handling
-app.all('*', (req, res, next) => {
-  next(
-    new AppError(
-      `Page not found - can't find ${req.originalUrl} on this server!`,
-      404
-    )
-  );
-});
+// app.all('*', (req, res, next) => {
+//   next(
+//     new AppError(
+//       `Page not found - can't find ${req.originalUrl} on this server!`,
+//       404
+//     )
+//   );
+// });
 
 //global error controller
 app.use(globalErrorHandler);

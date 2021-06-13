@@ -15,5 +15,8 @@ exports.getAllUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User);
 
 exports.getCurrentUser = (req, res) => {
-  res.send(req.user);
+  if (!req.user)
+    return res.status(403).json({ errors: ['login to get the info'] });
+
+  return res.status(200).json({ user: req.user });
 };

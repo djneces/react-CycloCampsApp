@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const passportLocalMongoose = require('passport-local-mongoose');
+const bcrypt = require('bcrypt');
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
@@ -12,17 +13,20 @@ const userSchema = new Schema({
     required: [true, 'Please provide your email'],
     unique: true,
     lowercase: true,
-    // validate: [validator.isEmail, 'Please provide a valid email']
   },
   // photo: {
   //   type: String,
   //   default: 'default.jpg'
   // },
-  __v: { type: Number, select: false },
   role: {
     type: String,
     enum: ['user', 'admin'],
     default: 'user',
+  },
+  password: {
+    type: String,
+    required: [true, 'Please provide a password'],
+    select: false,
   },
   passwordChangedAt: Date,
   passwordResetToken: String,
@@ -32,10 +36,40 @@ const userSchema = new Schema({
     default: true,
     select: false,
   },
+  __v: { type: Number, select: false },
 });
 
-userSchema.plugin(passportLocalMongoose);
+// userSchema.plugin(passportLocalMongoose);
 
-const User = mongoose.model('User', userSchema);
+userSchema.pre('save', async function (next) {
+  const user = this;
 
-module.exports = User;
+  try {
+    // Only run this function if password was actually modified
+    if (!user.isModified('password')) return next();
+
+    // Hash the password with 13
+    const hash = await bcrypt.hash(user.password, 13);
+    user.password = hash;
+
+    // Delete passwordConfirm field
+    this.passwordConfirm = undefined;
+    next();
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+userSchema.methods.comparePassword = async function (password) {
+  try {
+    const result = await bcrypt.compare(password, this.password);
+
+    return result;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
+module.exports = mongoose.model('User', userSchema);

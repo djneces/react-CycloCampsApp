@@ -4,6 +4,10 @@ const duplicatedUsernameDb = () => {
   const message = 'User with these credentials already exists!';
   return new AppError(message, 422);
 };
+// const incorrectCredentials = () => {
+//   const message = 'Your credentials are incorrect!';
+//   return new AppError(message, 400);
+// };
 
 // Error development
 const sendErrorDev = (err, res) => {
@@ -48,7 +52,8 @@ module.exports = (err, req, res, next) => {
 
     //Register user with the same credentials
     if (error.name === 'UserExistsError' || error.code === 11000)
-      error = duplicatedUsernameDb(error);
+      error = duplicatedUsernameDb();
+    // if (error.name === 'Incorrect credentials') error = incorrectCredentials();
     // if (error.name === 'CastError') error = handleCastErrorDB(error);
     // if (error.name === 'ValidationError')
     //   error = handleValidationErrorDB(error);
