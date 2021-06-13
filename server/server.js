@@ -15,14 +15,13 @@ process.on('uncaughtException', (err) => {
 const app = require('./app');
 
 //connection to the Mongo DB
-const mongoURI = process.env.DATABASE.replace(
-  '<PASSWORD>',
-  process.env.DATABASE_PASSWORD
-);
+const mongoURI = process.env.DATABASE;
 
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false,
 });
 
 const db = mongoose.connection;
