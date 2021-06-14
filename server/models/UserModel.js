@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const passportLocalMongoose = require('passport-local-mongoose');
 const bcrypt = require('bcrypt');
 const { Schema } = mongoose;
+const AppError = require('../utils/AppError');
 
 const userSchema = new Schema({
   username: {
@@ -18,6 +18,11 @@ const userSchema = new Schema({
   //   type: String,
   //   default: 'default.jpg'
   // },
+
+  duration: {
+    type: Number,
+    default: 5,
+  },
   role: {
     type: String,
     enum: ['user', 'admin'],
@@ -29,8 +34,8 @@ const userSchema = new Schema({
     select: false,
   },
   passwordChangedAt: Date,
-  passwordResetToken: String,
-  passwordResetExpires: Date,
+  // passwordResetToken: String,
+  // passwordResetExpires: Date,
   activeUser: {
     type: Boolean,
     default: true,
@@ -39,8 +44,7 @@ const userSchema = new Schema({
   __v: { type: Number, select: false },
 });
 
-// userSchema.plugin(passportLocalMongoose);
-
+//hash password before saving into the DB
 userSchema.pre('save', async function (next) {
   const user = this;
 
@@ -52,14 +56,30 @@ userSchema.pre('save', async function (next) {
     const hash = await bcrypt.hash(user.password, 13);
     user.password = hash;
 
-    // Delete passwordConfirm field
-    this.passwordConfirm = undefined;
     next();
   } catch (error) {
-    console.error(error);
-    next(error);
+    next(new AppError(error));
   }
 });
+
+// Records the time of password change
+userSchema.pre('save', function (next) {
+  //if field password not modified || new document created
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
+// Query using method starting at 'find' filters out only active users except for findByIdAndDelete method
+userSchema.pre(
+  /(?=.*\b(^find)\b)(?!.*\b(findByIdAndDelete)\b)(.+)/i,
+  function (next) {
+    // this points to the current query
+    this.find({ activeUser: { $ne: false } });
+    next();
+  }
+);
 
 userSchema.methods.comparePassword = async function (password) {
   try {
@@ -67,7 +87,7 @@ userSchema.methods.comparePassword = async function (password) {
 
     return result;
   } catch (error) {
-    console.error(error);
+    new AppError(error);
     return false;
   }
 };

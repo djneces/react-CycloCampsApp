@@ -13,12 +13,7 @@ router
   .route('/register')
   .post(userValidationRules(), validate, authController.register);
 
-router
-  .route('/login')
-  .post(authController.auth, authController.login)
-  .get((req, res) => {
-    res.send('<h1>Please login</h1>');
-  });
+router.route('/login').post(authController.auth, authController.login);
 
 router.get('/logout', authController.logout);
 

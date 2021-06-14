@@ -3,10 +3,19 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 
+// Func to filter out not permitted fields from the body
+const filterObj = (obj, ...allowedFields) => {
+  const newObj = {};
+  Object.keys(obj).forEach((field) => {
+    if (allowedFields.includes(field)) newObj[field] = obj[field];
+  });
+  return newObj;
+};
+
 exports.createUser = (req, res) => {
   res.status(500).json({
     status: 'error',
-    message: 'Please use /signup to create a new user',
+    message: 'Please use api/auth/register to create a new user',
   });
 };
 
@@ -20,3 +29,46 @@ exports.getCurrentUser = (req, res) => {
 
   return res.status(200).json({ user: req.user });
 };
+
+exports.updateCurrentUser = catchAsync(async (req, res, next) => {
+  // Error if user tries to change password via this route
+  if (req.body.password || req.body.passwordConfirm) {
+    return next(
+      new AppError(
+        'This route is not for password updates. Please use /updateMyPassword.',
+        400
+      )
+    );
+  }
+
+  // Filtered out all unwanted fields that ought not be updated
+  const filteredBody = filterObj(req.body, 'username', 'email');
+
+  // Update user
+  const updatedUser = await User.findByIdAndUpdate(req.user.id, filteredBody, {
+    new: true,
+    runValidators: true,
+  });
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      user: updatedUser,
+    },
+  });
+});
+
+exports.deleteCurrentUser = catchAsync(async (req, res, next) => {
+  //user is not permanently deleted -> only deactivated
+  await User.findByIdAndUpdate(req.user.id, { activeUser: false });
+
+  res.status(200).json({
+    status: 'success',
+    msg: 'current user removed',
+    data: null,
+  });
+});
+
+// not for password updates, use api/users/current_user
+exports.updateUser = factory.updateOne(User);
+exports.deleteUser = factory.deleteOne(User);

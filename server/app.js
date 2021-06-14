@@ -1,6 +1,5 @@
 const path = require('path');
 const express = require('express');
-// const cookieSession = require('cookie-session');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
@@ -36,15 +35,6 @@ app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 app.use(cookieParser());
 
 // ***** SESSIONS ****
-// app.use(
-//   cookieSession({
-//     //30days
-//     maxAge: 30 * 24 * 60 * 60 * 1000,
-//     //encrypt the id token
-//     keys: [process.env.COOKIE_SECRET],
-//   })
-// );
-
 app.use(
   session({
     secret: process.env.COOKIE_SECRET,

@@ -67,9 +67,42 @@ exports.isLoggedIn = (req, res, next) => {
 };
 
 // LOGOUT
+// /api/auth/logout
 exports.logout = (req, res, next) => {
   //method from Passport
   req.logout();
   console.log('logout', req.isAuthenticated());
   res.status(200).json({ status: 'success', msg: 'logged out' });
 };
+
+// RESTRICT ACCESS
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    // roles ['admin', 'user']
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perform this action', 403)
+      );
+    }
+
+    next();
+  };
+};
+
+// UPDATE PASSWORD
+// /api/auth/update_password
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select('+password');
+
+  // Check if POSTed current password is correct
+  if (!(await user.comparePassword(req.body.currentPassword))) {
+    return next(new AppError('Your current password is wrong.', 401));
+  }
+
+  user.password = req.body.password;
+  user.passwordConfirm = req.body.passwordConfirm;
+  await user.save();
+  res
+    .status(200)
+    .json({ status: 'success', msg: 'Password successfully changed' });
+});
