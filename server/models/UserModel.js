@@ -72,6 +72,7 @@ userSchema.pre('save', function (next) {
 });
 
 // Query using method starting at 'find' filters out only active users except for findByIdAndDelete method
+//(we need to delete also inactive users)
 userSchema.pre(
   /(?=.*\b(^find)\b)(?!.*\b(findByIdAndDelete)\b)(.+)/i,
   function (next) {

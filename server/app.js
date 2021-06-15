@@ -12,6 +12,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const viewRouter = require('./routes/viewRouter');
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
+const campgroundRouter = require('./routes/campgroundRouter');
 require('./services/passport');
 
 // Start express app
@@ -61,6 +62,7 @@ app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   console.log(req.requestTime);
   console.log(req.isAuthenticated());
+  console.log('params', req.params);
   next();
 });
 
@@ -68,22 +70,22 @@ app.use((req, res, next) => {
 app.use('/', viewRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
+app.use('/api/campgrounds', campgroundRouter);
 
 app.use((req, res, next) => {
-  console.log(req.isAuthenticated());
-
+  console.log('params', req.params);
   next();
 });
 
 // 404 Page not found handling
-// app.all('*', (req, res, next) => {
-//   next(
-//     new AppError(
-//       `Page not found - can't find ${req.originalUrl} on this server!`,
-//       404
-//     )
-//   );
-// });
+app.all('*', (req, res, next) => {
+  next(
+    new AppError(
+      `Page not found - can't find ${req.originalUrl} on this server!`,
+      404
+    )
+  );
+});
 
 //global error controller
 app.use(globalErrorHandler);

@@ -55,6 +55,15 @@ exports.login = (req, res) => {
     .json({ status: 'success', msg: 'User successfully logged in' });
 };
 
+// LOGOUT
+// /api/auth/logout
+exports.logout = (req, res, next) => {
+  //method from Passport
+  req.logout();
+  console.log('logout', req.isAuthenticated());
+  res.status(200).json({ status: 'success', msg: 'logged out' });
+};
+
 // CHECK IF USER IS LOGGED IN
 exports.isLoggedIn = (req, res, next) => {
   //method from Passport
@@ -64,15 +73,6 @@ exports.isLoggedIn = (req, res, next) => {
     );
   }
   next();
-};
-
-// LOGOUT
-// /api/auth/logout
-exports.logout = (req, res, next) => {
-  //method from Passport
-  req.logout();
-  console.log('logout', req.isAuthenticated());
-  res.status(200).json({ status: 'success', msg: 'logged out' });
 };
 
 // RESTRICT ACCESS

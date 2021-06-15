@@ -2,12 +2,22 @@ const catchAsync = require('./../utils/catchAsync');
 const APIFeatures = require('./../utils/apiFeatures');
 const AppError = require('./../utils/appError');
 
+const Review = require('./../models/ReviewModel');
+
 // GET ALL
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    // Allow nested GET reviews on a tour
+    // Allow nested GET reviews on a campground
     let filter = {};
-    if (req.params.tourId) filter = { tour: req.params.tourId };
+
+    //filter out reviews for specific campground
+    // console.log(
+    //   await Review.find({ campground: '60c79cb1a17d32ecf398a452' })
+    // );
+
+    if (req.params.campgroundId)
+      //filter by campgroundId
+      filter = { campground: req.params.campgroundId };
 
     //query is in the object req.query
     const features = new APIFeatures(Model.find(filter), req.query)
@@ -16,12 +26,10 @@ exports.getAll = (Model) =>
       .limitFields()
       .paginate();
 
-    //explain for testing
+    //explain() for testing
     // const doc = await features.query.explain();
 
     const doc = await features.query;
-
-    // const doc = await Model.find();
 
     res.status(200).json({
       status: 'success',
@@ -76,7 +84,7 @@ exports.deleteOne = (Model) =>
 
     res.status(200).json({
       status: 'success',
-      msg: 'user deleted',
+      msg: 'record deleted',
       data: null,
     });
   });
