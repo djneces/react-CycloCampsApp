@@ -18,7 +18,7 @@ passport.deserializeUser((id, done) => {
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      //password added to the query (needed to compare passwords)
+      //password added back to the query (needed to compare passwords)
       const user = await User.findOne({ username }).select('+password');
       if (!user) return done(null, false);
 

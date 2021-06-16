@@ -6,7 +6,7 @@ const AppError = require('../utils/AppError');
 const userSchema = new Schema({
   username: {
     type: String,
-    required: [true, 'Please provide your name!'],
+    required: [true, 'Please provide your username!'],
   },
   email: {
     type: String,
@@ -41,6 +41,7 @@ const userSchema = new Schema({
     default: true,
     select: false,
   },
+  deactivatedUserAt: Date,
   __v: { type: Number, select: false },
 });
 
@@ -71,7 +72,7 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-// Query using method starting at 'find' filters out only active users except for findByIdAndDelete method
+// Query using method starting at 'find' filters out only active users except for 'findByIdAndDelete' method
 //(we need to delete also inactive users)
 userSchema.pre(
   /(?=.*\b(^find)\b)(?!.*\b(findByIdAndDelete)\b)(.+)/i,

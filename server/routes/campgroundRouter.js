@@ -2,6 +2,7 @@ const express = require('express');
 const campgroundController = require('../controllers/campgroundController');
 const authController = require('../controllers/authController');
 const reviewRouter = require('../routes/reviewRouter');
+const Campground = require('../models/CampgroundModel');
 
 const router = express.Router();
 
@@ -17,25 +18,29 @@ router
 
 router.route('/campground-stats').get(campgroundController.getCampgroundStats);
 
-router.route('/').get(campgroundController.getAllCampgrounds).post(
-  authController.isLoggedIn,
-  // is owner
-  campgroundController.setUserIds,
-  campgroundController.createCampground
-);
+router
+  .route('/')
+  .get(campgroundController.getAllCampgrounds)
+  .post(
+    authController.isLoggedIn,
+    campgroundController.setUserIds,
+    campgroundController.createCampground
+  );
 
 router
   .route('/:id')
   .get(campgroundController.getCampground)
   .patch(
     authController.isLoggedIn,
-    // is owner
+    authController.isAuthor(Campground),
     campgroundController.updateCampground
   )
   .delete(
     authController.isLoggedIn,
-    // is owner
-    campgroundController.deleteCampground
+    authController.isAuthor(Campground),
+    campgroundController.deleteCampground,
+    //remove all reviews linked to this campground
+    campgroundController.deleteCampgroundsReviews
   );
 
 module.exports = router;

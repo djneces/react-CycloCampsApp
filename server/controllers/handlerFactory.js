@@ -84,9 +84,18 @@ exports.deleteOne = (Model) =>
 
     res.status(200).json({
       status: 'success',
-      msg: 'record deleted',
+      msg: 'Record deleted',
       data: null,
     });
+    next();
+  });
+
+// DELETE MANY
+exports.deleteMany = (Model) =>
+  catchAsync(async (req, res, next) => {
+    //permanently delete multiple records
+    const response = await Model.deleteMany({ campground: req.params.id });
+    console.log('success', response.deletedCount);
   });
 
 // UPDATE ONE

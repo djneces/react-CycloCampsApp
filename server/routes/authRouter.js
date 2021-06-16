@@ -1,6 +1,5 @@
 const express = require('express');
 const passport = require('passport');
-const { check, validationResult } = require('express-validator');
 const authController = require('./../controllers/authController');
 const {
   userValidationRules,

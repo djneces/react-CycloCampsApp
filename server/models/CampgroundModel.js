@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
-const Review = require('./ReviewModel');
 const Schema = mongoose.Schema;
 
 // const ImageSchema = new Schema({
@@ -13,7 +12,7 @@ const Schema = mongoose.Schema;
 // To have virtual property appear in the object in the console when stringified
 const options = { toJSON: { virtuals: true }, toObject: { virtuals: true } };
 
-const CampgroundSchema = new Schema(
+const campgroundSchema = new Schema(
   {
     title: {
       type: String,
@@ -25,8 +24,8 @@ const CampgroundSchema = new Schema(
         'A campground name must have less or equal than 40 characters',
       ],
       minlength: [
-        10,
-        'A campground name must have more or equal than 10 characters',
+        5,
+        'A campground name must have more or equal than 5 characters',
       ],
     },
     slug: String,
@@ -63,12 +62,6 @@ const CampgroundSchema = new Schema(
       ref: 'User',
       required: [true, 'Campground author is missing'],
     },
-    // reviews: [
-    //   {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Review',
-    //   },
-    // ],
     createdAt: {
       type: Date,
       default: Date.now(),
@@ -80,20 +73,20 @@ const CampgroundSchema = new Schema(
 );
 
 // Virtual populate
-CampgroundSchema.virtual('reviews', {
+campgroundSchema.virtual('reviews', {
   ref: 'Review',
   foreignField: 'campground',
   localField: '_id',
 });
 
 // Generate slug
-CampgroundSchema.pre('save', function (next) {
+campgroundSchema.pre('save', function (next) {
   this.slug = slugify(this.title, { lower: true });
   next();
 });
 
 // Populate author when query
-CampgroundSchema.pre(/^find/, function (next) {
+campgroundSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'author',
     select: '-__v -passwordChangedAt -role -email',
@@ -102,17 +95,4 @@ CampgroundSchema.pre(/^find/, function (next) {
   next();
 });
 
-// Delete associated reviews afterwards we delete a campground
-CampgroundSchema.post('findOneAndDelete', async function (doc) {
-  // doc -> campground
-  if (doc) {
-    await Review.deleteMany({
-      _id: {
-        // in reviews []
-        $in: doc.reviews,
-      },
-    });
-  }
-});
-
-module.exports = mongoose.model('Campground', CampgroundSchema);
+module.exports = mongoose.model('Campground', campgroundSchema);

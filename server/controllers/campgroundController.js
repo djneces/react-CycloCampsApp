@@ -1,4 +1,5 @@
 const Campground = require('../models/CampgroundModel');
+const Review = require('../models/ReviewModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -23,6 +24,7 @@ exports.getCampground = factory.getOne(Campground, { path: 'reviews' });
 exports.createCampground = factory.createOne(Campground);
 exports.updateCampground = factory.updateOne(Campground);
 exports.deleteCampground = factory.deleteOne(Campground);
+exports.deleteCampgroundsReviews = factory.deleteMany(Review);
 
 exports.getCampgroundStats = catchAsync(async (req, res, next) => {
   const stats = await Campground.aggregate([

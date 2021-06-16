@@ -1,4 +1,5 @@
 const User = require('../models/UserModel');
+// const Campground = require('../models/CampgroundModel');
 const passport = require('passport');
 
 const catchAsync = require('../utils/catchAsync');
@@ -15,13 +16,13 @@ exports.register = catchAsync(async (req, res, next) => {
 
     //req.login from passport, logs automatically in after registration
     req.login(newUser, (err) => {
-      if (err) return next(err);
+      if (err) return next(new AppError('Login error, please try again', 422));
       // res.redirect('/campgrounds')
     });
 
     return res.status(201).json({
       status: 'success',
-      msg: 'user successfully created',
+      msg: 'User successfully created',
       data: newUser,
     });
   }
@@ -33,7 +34,7 @@ exports.register = catchAsync(async (req, res, next) => {
 exports.auth = (req, res, next) => {
   passport.authenticate('local', function (err, user, info) {
     if (err) {
-      return next(err);
+      return next(new AppError(err));
     }
     if (!user) {
       // return res.redirect('/login');
@@ -41,7 +42,7 @@ exports.auth = (req, res, next) => {
     }
     req.login(user, function (err) {
       if (err) {
-        return next(err);
+        return next(new AppError(err));
       }
       next();
       // return res.redirect('/users/' + user.username);
@@ -60,8 +61,7 @@ exports.login = (req, res) => {
 exports.logout = (req, res, next) => {
   //method from Passport
   req.logout();
-  console.log('logout', req.isAuthenticated());
-  res.status(200).json({ status: 'success', msg: 'logged out' });
+  res.status(200).json({ status: 'success', msg: 'Successfully logged out' });
 };
 
 // CHECK IF USER IS LOGGED IN
@@ -70,6 +70,22 @@ exports.isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     return next(
       new AppError('You are not logged in! Please log in to get access.', 401)
+    );
+  }
+  next();
+};
+
+// IS AUTHOR
+exports.isAuthor = (Model) => async (req, res, next) => {
+  const { id } = req.params;
+  const doc = await Model.findById(id);
+
+  if (!doc) {
+    return next(new AppError('Document not found', 404));
+  }
+  if (!doc.author._id.equals(req.user._id)) {
+    return next(
+      new AppError('You are not the author! Operation not allowed.', 401)
     );
   }
   next();

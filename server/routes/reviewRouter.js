@@ -1,4 +1,5 @@
 const express = require('express');
+const Review = require('../models/ReviewModel');
 const reviewController = require('./../controllers/reviewController');
 const authController = require('./../controllers/authController');
 
@@ -15,13 +16,7 @@ router
 router
   .route('/:id')
   .get(reviewController.getReview)
-  .patch(
-    // be owner
-    reviewController.updateReview
-  )
-  .delete(
-    //be owner
-    reviewController.deleteReview
-  );
+  .patch(authController.isAuthor(Review), reviewController.updateReview)
+  .delete(authController.isAuthor(Review), reviewController.deleteReview);
 
 module.exports = router;

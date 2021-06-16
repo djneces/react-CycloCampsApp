@@ -4,10 +4,6 @@ const duplicatedUsernameDb = () => {
   const message = 'User with these credentials already exists!';
   return new AppError(message, 422);
 };
-// const incorrectCredentials = () => {
-//   const message = 'Your credentials are incorrect!';
-//   return new AppError(message, 400);
-// };
 
 // Error development
 const sendErrorDev = (err, res) => {

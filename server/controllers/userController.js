@@ -25,7 +25,9 @@ exports.getUser = factory.getOne(User);
 
 exports.getCurrentUser = (req, res) => {
   if (!req.user)
-    return res.status(403).json({ errors: ['login to get the info'] });
+    return res
+      .status(403)
+      .json({ errors: ['Login to get the current user info'] });
 
   return res.status(200).json({ user: req.user });
 };
@@ -35,13 +37,14 @@ exports.updateCurrentUser = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(
-        'This route is not for password updates. Please use /updateMyPassword.',
+        'This route is not for password updates. Please use api/users/update_password',
         400
       )
     );
   }
 
   // Filtered out all unwanted fields that ought not be updated
+  //we allow changing username and email
   const filteredBody = filterObj(req.body, 'username', 'email');
 
   // Update user
@@ -60,15 +63,19 @@ exports.updateCurrentUser = catchAsync(async (req, res, next) => {
 
 exports.deleteCurrentUser = catchAsync(async (req, res, next) => {
   //user is not permanently deleted -> only deactivated
-  await User.findByIdAndUpdate(req.user.id, { activeUser: false });
-
+  await User.findByIdAndUpdate(req.user.id, {
+    activeUser: false,
+    deactivatedUserAt: Date.now(),
+  });
+  //log out user
+  req.logout();
   res.status(200).json({
     status: 'success',
-    msg: 'current user removed',
+    msg: 'Current user deactivated',
     data: null,
   });
 });
 
-// not for password updates, use api/users/current_user
+// not for password updates, use api/users/current_user...
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);
