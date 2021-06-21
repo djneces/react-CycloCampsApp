@@ -1,0 +1,63 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.Button {
+    font: inherit;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid $color-orange;
+    background: $color-orange;
+    color: white;
+    cursor: pointer;
+    margin-right: 1rem;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.Button:focus {
+    outline: none;
+}
+
+.Button:hover,
+.Button:active {
+    background: lighten($color-orange, 10);
+    border-color: lighten($color-orange, 10);
+}
+
+.Button--inverse {
+    background: transparent;
+    color: $color-orange;
+}
+
+.Button--inverse:hover,
+.Button--inverse:active {
+    color: white;
+    background: $color-orange;
+}
+
+.Button--danger {
+    background: #830000;
+    border-color: #830000;
+}
+
+.Button--danger:hover,
+.Button--danger:active {
+    background: #f34343;
+    border-color: #f34343;
+}
+
+.Button:disabled,
+.Button:hover:disabled,
+.Button:active:disabled {
+    background: #ccc;
+    color: #979797;
+    border-color: #ccc;
+    cursor: not-allowed;
+}
+
+.Button--small {
+    font-size: 0.8rem;
+}
+
+.Button--big {
+    font-size: 1.5rem;
+}

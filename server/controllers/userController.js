@@ -25,9 +25,10 @@ exports.getUser = factory.getOne(User);
 
 exports.getCurrentUser = (req, res) => {
   if (!req.user)
-    return res
-      .status(403)
-      .json({ errors: ['Login to get the current user info'] });
+    return res.status(403).json({
+      status: 'error',
+      message: 'Login to get the current user info',
+    });
 
   return res.status(200).json({ user: req.user });
 };

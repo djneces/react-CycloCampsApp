@@ -1,0 +1,22 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.ArrowDownBox {
+    width: 40px;
+    height: 40px;
+    background-color: $color-white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    i {
+        color: $color-primary-medium;
+        transition: transform $transition-time-faster ease-in-out;
+    }
+
+    &:hover {
+        i {
+            transform: translateY(3px)
+        }
+    }
+}

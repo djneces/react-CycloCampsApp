@@ -1,0 +1,39 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.Input {
+    input {
+        font-size: 1.2rem;
+        color: $color-primary;
+        padding: 0.5rem 1rem;
+        outline: none;
+        margin: 0 0.5rem;
+        display: flex;
+        flex-direction: column;
+        border: 2px solid transparent;
+
+        &:not(:placeholder-shown) {
+            border-bottom: 2px solid $color-orange;
+        }
+    }
+
+    &--invalid {
+        input {
+            border: 2px solid $color-orange;
+
+        }
+
+        &-errorMessage {
+            margin: 1rem 0.5rem;
+            position: absolute;
+            z-index: 100;
+            font-size: 0.8rem;
+            color: $color-white;
+            width: 15rem;
+        }
+    }
+
+    label {
+        color: $color-white;
+    }
+}

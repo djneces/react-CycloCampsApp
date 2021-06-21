@@ -5,11 +5,12 @@ const authController = require('./../controllers/authController');
 
 const router = express.Router();
 
+router.route('/current_user').get(userController.getCurrentUser);
+
 //routes available for logged in users
 router.use(authController.isLoggedIn);
 router
   .route('/current_user')
-  .get(userController.getCurrentUser)
   .patch(userController.updateCurrentUser)
   .delete(userController.deleteCurrentUser);
 

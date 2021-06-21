@@ -3,8 +3,8 @@ const { body, validationResult } = require('express-validator');
 const userValidationRules = () => {
   return [
     body('username')
-      .isLength({ min: 3 })
-      .withMessage('the username must have minimum length of 3')
+      .isLength({ min: 3, max: 15 })
+      .withMessage('the username must have length between 3-15')
       .trim(),
     body('email')
       .isEmail()
