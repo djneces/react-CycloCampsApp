@@ -3,11 +3,11 @@ import {
   AUTH_START,
   AUTH_ERROR,
   AUTH_SUCCESS,
-  AUTH_REGISTER,
   AUTH_LOGOUT,
 } from './actionTypes';
 
 import { fetchUser } from './user';
+import { clearForm } from './form';
 
 // Start authentication
 export const authStart = () => ({
@@ -50,6 +50,7 @@ export const usernameSignIn = (username, password) => async (dispatch) => {
     })
     .then(() => {
       dispatch(authSuccess());
+      dispatch(clearForm());
     })
     .catch((error) => {
       console.log(error.response.data.message);
@@ -58,33 +59,54 @@ export const usernameSignIn = (username, password) => async (dispatch) => {
     });
 };
 
-export const registerUser = (username, password) => async (dispatch) => {
-  dispatch(authStart());
+export const registerUser =
+  (username, email, password, confirmPassword) => async (dispatch) => {
+    dispatch(authStart());
 
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
-      Accept: 'application/json',
-    },
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Accept: 'application/json',
+      },
+    };
+    axios
+      .post(
+        '/api/auth/register',
+        { username, email, password, confirmPassword },
+        options
+      )
+      .then((res) => {
+        if (res.status === 201) {
+          //wait until it's successfully fetched
+          return dispatch(fetchUser());
+        } else {
+          console.error('Something went wrong');
+        }
+      })
+      .then(() => {
+        dispatch(authSuccess());
+        dispatch(clearForm());
+      })
+      .catch((error) => {
+        if (error.response.data.errors) {
+          dispatch(authFail(error.response.data.errors[0]));
+        }
+      });
   };
+
+export const signOutUser = () => {
   axios
-    .post('/api/auth/register', { username, password }, options)
+    .get('/api/auth/logout')
     .then((res) => {
       if (res.status === 200) {
-        //wait until it's successfully fetched
-        return dispatch(fetchUser());
-      } else {
-        console.error('Something went wrong');
+        //TODO alert
+        console.log(res.data.msg);
       }
     })
-    .then(() => {
-      dispatch(authSuccess());
-    })
-    .catch((error) => {
-      console.log(error.response.data.message);
-      //dispatch message on error response obj
-      dispatch(authFail(error.response.data.message));
-    });
+    .catch((err) => console.error('Something went wrong', err));
+  return {
+    type: AUTH_LOGOUT,
+  };
 };

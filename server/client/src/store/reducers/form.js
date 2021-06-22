@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import {
   CHANGE_INPUT,
   TOUCH_INPUT,
@@ -29,6 +28,10 @@ const INITIAL_STATE = {
       isValid: false,
     },
     password: {
+      value: '',
+      isValid: false,
+    },
+    confirmPassword: {
       value: '',
       isValid: false,
     },

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import LandingPage from './containers/LandingPage/LandingPage';
-import Header from './components/Header/Header';
+import NavigationMenu from './components/Navigation/NavigationMenu';
 import { fetchUser } from './store/actions/user';
+
 import './App.scss';
 
 const App = ({ fetchUser }) => {
@@ -14,9 +15,10 @@ const App = ({ fetchUser }) => {
   return (
     <BrowserRouter>
       <div className='App'>
-        <Header />
+        <NavigationMenu />
         <Switch>
           <Route exact path='/' component={LandingPage} />
+          <Redirect to='/' />
         </Switch>
       </div>
     </BrowserRouter>

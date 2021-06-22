@@ -1,0 +1,58 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.NavigationMenu {
+    width: 100%;
+    height: $margin-top-header;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    background-color: $color-primary;
+    color: $color-white;
+    word-spacing: 5px;
+    font-size: 1.1rem;
+    padding: 0 2rem;
+
+    &__logo {
+        a {
+            i {
+                margin-right: 1rem;
+                font-size: 1.5rem;
+                color: $color-white;
+            }
+        }
+
+
+        span {
+            color: $color-orange;
+        }
+    }
+
+    &__accountMenu {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 21vw;
+
+        &-username {
+            margin-right: 1rem;
+
+            span {
+                color: $color-orange;
+            }
+        }
+
+        &-burgerMenu {
+            font-size: 2rem;
+            cursor: pointer;
+
+            i {
+                &:hover {
+                    color: $color-orange;
+                }
+            }
+        }
+    }
+
+}

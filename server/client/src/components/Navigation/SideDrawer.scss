@@ -1,0 +1,13 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.SideDrawer {
+    position: fixed;
+    right: 0;
+    top: $margin-top-header;
+    z-index: 100;
+    height: 80vh;
+    width: 32%;
+    background: $color-primary;
+    box-shadow: $box-shadow;
+}

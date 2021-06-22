@@ -1,0 +1,52 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.RegisterForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Lato', sans-serif;
+    color: $color-white;
+    height: 50%;
+
+    &__heading {
+        width: 100%;
+
+        h3 {
+            background-color: $color-primary-light;
+            padding: 2rem;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            text-align: center;
+            text-transform: uppercase;
+        }
+    }
+
+    &__inputs {
+        height: 70%;
+
+        div {
+            margin: 2rem 0;
+
+            input {
+                margin: 0;
+            }
+        }
+
+        .Input--invalid-errorMessage {
+            margin: 0.5rem 0;
+        }
+
+        &-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .SpinnerLoader {
+                margin: 0 0.5rem 0 0;
+            }
+        }
+    }
+}

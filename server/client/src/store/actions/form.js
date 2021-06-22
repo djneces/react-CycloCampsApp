@@ -30,9 +30,8 @@ export const validateForm = (inputId, isValid, key) => {
   };
 };
 
-export const clearForm = (key) => {
+export const clearForm = () => {
   return {
     type: CLEAR_FORM,
-    key: key,
   };
 };

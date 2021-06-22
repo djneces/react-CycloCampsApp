@@ -5,6 +5,7 @@ const VALIDATOR_TYPE_MIN = 'MIN';
 const VALIDATOR_TYPE_MAX = 'MAX';
 const VALIDATOR_TYPE_EMAIL = 'EMAIL';
 const VALIDATOR_TYPE_FILE = 'FILE';
+const VALIDATOR_TYPE_PASSWORD = 'PASSWORD';
 
 export const VALIDATOR_REQUIRE = () => ({ type: VALIDATOR_TYPE_REQUIRE });
 export const VALIDATOR_FILE = () => ({ type: VALIDATOR_TYPE_FILE });
@@ -19,6 +20,10 @@ export const VALIDATOR_MAXLENGTH = (val) => ({
 export const VALIDATOR_MIN = (val) => ({ type: VALIDATOR_TYPE_MIN, val: val });
 export const VALIDATOR_MAX = (val) => ({ type: VALIDATOR_TYPE_MAX, val: val });
 export const VALIDATOR_EMAIL = () => ({ type: VALIDATOR_TYPE_EMAIL });
+export const CONFIRM_PASSWORD = (val) => ({
+  type: VALIDATOR_TYPE_PASSWORD,
+  val: val,
+});
 
 export const validate = (value, validators) => {
   let isValid = true;
@@ -39,7 +44,14 @@ export const validate = (value, validators) => {
       isValid = isValid && +value <= validator.val;
     }
     if (validator.type === VALIDATOR_TYPE_EMAIL) {
-      isValid = isValid && /^\S+@\S+\.\S+$/.test(value);
+      isValid =
+        isValid &&
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+          value
+        );
+    }
+    if (validator.type === VALIDATOR_TYPE_PASSWORD) {
+      isValid = isValid && validator.val.value === value;
     }
   }
   return isValid;

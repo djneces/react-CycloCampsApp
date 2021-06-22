@@ -3,6 +3,7 @@
 
 .Button {
     font: inherit;
+    font-size: 1rem;
     padding: 0.5rem 1.5rem;
     border: 1px solid $color-orange;
     background: $color-orange;
@@ -35,22 +36,22 @@
 }
 
 .Button--danger {
-    background: #830000;
-    border-color: #830000;
+    background: $color-red;
+    border-color: $color-red;
 }
 
 .Button--danger:hover,
 .Button--danger:active {
-    background: #f34343;
-    border-color: #f34343;
+    background: lighten($color-red, 10);
+    border-color: lighten($color-red, 10);
 }
 
 .Button:disabled,
 .Button:hover:disabled,
 .Button:active:disabled {
-    background: #ccc;
-    color: #979797;
-    border-color: #ccc;
+    background: $color-primary-light;
+    color: $color-muted;
+    border-color: $color-primary-light;
     cursor: not-allowed;
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import heroImage from '../../assets/images/bg-campsite.jpg';
+// import heroImage from '../../assets/images/bg-campsite.jpg';
 import heroImage2 from '../../assets/images/img1-cyclist.jpg';
 import ArrowDownBox from '../../components/ArrowDownBox/ArrowDownBox';
 import './LandingPage.scss';

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
@@ -58,8 +59,9 @@ const Input = ({
       className={`Input ${
         !(form[formName][id] && form[formName][id].isValid) &&
         form[formName][id] &&
-        form[formName][id].isTouched &&
-        'Input--invalid'
+        form[formName][id].isTouched
+          ? 'Input--invalid'
+          : ''
       }`}
     >
       {/* <label htmlFor={props.id}>{props.label}</label> */}

@@ -1,0 +1,70 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.LoginForm {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    &__loginMenu {
+        display: flex;
+        align-items: center;
+        height: 100%;
+
+        &-login,
+        &-register {
+            position: relative;
+            cursor: pointer;
+            line-height: 2;
+
+            &::after {
+                content: '';
+                border-bottom: solid 2px $color-white;
+                display: block;
+                transform: scaleX(0);
+                transform-origin: center;
+                transition: transform $transition-time-faster ease-in-out;
+            }
+
+            &:hover::after {
+                transform: scaleX(1)
+            }
+        }
+
+        &-login {
+            margin-right: 1.5rem;
+        }
+
+        .LoginForm__loginMenu__inputs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            height: 38px;
+
+            button {
+                height: 100%;
+            }
+
+            &-controls {
+                width: 3rem;
+
+                i {
+                    margin-left: 1rem;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: $color-red;
+                    }
+                }
+
+                .SpinnerLoader {
+                    margin-left: 1rem;
+                }
+            }
+
+        }
+
+
+    }
+}
