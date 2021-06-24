@@ -1,0 +1,73 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.PreviewStory {
+
+    width: 50%;
+    height: 393px;
+    background-color: $color-white;
+    padding: 3rem;
+    position: absolute;
+    z-index: 10;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-right: 10px solid #2B363E;
+        border-bottom: 10px solid transparent;
+        position: absolute;
+        top: 3rem;
+        right: 0;
+    }
+
+    &__heading {
+        h3 {
+            text-transform: uppercase;
+            text-align: center;
+            color: $color-orange;
+            margin-bottom: 1em;
+            font-size: 2vw;
+            word-spacing: 8px;
+            letter-spacing: 3px;
+        }
+    }
+
+    &__quote {
+        text-align: center;
+        font-size: 0.8vw;
+        line-height: 1.8;
+        margin-bottom: 1rem;
+        color: lighten($color-primary-light, 20);
+
+        @media (max-width: 1500px) {
+            font-size: 1.1vw;
+        }
+    }
+
+    figcaption {
+        color: $color-primary;
+    }
+
+    &.reverse {
+        &::after {
+            border: transparent;
+        }
+
+        &::before {
+            content: '';
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-left: 10px solid #9e9893;
+            border-bottom: 10px solid transparent;
+            position: absolute;
+            top: 3rem;
+            left: 0;
+        }
+    }
+
+
+}

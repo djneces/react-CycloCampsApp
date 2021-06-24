@@ -27,6 +27,7 @@ export const authFail = (error) => ({
   payload: error,
 });
 
+// Sign in the user with username and password
 export const usernameSignIn = (username, password) => async (dispatch) => {
   dispatch(authStart());
 
@@ -59,6 +60,7 @@ export const usernameSignIn = (username, password) => async (dispatch) => {
     });
 };
 
+// Register user
 export const registerUser =
   (username, email, password, confirmPassword) => async (dispatch) => {
     dispatch(authStart());
@@ -71,31 +73,37 @@ export const registerUser =
         Accept: 'application/json',
       },
     };
-    axios
-      .post(
-        '/api/auth/register',
-        { username, email, password, confirmPassword },
-        options
-      )
-      .then((res) => {
-        if (res.status === 201) {
-          //wait until it's successfully fetched
-          return dispatch(fetchUser());
-        } else {
-          console.error('Something went wrong');
-        }
-      })
-      .then(() => {
-        dispatch(authSuccess());
-        dispatch(clearForm());
-      })
-      .catch((error) => {
-        if (error.response.data.errors) {
-          dispatch(authFail(error.response.data.errors[0]));
-        }
-      });
+    const user = new Promise((resolve, reject) => {
+      axios
+        .post(
+          '/api/auth/register',
+          { username, email, password, confirmPassword },
+          options
+        )
+        .then((res) => {
+          if (res.status === 201) {
+            resolve(res);
+            //wait until it's successfully fetched
+            return dispatch(fetchUser());
+          } else {
+            console.error('Something went wrong');
+          }
+        })
+        .then(() => {
+          dispatch(authSuccess());
+          dispatch(clearForm());
+        })
+        .catch((error) => {
+          if (error.response.data.errors) {
+            dispatch(authFail(error.response.data.errors[0]));
+          }
+        });
+    });
+
+    return await user;
   };
 
+// Sign out the user
 export const signOutUser = () => {
   axios
     .get('/api/auth/logout')

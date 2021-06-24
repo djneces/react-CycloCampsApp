@@ -4,17 +4,17 @@
 .RegisterForm {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     font-family: 'Lato', sans-serif;
     color: $color-white;
-    height: 50%;
 
     &__heading {
         width: 100%;
 
         h3 {
-            background-color: $color-primary-light;
+            background-color: $color-white;
+            color: $color-orange;
             padding: 2rem;
             width: 100%;
             height: 100%;
@@ -26,12 +26,19 @@
 
     &__inputs {
         height: 70%;
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
 
         div {
-            margin: 2rem 0;
+            margin: 1rem 0;
+            width: 100%;
 
             input {
                 margin: 0;
+                width: 100%;
             }
         }
 
@@ -43,10 +50,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-direction: column;
 
             .SpinnerLoader {
-                margin: 0 0.5rem 0 0;
+                width: 1rem;
+                color: $color-primary;
             }
+
+            button {
+                margin-right: 0;
+            }
+
         }
     }
 }

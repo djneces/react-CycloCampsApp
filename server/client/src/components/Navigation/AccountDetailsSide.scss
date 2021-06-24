@@ -14,13 +14,14 @@
         width: 100%;
 
         h3 {
-            background-color: $color-primary-light;
+            // background-color: $color-primary-light;
             padding: 2rem;
             width: 100%;
             height: 100%;
             margin: 0;
             text-align: center;
             text-transform: uppercase;
+            color: $color-orange;
         }
     }
 
@@ -34,7 +35,7 @@
 
         div {
             height: 5rem;
-            background-color: $color-muted;
+            background-color: $color-primary;
 
             a {
                 width: 50%;

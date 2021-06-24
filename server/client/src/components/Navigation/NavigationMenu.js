@@ -43,15 +43,14 @@ const NavigationMenu = ({
     setToggleAccountDetails(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!toggleRegister) {
       usernameSignIn(loginForm.username.value, loginForm.password.value);
-
-      // setToggleMenu(false);
     }
     if (toggleRegister) {
-      registerUser(
+      // Await until user is fetched, then toggle the register form
+      await registerUser(
         registerForm.username.value,
         registerForm.email.value,
         registerForm.password.value,
@@ -103,9 +102,18 @@ const NavigationMenu = ({
               setToggleRegister(false);
             }}
           ></i>
+          EV6 <span>CycloCamps</span> Network
         </Link>
-        EV6 <span>CycloCamps</span> Network
       </div>
+      <nav className='NavigationMenu__links'>
+        <ul>
+          <li>
+            <Link to='/campgrounds'>
+              <i className='fas fa-chevron-right'></i>All Campgrounds
+            </Link>
+          </li>
+        </ul>
+      </nav>
       {isAuthenticated ? (
         <div className='NavigationMenu__accountMenu'>
           <div className='NavigationMenu__accountMenu-username'>

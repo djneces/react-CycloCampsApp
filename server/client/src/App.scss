@@ -11,6 +11,7 @@
 
 a {
     text-decoration: none;
+    color: $color-white;
 }
 
 .App {
@@ -21,8 +22,16 @@ a {
     font-family: 'Lato', sans-serif;
 }
 
+// Input styling
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px $color-white inset !important;
+}
 
-// CSS Transition classes
+
+// CSS Transition classes - SideDrawer
 .slide-in-right-enter {
     transform: translateX(100%);
 }

@@ -68,7 +68,9 @@ const RegisterForm = ({
           formName='register'
         />
         <div className='RegisterForm__inputs-controls'>
-          <Button disabled={!regFormIsValid}>Register</Button>
+          <Button disabled={!regFormIsValid} size={'block'}>
+            Register
+          </Button>
           {userIsLoading && <SpinnerLoader />}
         </div>
       </form>

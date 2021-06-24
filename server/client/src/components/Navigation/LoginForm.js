@@ -28,6 +28,7 @@ const LoginForm = ({
               className='LoginForm__loginMenu-login'
               onClick={() => {
                 setToggleMenu(true);
+                setToggleRegister(false);
               }}
             >
               Login <i className='fas fa-lock'></i>

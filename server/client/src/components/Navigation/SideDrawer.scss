@@ -4,10 +4,12 @@
 .SideDrawer {
     position: fixed;
     right: 0;
-    top: $margin-top-header;
+    top: 8vh;
     z-index: 100;
-    height: 80vh;
-    width: 32%;
-    background: $color-primary;
+    height: 55vh;
+    max-height: 520px;
+    width: 28%;
+    max-width: 360px;
+    background: $color-white;
     box-shadow: $box-shadow;
 }
