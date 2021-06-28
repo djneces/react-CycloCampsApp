@@ -3,6 +3,8 @@ import {
   TOUCH_INPUT,
   VALIDATE_FORM,
   CLEAR_FORM,
+  ADD_STAR_RATING,
+  FETCH_FORM_DATA,
 } from '../actions/actionTypes';
 import { validate } from '../../util/validators';
 
@@ -37,6 +39,14 @@ const INITIAL_STATE = {
     },
     isValid: false,
   },
+  review: {
+    review: {
+      value: '',
+      isValid: false,
+      stars: 4,
+    },
+    isValid: false,
+  },
 };
 
 const formReducer =
@@ -51,6 +61,7 @@ const formReducer =
           [key]: {
             ...state[key],
             [payload.id]: {
+              ...state[key][payload.id],
               value: payload.value,
               isValid: validate(payload.value, validators),
             },
@@ -75,12 +86,31 @@ const formReducer =
             formIsValid = formIsValid && state[key][inputId].isValid;
           }
         }
-
         return {
           ...state,
           [key]: {
             ...state[key],
             isValid: formIsValid,
+          },
+        };
+      case ADD_STAR_RATING:
+        return {
+          ...state,
+          review: {
+            ...state.review,
+            review: { ...state.review.review, stars: payload },
+          },
+        };
+      case FETCH_FORM_DATA:
+        return {
+          ...state,
+          review: {
+            ...state.review,
+            review: {
+              ...state.review.review,
+              value: payload.review,
+              stars: payload.rating,
+            },
           },
         };
       case CLEAR_FORM:

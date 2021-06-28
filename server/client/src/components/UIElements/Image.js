@@ -2,13 +2,14 @@ import React from 'react';
 
 import './Image.scss';
 
-const Image = (props) => {
+const Image = ({ image, alt, width, imageLoaded, className, style }) => {
   return (
-    <div className={`Image ${props.className || ''}`} style={props.style}>
+    <div className={`Image ${className || ''}`} style={style}>
       <img
-        src={props.image}
-        alt={props.alt}
-        style={{ width: props.width, height: props.width }}
+        src={image}
+        alt={alt}
+        style={{ width: width, height: width }}
+        onLoad={() => imageLoaded && imageLoaded()}
       />
     </div>
   );

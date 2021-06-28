@@ -1,0 +1,147 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.CampgroundsListItem {
+    width: 100%;
+    // height: 24vh;
+    min-height: 215px;
+    height: 215px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: $color-white;
+    margin-bottom: 2rem;
+    color: $color-primary;
+    position: relative;
+
+    &__image {
+        width: 50%;
+        height: 100%;
+        position: relative;
+
+        .Image {
+            width: 100%;
+        }
+
+        &-notLoaded {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: $color-muted;
+            height: 215px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            i {
+                color: $color-white;
+                font-size: 2rem;
+            }
+        }
+    }
+
+
+
+    &__body {
+        height: 100%;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+
+        &-ratingsAverage {
+            font-size: 0.8rem;
+
+            i {
+                margin-right: 0.5rem;
+                color: $color-orange;
+            }
+
+            span:last-of-type {
+                color: $color-primary-light;
+                margin-left: 0.2rem;
+            }
+        }
+
+        &-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        &-location {
+            font-weight: 300;
+        }
+
+        &-price {
+            div {
+                width: 100px;
+                height: 50px;
+                background-color: $color-orange;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: $color-white;
+                font-size: 2rem;
+                position: absolute;
+                z-index: 5;
+                left: -1rem;
+                bottom: 0;
+
+                &::after {
+                    content: '';
+                    width: 0;
+                    height: 0;
+                    border-top: 8px solid transparent;
+                    border-left: 8px solid $color-orange;
+                    border-bottom: 8px solid transparent;
+                    position: absolute;
+                    top: 1.5rem;
+                    right: -0.5rem;
+                }
+            }
+        }
+
+        &-details {
+            button {
+                position: absolute;
+                bottom: 0rem;
+                right: -15px;
+                width: 100%;
+                margin-right: 0;
+                border-color: $color-orange;
+                text-align: right;
+
+                span {
+                    z-index: 10;
+                    position: relative;
+                }
+
+                &:hover {
+                    background-color: transparent;
+                    border-color: $color-orange;
+
+                    &::after {
+                        color: $color-white;
+                        background-color: $color-orange;
+                    }
+
+                }
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                    bottom: 0;
+                    height: 101%;
+                    width: 63%;
+                    background-color: $color-white;
+                    clip-path: polygon(9% 0, 100% 0, 100% 100%, 0 100%);
+                    z-index: 1;
+                }
+            }
+        }
+    }
+}

@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const slugify = require('slugify');
 const Schema = mongoose.Schema;
 
-// const ImageSchema = new Schema({
-//   url: String,
-//   filename: String,
-//   required: [true, 'Each campground must have at least 1 image'],
-// });
+const ImageSchema = new Schema({
+  url: String,
+  filename: String,
+  // required: [true, 'Each campground must have at least 1 image'],
+});
 
 //to JSON
 // To have virtual property appear in the object in the console when stringified
@@ -17,7 +17,7 @@ const campgroundSchema = new Schema(
     title: {
       type: String,
       required: [true, 'A campground must have a name'],
-      unique: true,
+      // unique: true,
       trim: true,
       maxlength: [
         40,
@@ -30,7 +30,7 @@ const campgroundSchema = new Schema(
     },
     slug: String,
     // Separate Schema
-    // images: [ImageSchema],
+    images: [ImageSchema],
     price: {
       type: Number,
       required: [true, 'Please input the price'],
@@ -40,6 +40,10 @@ const campgroundSchema = new Schema(
       type: String,
       trim: true,
       required: [true, 'Each campground must have a description'],
+      maxlength: [
+        350,
+        'A campground description must have less than 350 characters',
+      ],
     },
     location: {
       type: String,
@@ -66,6 +70,17 @@ const campgroundSchema = new Schema(
       type: Date,
       default: Date.now(),
       select: false,
+    },
+    geometry: {
+      type: {
+        type: String,
+        enum: ['Point'],
+        // required: true,
+      },
+      coordinates: {
+        type: [Number],
+        // required: true,
+      },
     },
   },
   // Pass the options

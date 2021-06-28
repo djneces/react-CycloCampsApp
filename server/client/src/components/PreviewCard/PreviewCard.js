@@ -10,7 +10,7 @@ import './PreviewCard.scss';
 const PreviewCard = ({ image, campground, reverse }) => {
   const [review, setReview] = useState(1);
 
-  const { place, country, season, author, profession, quote1, quote2 } =
+  const { location, country, season, author, profession, quote1, quote2 } =
     QUOTES[campground][review - 1];
 
   const onReviewClick = (e) => {
@@ -63,14 +63,19 @@ const PreviewCard = ({ image, campground, reverse }) => {
         </div>
         <Image image={image} alt='Campsite' />
         <PreviewStory
-          place={place}
+          location={location}
           author={author}
           profession={profession}
           quote1={quote1}
           quote2={quote2}
           reverse={reverse}
         />
-        <PreviewPlace place={place} country={country} season={season} />
+        <PreviewPlace
+          location={location}
+          country={country}
+          season={season}
+          temperature='20°'
+        />
       </div>
     </div>
   );

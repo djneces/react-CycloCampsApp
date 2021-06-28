@@ -28,6 +28,8 @@ const userSchema = new Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
+
+  // Validation password via inputValidation.js (express-validator)
   password: {
     type: String,
     required: [true, 'Please provide a password'],

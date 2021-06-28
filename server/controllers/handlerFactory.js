@@ -19,6 +19,9 @@ exports.getAll = (Model) =>
       //filter by campgroundId
       filter = { campground: req.params.campgroundId };
 
+    const allDocs = await Model.countDocuments();
+    console.log(allDocs);
+
     //query is in the object req.query
     const features = new APIFeatures(Model.find(filter), req.query)
       .filter()
@@ -33,6 +36,7 @@ exports.getAll = (Model) =>
 
     res.status(200).json({
       status: 'success',
+      allDocs: allDocs,
       results: doc.length,
       data: doc,
     });

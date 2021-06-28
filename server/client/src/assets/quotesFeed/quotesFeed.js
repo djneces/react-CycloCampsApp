@@ -2,7 +2,7 @@ export const QUOTES = {
   Wagenburg: [
     {
       reviewNumber: 1,
-      place: 'Campingplatz Wagenburg',
+      location: 'Campingplatz Wagenburg',
       country: 'Germany',
       season: 'May - September',
       author: 'Jeremy Keith',
@@ -14,7 +14,7 @@ export const QUOTES = {
     },
     {
       reviewNumber: 2,
-      place: 'Campingplatz Wagenburg',
+      location: 'Campingplatz Wagenburg',
       country: 'Germany',
       season: 'May - September',
       author: 'Bluebird',
@@ -25,7 +25,7 @@ export const QUOTES = {
     },
     {
       reviewNumber: 3,
-      place: 'Campingplatz Wagenburg',
+      location: 'Campingplatz Wagenburg',
       country: 'Germany',
       season: 'May - September',
       author: 'FB99. UK',
@@ -37,7 +37,7 @@ export const QUOTES = {
     },
     {
       reviewNumber: 4,
-      place: 'Campingplatz Wagenburg',
+      location: 'Campingplatz Wagenburg',
       country: 'Germany',
       season: 'May - September',
       author: 'Colin and Carol. Derby, Royaume-Uni',
@@ -48,7 +48,7 @@ export const QUOTES = {
     },
     {
       reviewNumber: 5,
-      place: 'Campingplatz Wagenburg',
+      location: 'Campingplatz Wagenburg',
       country: 'Germany',
       season: 'May - September',
       author: 'johnandden',
@@ -61,7 +61,7 @@ export const QUOTES = {
   Herlequins: [
     {
       reviewNumber: 1,
-      place: 'Camping Les Herlequins',
+      location: 'Camping Les Herlequins',
       country: 'France',
       season: 'May - October',
       author: 'Chris',
@@ -72,7 +72,7 @@ export const QUOTES = {
     },
     {
       reviewNumber: 2,
-      place: 'Camping Les Herlequins',
+      location: 'Camping Les Herlequins',
       country: 'France',
       season: 'May - October',
       author: 'pfsm95',
@@ -84,7 +84,7 @@ export const QUOTES = {
     },
     {
       reviewNumber: 3,
-      place: 'Camping Les Herlequins',
+      location: 'Camping Les Herlequins',
       country: 'France',
       season: 'May - October',
       author: 'BridgetC. UK',
@@ -96,7 +96,7 @@ export const QUOTES = {
     },
     {
       reviewNumber: 4,
-      place: 'Camping Les Herlequins',
+      location: 'Camping Les Herlequins',
       country: 'France',
       season: 'May - October',
       author: 'Fabien. Upie, France',
@@ -108,7 +108,7 @@ export const QUOTES = {
     },
     {
       reviewNumber: 5,
-      place: 'Camping Les Herlequins',
+      location: 'Camping Les Herlequins',
       country: 'France',
       season: 'May - October',
       author: 'Nigeljwatson. UK',

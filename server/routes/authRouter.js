@@ -12,7 +12,13 @@ router
   .route('/register')
   .post(userValidationRules(), validate, authController.register);
 
-router.route('/login').post(authController.auth, authController.login);
+router
+  .route('/login')
+  .post(
+    authController.isDeactivated,
+    authController.auth,
+    authController.login
+  );
 
 router.get('/logout', authController.logout);
 

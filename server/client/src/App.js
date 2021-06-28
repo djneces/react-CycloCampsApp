@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 
 import LandingPage from './containers/LandingPage/LandingPage';
 import CampgroundsPage from './containers/CampgroundsPage/CampgroundsPage';
+import CampgroundPage from './containers/CampgroundPage/CampgroundPage';
 import NavigationMenu from './components/Navigation/NavigationMenu';
 import { fetchUser } from './store/actions/user';
 
@@ -20,7 +21,12 @@ const App = ({ fetchUser }) => {
         <Switch>
           <Route exact path='/' component={LandingPage} />
           <Route exact path='/campgrounds' component={CampgroundsPage} />
-          <Redirect to='/' />
+          <Route
+            exact
+            path='/campgrounds/:campgroundId'
+            component={CampgroundPage}
+          />
+          {/* <Redirect to='/' /> */}
         </Switch>
       </div>
     </BrowserRouter>

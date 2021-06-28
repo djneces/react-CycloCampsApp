@@ -3,7 +3,7 @@ import React from 'react';
 import './PreviewStory.scss';
 
 const PreviewStory = ({
-  place,
+  location,
   author,
   profession,
   quote1,
@@ -13,7 +13,7 @@ const PreviewStory = ({
   return (
     <div className={`PreviewStory ${reverse ? 'reverse' : ''}`}>
       <div className='PreviewStory__heading'>
-        <h3>{place}</h3>
+        <h3>{location}</h3>
       </div>
       <blockquote className='PreviewStory__quote'>
         <p>

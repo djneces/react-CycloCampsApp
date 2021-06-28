@@ -1,0 +1,107 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.CampgroundSingleReview {
+    width: 65%;
+    margin: 1rem 0.5rem;
+    padding: 1rem;
+    background-color: #fff;
+    border: 1px solid $color-primary;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+
+    &-container {
+        display: flex;
+        width: 100%;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: column;
+
+        &>div:first-of-type {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+
+            .CampgroundSingleReview-author {
+                font-weight: bold;
+            }
+        }
+
+        &>div:nth-of-type(2) {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+
+            .CampgroundSingleReview-createdAt {
+                font-size: 0.8rem;
+                color: $color-muted;
+            }
+
+            &>div:first-of-type {
+                border-bottom: 1px solid $color-orange;
+
+                .CampgroundSingleReview-createdAt {
+                    font-size: 0.8rem;
+                    color: $color-muted;
+                }
+            }
+
+            .CampgroundSingleReview-delete {
+                cursor: pointer;
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &.isDeleted i:last-of-type {
+                    color: $color-white;
+
+                    &::after {
+                        background-color: $color-red;
+                        z-index: -1;
+                    }
+
+                }
+
+                i:first-of-type {
+                    margin-right: 1rem;
+                }
+
+                i:last-of-type {
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    z-index: 10;
+                    color: $color-primary;
+
+                    &::after {
+                        content: '';
+                        padding: 0.5rem;
+                        border-radius: 50%;
+                        width: 32px;
+                        height: 32px;
+                        position: absolute
+                    }
+                }
+
+                i {
+                    &:hover {
+                        color: $color-red;
+                    }
+                }
+
+                .SpinnerLoader {
+                    color: $color-white;
+                    position: absolute;
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

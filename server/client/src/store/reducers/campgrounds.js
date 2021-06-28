@@ -1,5 +1,6 @@
 import {
   FETCH_ALL_CAMPGROUNDS,
+  FETCH_ONE_CAMPGROUND,
   FETCH_CAMPGROUNDS_START,
   FETCH_CAMPGROUNDS_SUCCESS,
   FETCH_CAMPGROUNDS_FAIL,
@@ -7,7 +8,9 @@ import {
 
 const INITIAL_STATE = {
   campgrounds: [],
+  selectedCampground: null,
   isLoading: false,
+  allCampgrounds: null,
   error: null,
 };
 
@@ -28,13 +31,21 @@ const campgroundReducer = (state = INITIAL_STATE, action) => {
     case FETCH_ALL_CAMPGROUNDS:
       return {
         ...state,
-        campgrounds: payload,
+        campgrounds: payload.campgrounds,
+        allCampgrounds: payload.allDocs,
+      };
+    case FETCH_ONE_CAMPGROUND:
+      return {
+        ...state,
+        selectedCampground: payload,
       };
     case FETCH_CAMPGROUNDS_FAIL:
       return {
         ...state,
         campgrounds: [],
+        selectedCampground: null,
         isLoading: false,
+        allCampgrounds: null,
         error: payload,
       };
     default:

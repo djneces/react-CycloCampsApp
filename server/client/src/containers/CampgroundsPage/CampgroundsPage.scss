@@ -1,7 +1,11 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
 .CampgroundsPage {
     width: 100%;
+    height: 92vh;
     position: relative;
+    margin-top: $margin-top-header;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 }

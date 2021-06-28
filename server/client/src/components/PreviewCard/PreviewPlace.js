@@ -2,13 +2,14 @@ import React from 'react';
 
 import './PreviewPlace.scss';
 
-const PreviewPlace = ({ place, country, season }) => {
+const PreviewPlace = ({ location, country, season, title, temperature }) => {
   return (
     <div className='PreviewPlace'>
-      <h3>{place}</h3>
+      <h3>{location}</h3>
       <strong>{country}</strong>
       <small>{season}</small>
-      <span>20°</span>
+      <span>{title}</span>
+      <span>{temperature}</span>
     </div>
   );
 };

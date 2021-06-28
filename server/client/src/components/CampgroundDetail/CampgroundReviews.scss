@@ -1,0 +1,46 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.CampgroundReviews {
+    width: 100%;
+    max-width: 1000px;
+    background-color: $color-white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    color: $color-primary;
+
+    &__heading {
+        margin: 1rem 0;
+        width: 50%;
+        text-align: right;
+
+        h3 {
+            color: $color-primary;
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            word-spacing: 3px;
+        }
+    }
+
+    &__review {
+        width: 65%;
+        margin: 1rem 0.5rem;
+        padding: 1rem;
+        background-color: #fff;
+        border: 1px solid $color-primary;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: column;
+
+        &-input {
+            height: 165px;
+        }
+
+        .CampgroundReviewForm {
+            height: 100%;
+        }
+    }
+}

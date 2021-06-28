@@ -91,6 +91,19 @@ exports.isAuthor = (Model) => async (req, res, next) => {
   next();
 };
 
+// IS DEACTIVATED USER
+exports.isDeactivated = async (req, res, next) => {
+  const { email, username, password } = req.body;
+
+  const user = await User.findOne({ username }).select('activeUser');
+
+  if (!user.activeUser) {
+    return next(new AppError('This user is not active', 401));
+  }
+
+  next();
+};
+
 // RESTRICT ACCESS
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {

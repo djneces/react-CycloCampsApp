@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
 import { changeInput, touchInput } from '../../store/actions/form';
@@ -18,6 +18,8 @@ const Input = ({
   onInput,
   form,
   formName,
+  value,
+  openModal,
 }) => {
   // Input change
   const changeHandler = (e) => {
@@ -47,11 +49,13 @@ const Input = ({
     ) : (
       <textarea
         id={id}
+        placeholder={placeholder}
         rows={rows || 3}
         onChange={changeHandler}
         onBlur={touchHandler}
-        value={form[formName][id].value}
-      />
+        // value from the typed input or pre-filled value
+        value={form[formName][id].value || value}
+      ></textarea>
     );
 
   return (

@@ -2,7 +2,9 @@
 @import '../../assets/styles/utils';
 
 .Input {
-    input {
+
+    input,
+    textarea {
         font-size: 1rem;
         color: $color-primary;
         padding: 0.5rem 0.5rem;
@@ -30,6 +32,10 @@
             font-size: 0.8rem;
             color: $color-white;
             width: 15rem;
+            background-color: $color-primary;
+            padding: 3px;
+            width: 186px;
+            text-align: center;
         }
     }
 

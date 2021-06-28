@@ -11,6 +11,7 @@ const Button = (props) => {
           props.inverse ? 'Button--inverse' : ''
         } ${props.danger ? 'Button--danger' : ''}`}
         href={props.href}
+        data-data={props.data}
       >
         {props.children}
       </a>
@@ -35,6 +36,7 @@ const Button = (props) => {
         props.inverse ? 'Button--inverse' : ''
       } ${props.danger ? 'Button--danger' : ''}`}
       type={props.type}
+      data-data={props.data}
       onClick={props.onClick}
       disabled={props.disabled}
     >

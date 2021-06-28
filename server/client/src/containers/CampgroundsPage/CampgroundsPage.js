@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 
-import * as campgroundActions from '../../store/actions/campgrounds';
+import CampgroundsList from '../../components/CampgroundsList/CampgroundsList';
+import Map from '../../components/Map/Map';
 
 import './CampgroundsPage.scss';
 
-const CampgroundsPage = ({ fetchAllCampgrounds }) => {
-  useEffect(() => {
-    fetchAllCampgrounds();
-  });
-  return <div className='CampgroundsPage'>Camps</div>;
+const CampgroundsPage = () => {
+  return (
+    <div className='CampgroundsPage'>
+      <CampgroundsList />
+      <Map />
+    </div>
+  );
 };
-
-export default connect(null, campgroundActions)(CampgroundsPage);
+export default CampgroundsPage;

@@ -1,0 +1,136 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.CampgroundDetail {
+    width: 100%;
+    max-width: 1000px;
+    height: 65vh;
+    max-height: 585px;
+    background-color: $color-white;
+    margin-top: 3rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__image {
+        width: 50%;
+        height: 100%;
+        position: relative;
+
+        .Image {
+            height: 100%;
+            width: 100%;
+        }
+
+        &-notLoaded {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: $color-muted;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            i {
+                color: $color-white;
+                font-size: 2rem;
+            }
+        }
+    }
+
+
+    .SpinnerLoader {
+        color: black;
+        font-size: 3rem;
+        margin: 0;
+    }
+
+    &__card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 100%;
+        width: 50%;
+
+        &-header {
+            width: 25%;
+            height: 100%;
+            background-color: $color-primary;
+            position: relative;
+
+            .PreviewPlace {
+                left: -67%;
+
+                &>* {
+                    margin-bottom: 0.5rem;
+                    background-color: $color-white;
+                    padding: 0.5rem 0.5rem;
+                    color: $color-orange;
+                }
+            }
+        }
+
+        &-body {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            width: 75%;
+
+            &-rating {
+                text-align: right;
+                padding: 1rem 2rem;
+                color: $color-primary;
+                display: flex;
+                flex-direction: column;
+
+                span {
+                    font-size: 0.8rem;
+
+                    &:first-of-type {
+                        font-weight: bold;
+                        font-size: 1rem;
+                    }
+
+                    span {
+                        color: lighten($color-primary, 20);
+                        margin-left: 0.5rem;
+                    }
+                }
+            }
+
+            &-author {
+                text-align: right;
+                padding: 0rem 2rem;
+                font-size: 0.8rem;
+                color: $color-muted;
+            }
+
+            &-description {
+                height: auto;
+                background-color: $color-white;
+                padding: 2vw 2rem 2vw 6vw;
+                color: $color-primary;
+                line-height: 1.5;
+                word-spacing: 3px;
+                text-align: right;
+            }
+
+            &-price {
+                text-align: right;
+                padding: 1rem 2rem;
+                font-size: 4vw;
+                color: $color-orange;
+
+                span {
+                    font-size: 2vw;
+                    color: $color-primary;
+                    margin-left: 1rem;
+                }
+            }
+        }
+    }
+}

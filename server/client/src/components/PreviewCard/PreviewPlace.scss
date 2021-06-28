@@ -35,6 +35,10 @@
         text-transform: uppercase;
         color: $color-white;
         text-align: right !important;
+
+        @media screen and (min-width: 1400px) {
+            font-size: 20px;
+        }
     }
 
     &>* {
@@ -50,6 +54,10 @@
     }
 
     span {
-        font-size: 2.9rem;
+        font-size: 2.9vw;
+
+        @media screen and (min-width: 1400px) {
+            font-size: 35px;
+        }
     }
 }
