@@ -51,34 +51,21 @@
                 }
             }
 
-            .CampgroundSingleReview-delete {
+            .CampgroundSingleReview-controls {
                 cursor: pointer;
                 position: relative;
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                justify-content: space-between;
+                width: 3.5rem;
+                margin: 1rem 0.5rem;
 
-                &.isDeleted i:last-of-type {
-                    color: $color-white;
-
-                    &::after {
-                        background-color: $color-red;
-                        z-index: -1;
-                    }
-
-                }
-
-                i:first-of-type {
-                    margin-right: 1rem;
-                }
-
-                i:last-of-type {
+                &--edit,
+                &--delete {
                     position: relative;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    z-index: 10;
-                    color: $color-primary;
 
                     &::after {
                         content: '';
@@ -86,22 +73,49 @@
                         border-radius: 50%;
                         width: 32px;
                         height: 32px;
-                        position: absolute
+                        position: absolute;
+                        background-color: $color-primary-light;
                     }
-                }
 
-                i {
+
                     &:hover {
-                        color: $color-red;
+                        i {
+                            color: $color-orange;
+                        }
+                    }
+
+                }
+
+                &--edit {
+
+                    i {
+                        position: relative;
+                        z-index: 1;
+                        color: white;
+                    }
+
+                    .SpinnerLoader {
+                        margin: 0;
+                        position: absolute;
+                        z-index: 10;
                     }
                 }
 
-                .SpinnerLoader {
-                    color: $color-white;
-                    position: absolute;
-                    margin: 0;
+                &--delete {
+                    i {
+                        position: relative;
+                        z-index: 1;
+                        color: white;
+                    }
+
+                    .SpinnerLoader {
+                        margin: 0;
+                        position: absolute;
+                        z-index: 10;
+                    }
                 }
             }
         }
     }
+
 }

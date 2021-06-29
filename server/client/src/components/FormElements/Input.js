@@ -1,5 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+
 import { connect } from 'react-redux';
 
 import { changeInput, touchInput } from '../../store/actions/form';
@@ -18,9 +18,10 @@ const Input = ({
   onInput,
   form,
   formName,
-  value,
-  openModal,
 }) => {
+  // State when editing form to correctly show !disabled button
+  const [reviewFormTouched, setReviewFormTouched] = useState(false);
+
   // Input change
   const changeHandler = (e) => {
     changeInput(e, validators, formName);
@@ -30,6 +31,23 @@ const Input = ({
   const touchHandler = (e) => {
     touchInput(e.target.id, formName);
   };
+
+  useEffect(() => {
+    // hack to force validation and possibility to change star rating only (no changes in review) when editing a review
+    if (element === 'textarea' && formName === 'review') {
+      if (form[formName][id].value.length === 0) return;
+      if (!reviewFormTouched) {
+        changeInput(
+          { target: { id: id, value: form[formName][id].value } },
+          validators,
+          formName
+        );
+        if (form[formName][id].value.length > 0) {
+          setReviewFormTouched(true);
+        }
+      }
+    }
+  }, [form[formName][id].value]);
 
   // Whenever isValid changes
   useEffect(() => {
@@ -53,8 +71,8 @@ const Input = ({
         rows={rows || 3}
         onChange={changeHandler}
         onBlur={touchHandler}
-        // value from the typed input or pre-filled value
-        value={form[formName][id].value || value}
+        // value fetched from redux
+        value={form[formName][id].value}
       ></textarea>
     );
 

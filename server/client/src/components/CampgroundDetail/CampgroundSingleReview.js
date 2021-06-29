@@ -1,11 +1,12 @@
 import moment from 'moment';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Modal from '../UIElements/Modal';
 import CampgroundUpdateForm from '../CampgroundUpdateForm/CampgroundUpdateForm';
 import SpinnerLoader from '../UIElements/SpinnerLoader';
 import * as reviewActions from '../../store/actions/review';
+import * as formActions from '../../store/actions/form';
 
 import './CampgroundSingleReview.scss';
 
@@ -20,16 +21,36 @@ const CampgroundSingleReview = ({
   handleClick,
   disableForm,
   fetchOneReview,
+  clearForm,
+  reviewIsEditing,
 }) => {
   const [isDeleted, setIsDeleted] = useState(false);
+  const [isEdited, setIsEdited] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
   const handleToggleModal = () => {
     setOpenModal(!openModal);
-
     // Hiding the underlying form when modal is open
     disableForm();
+
+    if (openModal) {
+      clearForm();
+    }
   };
+
+  const handleEdit = () => {
+    fetchOneReview(campgroundId, reviewId);
+    handleToggleModal();
+    setIsEdited(true);
+  };
+
+  useEffect(() => {
+    if (!openModal) {
+      setTimeout(() => {
+        setIsEdited(false);
+      }, 2000);
+    }
+  }, [openModal]);
 
   return (
     <>
@@ -44,14 +65,13 @@ const CampgroundSingleReview = ({
           prevReview={review}
           prevRating={rating}
           handleToggleModal={handleToggleModal}
-          openModal={openModal}
         />
       </Modal>
       <div className='CampgroundSingleReview'>
         <div className='CampgroundSingleReview-container'>
           <div>
             <div className='CampgroundSingleReview-author'>
-              {author.username}
+              {author ? author.username : 'Unknown author'}
             </div>
             <div className='CampgroundSingleReview-rating'>
               {Array.from({ length: rating }).map((star, i) => {
@@ -63,29 +83,23 @@ const CampgroundSingleReview = ({
             <div className='CampgroundSingleReview-createdAt'>
               {moment(createdAt).format('MMMM-Do-YY, h:mm A')}
             </div>
-            <div
-              className={`CampgroundSingleReview-delete ${
-                isDeleted ? 'isDeleted' : ''
-              }`}
-            >
-              {currentUser === author._id ? (
+            <div className={`CampgroundSingleReview-controls`}>
+              {author && currentUser === author._id ? (
                 <>
-                  <i
-                    className='far fa-edit'
-                    onClick={() => {
-                      fetchOneReview(campgroundId, reviewId);
-                      handleToggleModal();
-                    }}
-                  ></i>
-                  <i
-                    className='far fa-trash-alt'
-                    onClick={() => {
-                      handleClick(reviewId);
-                      setIsDeleted(true);
-                    }}
-                  >
+                  <div className={`CampgroundSingleReview-controls--edit`}>
+                    <i className='far fa-edit' onClick={handleEdit}></i>
+                    {reviewIsEditing && isEdited && <SpinnerLoader />}
+                  </div>
+                  <div className={`CampgroundSingleReview-controls--delete`}>
+                    <i
+                      className='far fa-trash-alt'
+                      onClick={() => {
+                        handleClick(reviewId);
+                        setIsDeleted(true);
+                      }}
+                    ></i>
                     {isDeleted && <SpinnerLoader />}
-                  </i>
+                  </div>
                 </>
               ) : null}
             </div>
@@ -96,10 +110,10 @@ const CampgroundSingleReview = ({
     </>
   );
 };
-
-const mapStateToProps = ({ form }) => ({
-  // review: form.review.review.value,
-  // rating: form.review.review.stars,
+const mapStateToProps = ({ review }) => ({
+  reviewIsEditing: review.isEditing,
 });
 
-export default connect(mapStateToProps, reviewActions)(CampgroundSingleReview);
+export default connect(mapStateToProps, { ...formActions, ...reviewActions })(
+  CampgroundSingleReview
+);

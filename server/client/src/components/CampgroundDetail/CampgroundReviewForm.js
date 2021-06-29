@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { connect } from 'react-redux';
 
 import Input from '../FormElements/Input';
@@ -19,9 +19,7 @@ const CampgroundReviewForm = ({
   reviewFormIsValid,
   validateForm,
   handleReviewSubmit,
-  value,
   rating,
-  openModal,
   hideFormUnder,
 }) => {
   const inputReviewHandler = useCallback((id, reviewFormIsValid) => {
@@ -42,14 +40,9 @@ const CampgroundReviewForm = ({
             onInput={inputReviewHandler}
             id='review'
             formName='review'
-            value={value ? value : ''}
-            openModal={openModal}
           />
           <div>
-            <StarRating
-              rating={rating}
-              inputReviewHandler={inputReviewHandler}
-            />
+            <StarRating rating={rating} />
             {reviewIsLoading && <SpinnerLoader />}
             <Button
               inverse

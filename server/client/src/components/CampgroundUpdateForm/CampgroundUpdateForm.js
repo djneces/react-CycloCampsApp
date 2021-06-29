@@ -15,7 +15,6 @@ const CampgroundUpdateForm = ({
   newRating,
   updateReview,
   handleToggleModal,
-  openModal,
 }) => {
   const handleReviewSubmit = () => {
     let review, rating;
@@ -28,11 +27,9 @@ const CampgroundUpdateForm = ({
   return (
     <div className='CampgroundUpdateForm'>
       <CampgroundReviewForm
-        value={prevReview}
         rating={prevRating}
         handleReviewSubmit={handleReviewSubmit}
         fetchFormData
-        openModal={openModal}
       />
     </div>
   );

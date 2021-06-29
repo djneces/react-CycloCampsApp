@@ -42,10 +42,16 @@
             }
         }
 
-        .Input--invalid-errorMessage {
-            margin: 0;
-            width: 264px;
+        .Input {
+            position: relative;
+
+            &--invalid-errorMessage {
+                margin: 0;
+                width: 100%;
+            }
         }
+
+
 
         &-controls {
             display: flex;

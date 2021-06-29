@@ -8,11 +8,15 @@ import {
   FETCH_ONE_REVIEW_START,
   FETCH_ONE_REVIEW_SUCCESS,
   FETCH_ONE_REVIEW_FAIL,
+  SUBMIT_EDITED_REVIEW_START,
+  SUBMIT_EDITED_REVIEW_SUCCESS,
+  SUBMIT_EDITED_REVIEW_FAIL,
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
   isLoading: false,
   isDeleting: false,
+  isEditing: false,
   error: null,
   selectedReview: null,
 };
@@ -39,6 +43,12 @@ const reviewReducer = (state = INITIAL_STATE, action) => {
         isDeleting: true,
         error: null,
       };
+    case SUBMIT_EDITED_REVIEW_START:
+      return {
+        ...state,
+        isEditing: true,
+        error: null,
+      };
     case SUBMIT_REVIEW_SUCCESS:
       return {
         ...state,
@@ -55,10 +65,21 @@ const reviewReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isDeleting: false,
       };
+    case SUBMIT_EDITED_REVIEW_SUCCESS:
+      return {
+        ...state,
+        isEditing: false,
+      };
     case SUBMIT_REVIEW_FAIL:
       return {
         ...state,
         isLoading: false,
+        error: payload,
+      };
+    case SUBMIT_EDITED_REVIEW_FAIL:
+      return {
+        ...state,
+        isEditing: false,
         error: payload,
       };
     case DELETE_REVIEW_FAIL:
@@ -68,6 +89,7 @@ const reviewReducer = (state = INITIAL_STATE, action) => {
         isDeleting: false,
         error: payload,
         selectedReview: null,
+        isEditing: false,
       };
     default:
       return state;

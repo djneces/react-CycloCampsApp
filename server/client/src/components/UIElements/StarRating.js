@@ -17,7 +17,6 @@ class StarRating extends Component {
   changeRating(newRating) {
     this.props.addStarRating(newRating);
     this.setState(() => ({ rating: newRating }));
-    this.props.inputReviewHandler();
   }
   render() {
     return (

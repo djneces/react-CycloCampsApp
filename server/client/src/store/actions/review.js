@@ -11,6 +11,9 @@ import {
   FETCH_ONE_REVIEW_START,
   FETCH_ONE_REVIEW_SUCCESS,
   FETCH_ONE_REVIEW_FAIL,
+  SUBMIT_EDITED_REVIEW_START,
+  SUBMIT_EDITED_REVIEW_SUCCESS,
+  SUBMIT_EDITED_REVIEW_FAIL,
 } from './actionTypes';
 
 // Start submitting review
@@ -73,10 +76,28 @@ export const submitReview =
       });
   };
 //******************************* *
+// Start submitting edited review
+export const submitEditedReviewStart = () => ({
+  type: SUBMIT_EDITED_REVIEW_START,
+});
+
+// Submit edited review success
+export const submitEditedReviewSuccess = () => {
+  return {
+    type: SUBMIT_EDITED_REVIEW_SUCCESS,
+  };
+};
+
+// Submit edited review fail
+export const submitEditedReviewFail = (error) => ({
+  type: SUBMIT_EDITED_REVIEW_FAIL,
+  payload: error,
+});
+
 // Edit review
 export const updateReview =
   (campgroundId, reviewId, review, rating) => async (dispatch) => {
-    dispatch(submitReviewStart());
+    dispatch(submitEditedReviewStart());
 
     const options = {
       method: 'POST',
@@ -94,7 +115,7 @@ export const updateReview =
       )
       .then((res) => {
         if (res.status === 200) {
-          return dispatch(submitReviewSuccess());
+          return dispatch(submitEditedReviewSuccess());
         } else {
           new Error('Something went wrong');
         }
@@ -106,9 +127,9 @@ export const updateReview =
       .catch((error) => {
         if (error.response) {
           console.error(error.response.data.message);
-          dispatch(submitReviewFail(error.response.data.message));
+          dispatch(submitEditedReviewFail(error.response.data.message));
         } else {
-          dispatch(submitReviewFail(error.message));
+          dispatch(submitEditedReviewFail(error.message));
         }
       });
   };
