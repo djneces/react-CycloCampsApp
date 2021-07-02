@@ -11,6 +11,11 @@
     cursor: pointer;
     text-decoration: none;
     display: inline-block;
+
+    &.active {
+        background-color: $color-orange;
+        color: $color-white;
+    }
 }
 
 .Button:focus {

@@ -26,6 +26,7 @@ const CampgroundsList = ({
   const numberPages = allCampgrounds / LIMIT;
   // Use of react-usestateref to get the actual correct state
   const [startingPage, setStartingPage, refStartingPage] = useState(1);
+  const [clickedPage, setClickedPage] = useState(startingPage);
 
   const fetchPage = (e) => {
     fetchAllCampgrounds(LIMIT, +e.target.dataset.data);
@@ -38,6 +39,7 @@ const CampgroundsList = ({
         : prevStartingPage
     );
     fetchAllCampgrounds(LIMIT, refStartingPage.current);
+    setClickedPage(refStartingPage.current);
   };
 
   const handleClickRight = () => {
@@ -47,6 +49,7 @@ const CampgroundsList = ({
         : startingPage
     );
     fetchAllCampgrounds(LIMIT, refStartingPage.current);
+    setClickedPage(refStartingPage.current);
   };
 
   const renderPagination = () => {
@@ -58,20 +61,26 @@ const CampgroundsList = ({
         }`,
       },
       (v, i) => i + startingPage
-    ).map(
-      (page) =>
+    ).map((page) => {
+      return (
         page <= numberPages && (
           <Button
             inverse
             key={page}
-            className='CampgroundsList__pagination-page'
+            className={`CampgroundsList__pagination-page ${
+              page === clickedPage ? 'active' : ''
+            }`}
             data={page}
-            onClick={fetchPage}
+            onClick={(e) => {
+              setClickedPage(+e.target.dataset.data);
+              fetchPage(e);
+            }}
           >
             {page}
           </Button>
         )
-    );
+      );
+    });
   };
 
   const renderList = () => {

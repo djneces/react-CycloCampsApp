@@ -1,5 +1,50 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
 .Map {
-    width: 50%;
     height: 100%;
-    background-color: rgb(200, 192, 248);
+    flex: 1;
+    overflow: hidden;
+
+    &__iconButton {
+        border: none;
+        background-color: $color-primary-light;
+        padding: 0.4rem;
+        box-shadow: $box-shadow;
+        cursor: pointer;
+
+        img {
+            width: 35px;
+            height: 35px;
+            padding: 0.4rem;
+        }
+    }
+
+    &__popup {
+        h3 {
+            font-weight: 500;
+            border-bottom: 1px solid $color-orange;
+
+            &:hover {
+                background-color: $color-orange;
+                color: $color-white;
+            }
+        }
+    }
+
+
+    // Mapbox popup close button 
+    .mapboxgl-popup-close-button {
+        right: -0.9rem;
+        width: 1rem;
+        background-color: $color-primary-light;
+        border: 1px solid $color-white;
+        font-size: 1.2rem;
+
+        &:hover {
+            color: $color-white;
+            background-color: $color-primary-light;
+        }
+    }
+
 }

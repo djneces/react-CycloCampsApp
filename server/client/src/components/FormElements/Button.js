@@ -9,7 +9,7 @@ const Button = (props) => {
       <a
         className={`Button Button--${props.size || 'default'} ${
           props.inverse ? 'Button--inverse' : ''
-        } ${props.danger ? 'Button--danger' : ''}`}
+        } ${props.danger ? 'Button--danger' : ''} ${props.className}`}
         href={props.href}
         data-data={props.data}
       >
@@ -24,7 +24,7 @@ const Button = (props) => {
         exact={props.exact}
         className={`Button Button--${props.size || 'default'} ${
           props.inverse ? 'Button--inverse' : ''
-        } ${props.danger ? 'Button--danger' : ''}`}
+        } ${props.danger ? 'Button--danger' : ''} ${props.className}`}
       >
         {props.children}
       </Link>
@@ -34,7 +34,7 @@ const Button = (props) => {
     <button
       className={`Button Button--${props.size || 'default'} ${
         props.inverse ? 'Button--inverse' : ''
-      } ${props.danger ? 'Button--danger' : ''}`}
+      } ${props.danger ? 'Button--danger' : ''} ${props.className}`}
       type={props.type}
       data-data={props.data}
       onClick={props.onClick}
