@@ -9,6 +9,7 @@ const PreviewStory = ({
   quote1,
   quote2,
   reverse,
+  children,
 }) => {
   return (
     <div className={`PreviewStory ${reverse ? 'reverse' : ''}`}>
@@ -27,6 +28,7 @@ const PreviewStory = ({
       <figcaption>
         &mdash; {author}, <em>{profession}</em>
       </figcaption>
+      {children}
     </div>
   );
 };

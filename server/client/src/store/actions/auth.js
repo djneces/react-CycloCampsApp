@@ -28,41 +28,42 @@ export const authFail = (error) => ({
 });
 
 // Sign in the user with username and password
-export const usernameSignIn = (username, password) => async (dispatch) => {
-  dispatch(authStart());
-
-  const options = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
-      Accept: 'application/json',
-    },
+export const usernameSignIn =
+  (username, password, history) => async (dispatch) => {
+    dispatch(authStart());
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Accept: 'application/json',
+      },
+    };
+    axios
+      .post('/api/auth/login', { username, password }, options)
+      .then((res) => {
+        if (res.status === 200) {
+          //wait until it's successfully fetched
+          return dispatch(fetchUser());
+        } else {
+          console.error('Something went wrong');
+        }
+      })
+      .then(() => {
+        dispatch(authSuccess());
+        dispatch(clearForm());
+        history.push('/');
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+        //dispatch message on error response obj
+        dispatch(authFail(error.response.data.message));
+      });
   };
-  axios
-    .post('/api/auth/login', { username, password }, options)
-    .then((res) => {
-      if (res.status === 200) {
-        //wait until it's successfully fetched
-        return dispatch(fetchUser());
-      } else {
-        console.error('Something went wrong');
-      }
-    })
-    .then(() => {
-      dispatch(authSuccess());
-      dispatch(clearForm());
-    })
-    .catch((error) => {
-      console.log(error.response.data.message);
-      //dispatch message on error response obj
-      dispatch(authFail(error.response.data.message));
-    });
-};
 
 // Register user
 export const registerUser =
-  (username, email, password, confirmPassword) => async (dispatch) => {
+  (username, email, password, confirmPassword, history) => async (dispatch) => {
     dispatch(authStart());
 
     const options = {
@@ -92,6 +93,7 @@ export const registerUser =
         .then(() => {
           dispatch(authSuccess());
           dispatch(clearForm());
+          history.push('/');
         })
         .catch((error) => {
           if (error.response.data.errors) {
@@ -111,6 +113,7 @@ export const signOutUser = () => {
       if (res.status === 200) {
         //TODO alert
         console.log(res.data.msg);
+        clearForm();
       }
     })
     .catch((err) => console.error('Something went wrong', err));

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { connect } from 'react-redux';
 
 import Input from '../FormElements/Input';
@@ -22,9 +22,12 @@ const CampgroundReviewForm = ({
   rating,
   hideFormUnder,
 }) => {
-  const inputReviewHandler = useCallback((id, reviewFormIsValid) => {
-    validateForm(id, reviewFormIsValid, 'review');
-  }, []);
+  const inputReviewHandler = useCallback(
+    (id, reviewFormIsValid) => {
+      validateForm(id, reviewFormIsValid, 'review');
+    },
+    [validateForm]
+  );
 
   return (
     <div className='CampgroundReviewForm'>

@@ -37,7 +37,6 @@ exports.auth = (req, res, next) => {
       return next(new AppError(err));
     }
     if (!user) {
-      // return res.redirect('/login');
       return next(new AppError('Incorrect credentials', 400));
     }
     req.login(user, function (err) {
@@ -45,7 +44,6 @@ exports.auth = (req, res, next) => {
         return next(new AppError(err));
       }
       next();
-      // return res.redirect('/users/' + user.username);
     });
   })(req, res, next);
 };
@@ -95,9 +93,10 @@ exports.isAuthor = (Model) => async (req, res, next) => {
 exports.isDeactivated = async (req, res, next) => {
   const { email, username, password } = req.body;
 
+  console.log('runs');
   const user = await User.findOne({ username }).select('activeUser');
 
-  if (!user.activeUser) {
+  if (user.activeUser === false) {
     return next(new AppError('This user is not active', 401));
   }
 

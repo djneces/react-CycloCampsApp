@@ -1,0 +1,53 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.CampgroundUpdateForm {
+    .Input {
+        position: relative;
+
+        input,
+        textarea {
+            margin: 0.5rem 0 1.8rem 0;
+        }
+
+        textarea {
+            resize: none;
+            width: 100%;
+            font-family: inherit;
+            padding: 0;
+        }
+
+        input[type=number] {
+            width: 5rem;
+            margin: 0;
+        }
+
+        &--invalid-errorMessage {
+            margin: 0.2rem 0;
+            bottom: -1.7rem;
+            width: 100%;
+        }
+
+        &__label {
+            color: $color-muted;
+            width: 100%;
+            background-color: $color-white;
+            padding: 0.5rem;
+        }
+    }
+
+    &__title,
+    &__location {
+        width: 50%;
+
+        input {
+            width: 100%;
+        }
+    }
+
+    &__price {
+        display: flex;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+}

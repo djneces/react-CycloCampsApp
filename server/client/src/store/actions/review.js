@@ -100,7 +100,6 @@ export const updateReview =
     dispatch(submitEditedReviewStart());
 
     const options = {
-      method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
@@ -161,12 +160,16 @@ export const fetchOneReview = (campgroundId, reviewId) => async (dispatch) => {
     .then((res) => {
       if (res.status === 200) {
         dispatch(
-          fetchFormData({
-            review: res.data.data.review,
-            rating: res.data.data.rating,
-          })
+          fetchFormData(
+            {
+              review: res.data.data.review,
+              rating: res.data.data.rating,
+            },
+            'review',
+            'review'
+          )
         );
-        return dispatch(fetchOneReviewSuccess(res.data.data));
+        dispatch(fetchOneReviewSuccess(res.data.data));
       } else {
         new Error('Something went wrong');
       }
@@ -219,7 +222,7 @@ export const deleteReview = (campgroundId, reviewId) => async (dispatch) => {
         //TODO alert
       } else {
         console.error(error.message);
-        dispatch(dispatch(deleteReviewFail(error.message)));
+        dispatch(deleteReviewFail(error.message));
       }
     });
 };

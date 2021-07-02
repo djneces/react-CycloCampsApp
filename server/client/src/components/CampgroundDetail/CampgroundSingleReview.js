@@ -1,9 +1,9 @@
-import moment from 'moment';
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import { connect } from 'react-redux';
 
 import Modal from '../UIElements/Modal';
-import CampgroundUpdateForm from '../CampgroundUpdateForm/CampgroundUpdateForm';
+import CampgroundUpdateReviewForm from '../CampgroundUpdateReviewForm/CampgroundUpdateReviewForm';
 import SpinnerLoader from '../UIElements/SpinnerLoader';
 import * as reviewActions from '../../store/actions/review';
 import * as formActions from '../../store/actions/form';
@@ -18,7 +18,7 @@ const CampgroundSingleReview = ({
   currentUser,
   reviewId,
   campgroundId,
-  handleClick,
+  handleDeleteReview,
   disableForm,
   fetchOneReview,
   clearForm,
@@ -59,7 +59,7 @@ const CampgroundSingleReview = ({
         onCancel={handleToggleModal}
         header='Update your review'
       >
-        <CampgroundUpdateForm
+        <CampgroundUpdateReviewForm
           reviewId={reviewId}
           campgroundId={campgroundId}
           prevReview={review}
@@ -71,7 +71,7 @@ const CampgroundSingleReview = ({
         <div className='CampgroundSingleReview-container'>
           <div>
             <div className='CampgroundSingleReview-author'>
-              {author ? author.username : 'Unknown author'}
+              {author ? author.username : 'Anonymous author'}
             </div>
             <div className='CampgroundSingleReview-rating'>
               {Array.from({ length: rating }).map((star, i) => {
@@ -94,7 +94,7 @@ const CampgroundSingleReview = ({
                     <i
                       className='far fa-trash-alt'
                       onClick={() => {
-                        handleClick(reviewId);
+                        handleDeleteReview(reviewId);
                         setIsDeleted(true);
                       }}
                     ></i>

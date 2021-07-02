@@ -13,12 +13,14 @@ const AccountDetailsSide = ({ signOutUser }) => {
         <h3>Your Account</h3>
       </div>
       <div className='AccountDetailsSide__navLinks'>
-        <div>
-          <Link to='/'>Account Details</Link>
-          <Link to='/'>Your Campsites</Link>
+        <div className='AccountDetailsSide__navLinks--accountDetails'>
+          <Link to='/your-account'>
+            <span>Account Details</span>
+            <span>- your campgrounds</span>
+          </Link>
         </div>
-        <div>
-          <Link to='/' onClick={signOutUser}>
+        <div className='AccountDetailsSide__navLinks--logout'>
+          <Link to='/logout' onClick={signOutUser}>
             Logout
           </Link>
         </div>

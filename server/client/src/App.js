@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
@@ -5,6 +6,7 @@ import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import LandingPage from './containers/LandingPage/LandingPage';
 import CampgroundsPage from './containers/CampgroundsPage/CampgroundsPage';
 import CampgroundPage from './containers/CampgroundPage/CampgroundPage';
+import AccountDetailsPage from './containers/AccountDetailsPage/AccountDetailsPage';
 import NavigationMenu from './components/Navigation/NavigationMenu';
 import { fetchUser } from './store/actions/user';
 
@@ -26,6 +28,8 @@ const App = ({ fetchUser }) => {
             path='/campgrounds/:campgroundId'
             component={CampgroundPage}
           />
+          {/* TODO is loggedIn */}
+          <Route exact path='/your-account' component={AccountDetailsPage} />
           {/* <Redirect to='/' /> */}
         </Switch>
       </div>

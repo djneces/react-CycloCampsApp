@@ -45,6 +45,10 @@ const userSchema = new Schema({
   },
   deactivatedUserAt: Date,
   __v: { type: Number, select: false },
+  registeredAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 //hash password before saving into the DB

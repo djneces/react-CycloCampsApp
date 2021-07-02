@@ -1,0 +1,112 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.CreatedCampground {
+    width: 100%;
+    max-width: 900px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+
+    &__image {
+        width: 100%;
+        height: 100%;
+        background-color: $color-primary-light;
+        cursor: pointer;
+
+        i {
+            color: $color-white;
+            font-size: 2rem;
+            padding: 3rem;
+        }
+    }
+
+    &>div:nth-of-type(2) {
+        position: absolute;
+        background-color: $color-white;
+        padding: 3rem;
+        line-height: 2;
+        width: 300px;
+        height: 160px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        cursor: pointer;
+    }
+
+    &__title {
+        font-size: 1.1rem;
+        font-weight: bold;
+    }
+
+    &__location {
+        font-size: 0.8rem;
+        color: $color-muted;
+    }
+
+    &__controls {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+        margin-left: 1rem;
+
+        i {
+            position: relative;
+            z-index: 1;
+            color: white;
+        }
+
+        &--edit,
+        &--delete {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            &::after {
+                content: '';
+                padding: 0.5rem;
+                border-radius: 50%;
+                width: 32px;
+                height: 32px;
+                position: absolute;
+                background-color: $color-primary-light;
+            }
+
+
+            &:hover {
+                i {
+                    color: $color-orange;
+                }
+            }
+        }
+
+        &--edit,
+        &--delete {
+            .SpinnerLoader {
+                margin: 0;
+                position: absolute;
+                z-index: 10;
+                font-size: initial !important;
+                color: white !important;
+            }
+        }
+    }
+
+    &__deleteModal {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button {
+            margin: 0 1rem;
+            padding: 0.5rem 2.5rem;
+        }
+    }
+}

@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -31,6 +32,7 @@ const NavigationMenu = ({
   const [toggleRegister, setToggleRegister] = useState(false);
   const [toggleAccountDetails, setToggleAccountDetails] = useState(false);
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
+  const history = useHistory();
 
   const toggleDrawerHandler = () => {
     setDrawerIsOpen(!drawerIsOpen);
@@ -46,7 +48,11 @@ const NavigationMenu = ({
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!toggleRegister) {
-      usernameSignIn(loginForm.username.value, loginForm.password.value);
+      usernameSignIn(
+        loginForm.username.value,
+        loginForm.password.value,
+        history
+      );
     }
     if (toggleRegister) {
       // Await until user is fetched, then toggle the register form
@@ -54,7 +60,8 @@ const NavigationMenu = ({
         registerForm.username.value,
         registerForm.email.value,
         registerForm.password.value,
-        registerForm.confirmPassword.value
+        registerForm.confirmPassword.value,
+        history
       );
       if (!userIsLoading) setToggleRegister(false);
     }

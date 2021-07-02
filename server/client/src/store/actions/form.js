@@ -45,9 +45,11 @@ export const addStarRating = (numberOfStars) => {
   };
 };
 
-export const fetchFormData = (data) => {
+export const fetchFormData = (data, formName, key) => {
   return {
     type: FETCH_FORM_DATA,
     payload: data,
+    formName: formName,
+    key: key,
   };
 };

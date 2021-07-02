@@ -117,7 +117,7 @@ const CampgroundDetail = ({
 };
 
 const mapStateToProps = ({ campgrounds }) => ({
-  selectedCampground: campgrounds.selectedCampground,
+  selectedCampground: campgrounds.selectedCampground.campground,
   campgroundIsLoading: campgrounds.isLoading,
 });
 

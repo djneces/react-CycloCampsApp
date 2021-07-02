@@ -20,7 +20,6 @@ exports.getAll = (Model) =>
       filter = { campground: req.params.campgroundId };
 
     const allDocs = await Model.countDocuments();
-    console.log(allDocs);
 
     //query is in the object req.query
     const features = new APIFeatures(Model.find(filter), req.query)

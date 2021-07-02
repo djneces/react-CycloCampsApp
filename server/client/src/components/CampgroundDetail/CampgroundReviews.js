@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import useState from 'react-usestateref';
 import { connect } from 'react-redux';
@@ -24,7 +25,7 @@ const CampgroundReviews = ({
     submitReview(campgroundId, value, stars);
   };
 
-  const handleClick = (id) => {
+  const handleDeleteReview = (id) => {
     deleteReview(campgroundId, id);
   };
 
@@ -47,7 +48,7 @@ const CampgroundReviews = ({
               currentUser={currentUser}
               reviewId={id}
               campgroundId={campgroundId}
-              handleClick={handleClick}
+              handleDeleteReview={handleDeleteReview}
               disableForm={disableForm}
             />
           );
@@ -82,7 +83,7 @@ const CampgroundReviews = ({
 const mapStateToProps = ({ form, auth, campgrounds }) => ({
   reviewForm: form.review.review,
   currentUser: auth.currentUser?.user._id,
-  reviews: campgrounds.selectedCampground?.reviews,
+  reviews: campgrounds.selectedCampground.campground?.reviews,
 });
 
 export default connect(mapStateToProps, reviewActions)(CampgroundReviews);

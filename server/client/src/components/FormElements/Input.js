@@ -18,9 +18,10 @@ const Input = ({
   onInput,
   form,
   formName,
+  label,
 }) => {
   // State when editing form to correctly show !disabled button
-  const [reviewFormTouched, setReviewFormTouched] = useState(false);
+  const [formTouched, setFormTouched] = useState(false);
 
   // Input change
   const changeHandler = (e) => {
@@ -32,27 +33,34 @@ const Input = ({
     touchInput(e.target.id, formName);
   };
 
+  const formValue = form[formName][id].value;
   useEffect(() => {
-    // hack to force validation and possibility to change star rating only (no changes in review) when editing a review
-    if (element === 'textarea' && formName === 'review') {
-      if (form[formName][id].value.length === 0) return;
-      if (!reviewFormTouched) {
+    // hack to force the validation => button disable state corresponds to the fetched input
+    // use this when preloading forms with default data from redux (when editing)
+    if (
+      formName === 'review' ||
+      formName === 'account' ||
+      formName === 'campground'
+    ) {
+      if (formValue.length === 0) return;
+      if (!formTouched) {
         changeInput(
-          { target: { id: id, value: form[formName][id].value } },
+          { target: { id: id, value: formValue } },
           validators,
           formName
         );
-        if (form[formName][id].value.length > 0) {
-          setReviewFormTouched(true);
+        if (formValue.length > 0) {
+          setFormTouched(true);
         }
       }
     }
-  }, [form[formName][id].value]);
+  }, [formValue, changeInput, formName, formTouched, id, validators]);
 
   // Whenever isValid changes
+  const formIsValid = form[formName][id].isValid;
   useEffect(() => {
-    onInput(id, form[formName][id].isValid);
-  }, [form[formName][id].isValid]);
+    onInput(id, formIsValid);
+  }, [formIsValid, id, onInput]);
 
   const renderedElement =
     element === 'input' ? (
@@ -86,7 +94,9 @@ const Input = ({
           : ''
       }`}
     >
-      {/* <label htmlFor={props.id}>{props.label}</label> */}
+      <div className='Input__label'>
+        {label && <label htmlFor={id}>{label}</label>}
+      </div>
       {renderedElement}
       {!(form[formName][id] && form[formName][id].isValid) &&
         form[formName][id] &&

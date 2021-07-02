@@ -1,0 +1,12 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.AccountDetailsPage {
+    width: 100%;
+    position: relative;
+    margin-top: $margin-top-header;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}

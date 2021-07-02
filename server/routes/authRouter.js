@@ -15,8 +15,8 @@ router
 router
   .route('/login')
   .post(
-    authController.isDeactivated,
     authController.auth,
+    authController.isDeactivated,
     authController.login
   );
 

@@ -17,6 +17,7 @@ const ModalOverlay = (props) => {
         }`}
       >
         <h2>{props.header}</h2>
+        <i className='fas fa-times' onClick={props.onCancel}></i>
       </header>
       <form
         onSubmit={

@@ -14,9 +14,21 @@
 
 .Modal__header {
     width: 100%;
-    padding: 1rem 0.5rem;
+    padding: 1rem 1rem;
     background: $color-primary;
     color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    i {
+        cursor: pointer;
+        margin-right: 0.5rem;
+
+        &:hover {
+            color: $color-red;
+        }
+    }
 }
 
 .Modal__header h2 {
@@ -28,7 +40,7 @@
 }
 
 .Modal__footer {
-    padding: 1rem 0.5rem;
+    // padding: 1rem 0.5rem;
 }
 
 @media (min-width: 768px) {

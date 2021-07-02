@@ -48,6 +48,8 @@ const campgroundSchema = new Schema(
     location: {
       type: String,
       required: [true, 'Each campground must have a location specified'],
+      minlength: [5, 'Location must have more or equal than 5 characters'],
+      maxlength: [40, 'Location must have less or equal than 40 characters'],
     },
     ratingsAverage: {
       type: Number,

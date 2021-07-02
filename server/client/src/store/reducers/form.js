@@ -47,12 +47,42 @@ const INITIAL_STATE = {
     },
     isValid: false,
   },
+  account: {
+    username: {
+      value: '',
+      isValid: false,
+    },
+    email: {
+      value: '',
+      isValid: false,
+    },
+    isValid: false,
+  },
+  campground: {
+    description: {
+      value: '',
+      isValid: false,
+    },
+    price: {
+      value: 0,
+      isValid: false,
+    },
+    title: {
+      value: '',
+      isValid: false,
+    },
+    location: {
+      value: '',
+      isValid: false,
+    },
+    isValid: false,
+  },
 };
 
 const formReducer =
   // (name, INITIAL_STATE) =>
   (state = INITIAL_STATE, action) => {
-    const { type, payload, validators, key } = action;
+    const { type, payload, validators, key, formName } = action;
 
     switch (type) {
       case CHANGE_INPUT:
@@ -102,17 +132,53 @@ const formReducer =
           },
         };
       case FETCH_FORM_DATA:
-        return {
-          ...state,
-          review: {
-            ...state.review,
-            review: {
-              ...state.review.review,
-              value: payload.review,
-              stars: payload.rating,
+        let formFetchData;
+        if (formName === 'review') {
+          formFetchData = {
+            ...state,
+            [formName]: {
+              ...state[formName],
+              [key]: {
+                ...state[formName][key],
+                value: payload.review,
+                stars: payload.rating,
+                ...payload,
+              },
             },
-          },
-        };
+          };
+        }
+        if (formName === 'account') {
+          formFetchData = {
+            ...state,
+            [formName]: {
+              ...state[formName],
+              username: {
+                ...state[formName].username,
+                value: payload.username,
+              },
+              email: { ...state[formName].email, value: payload.email },
+            },
+          };
+        }
+        if (formName === 'campground') {
+          formFetchData = {
+            ...state,
+            [formName]: {
+              ...state[formName],
+              description: {
+                ...state[formName].description,
+                value: payload.description,
+              },
+              price: { ...state[formName].price, value: payload.price },
+              title: { ...state[formName].title, value: payload.title },
+              location: {
+                ...state[formName].location,
+                value: payload.location,
+              },
+            },
+          };
+        }
+        return formFetchData;
       case CLEAR_FORM:
         return INITIAL_STATE;
       default:

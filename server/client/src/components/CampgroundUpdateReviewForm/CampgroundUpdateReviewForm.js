@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import CampgroundReviewForm from '../CampgroundDetail/CampgroundReviewForm';
 import * as reviewActions from '../../store/actions/review';
 
-import './CampgroundUpdateForm.scss';
+import './CampgroundUpdateReviewForm.scss';
 
 const CampgroundUpdateForm = ({
   reviewId,
@@ -29,7 +29,6 @@ const CampgroundUpdateForm = ({
       <CampgroundReviewForm
         rating={prevRating}
         handleReviewSubmit={handleReviewSubmit}
-        fetchFormData
       />
     </div>
   );
