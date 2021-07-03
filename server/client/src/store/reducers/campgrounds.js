@@ -13,11 +13,12 @@ import {
   SUBMIT_EDITED_CAMPGROUND_START,
   SUBMIT_EDITED_CAMPGROUND_SUCCESS,
   SUBMIT_EDITED_CAMPGROUND_FAIL,
+  FETCH_ONE_CAMPGROUND_COORDS,
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
   campgrounds: [],
-  selectedCampground: { campground: null, isLoading: false },
+  selectedCampground: { campground: null, isLoading: false, coords: null },
   isLoading: false,
   isDeleting: false,
   isEditing: false,
@@ -90,6 +91,14 @@ const campgroundReducer = (state = INITIAL_STATE, action) => {
           ...state.selectedCampground,
           campground: payload,
           isLoading: false,
+        },
+      };
+    case FETCH_ONE_CAMPGROUND_COORDS:
+      return {
+        ...state,
+        selectedCampground: {
+          ...state.selectedCampground,
+          coords: payload,
         },
       };
     case FETCH_CAMPGROUNDS_FAIL:

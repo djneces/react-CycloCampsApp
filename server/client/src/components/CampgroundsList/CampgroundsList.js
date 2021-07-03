@@ -93,6 +93,7 @@ const CampgroundsList = ({
         location,
         price,
         id,
+        geometry,
       } = campground;
       const key = uuidv4();
       return (
@@ -106,6 +107,7 @@ const CampgroundsList = ({
           ratingsQuantity={ratingsQuantity}
           id={id}
           history={history}
+          geometry={geometry}
         />
       );
     });

@@ -6,7 +6,7 @@ import * as reviewActions from '../../store/actions/review';
 
 import './CampgroundUpdateReviewForm.scss';
 
-const CampgroundUpdateForm = ({
+const CampgroundUpdateReviewForm = ({
   reviewId,
   campgroundId,
   prevReview,
@@ -21,11 +21,11 @@ const CampgroundUpdateForm = ({
     review = prevReview === newReview ? prevReview : newReview;
     rating = prevRating === newRating ? prevRating : newRating;
     updateReview(campgroundId, reviewId, review, rating);
-    handleToggleModal();
+    handleToggleModal('edit');
   };
 
   return (
-    <div className='CampgroundUpdateForm'>
+    <div className='CampgroundUpdateReviewForm'>
       <CampgroundReviewForm
         rating={prevRating}
         handleReviewSubmit={handleReviewSubmit}
@@ -38,4 +38,7 @@ const mapStateToProps = ({ form }) => ({
   newRating: form.review.review.stars,
 });
 
-export default connect(mapStateToProps, reviewActions)(CampgroundUpdateForm);
+export default connect(
+  mapStateToProps,
+  reviewActions
+)(CampgroundUpdateReviewForm);

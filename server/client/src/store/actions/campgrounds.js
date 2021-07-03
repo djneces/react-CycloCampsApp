@@ -15,6 +15,7 @@ import {
   SUBMIT_EDITED_CAMPGROUND_START,
   SUBMIT_EDITED_CAMPGROUND_SUCCESS,
   SUBMIT_EDITED_CAMPGROUND_FAIL,
+  FETCH_ONE_CAMPGROUND_COORDS,
 } from './actionTypes';
 
 // Start campground fetching
@@ -43,7 +44,7 @@ export const fetchAllCampgrounds =
       .get(
         `${
           !userId
-            ? `/api/campgrounds?limit=${limit}&page=${page}`
+            ? `/api/campgrounds?limit=${limit}&page=${page}&sort=title`
             : `api/campgrounds?author=${userId}`
         }`
       )
@@ -241,3 +242,9 @@ export const deleteCampground = (campgroundId, userId) => async (dispatch) => {
       }
     });
 };
+
+// Fetch one campground coords
+export const fetchOneCampgroundCoords = (coords) => ({
+  type: FETCH_ONE_CAMPGROUND_COORDS,
+  payload: coords,
+});

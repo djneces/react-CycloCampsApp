@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+
 import Image from '../UIElements/Image';
 import Button from '../FormElements/Button';
+import pinIconMap from '../../assets/images/pin.png';
+import { fetchOneCampgroundCoords } from '../../store/actions/campgrounds';
 
 import './CampgroundsListItem.scss';
 
@@ -13,6 +17,8 @@ const CampgroundsListItem = ({
   price,
   id,
   history,
+  geometry,
+  fetchOneCampgroundCoords,
 }) => {
   const [loaded, setLoaded] = useState(false);
 
@@ -26,7 +32,7 @@ const CampgroundsListItem = ({
   }
 
   return (
-    <div className='CampgroundsListItem'>
+    <div className='CampgroundsListItem' id={id}>
       <div className='CampgroundsListItem__image'>
         {loaded ? null : (
           <div className='CampgroundsListItem__image-notLoaded'>
@@ -59,8 +65,14 @@ const CampgroundsListItem = ({
           </Button>
         </div>
       </div>
+      <div
+        className='CampgroundsListItem__body-icon'
+        onClick={() => fetchOneCampgroundCoords(geometry)}
+      >
+        <Image image={pinIconMap} alt='camp-icon' />
+      </div>
     </div>
   );
 };
 
-export default CampgroundsListItem;
+export default connect(null, { fetchOneCampgroundCoords })(CampgroundsListItem);

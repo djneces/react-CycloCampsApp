@@ -118,7 +118,7 @@ const CampgroundDetail = ({
 
 const mapStateToProps = ({ campgrounds }) => ({
   selectedCampground: campgrounds.selectedCampground.campground,
-  campgroundIsLoading: campgrounds.isLoading,
+  campgroundIsLoading: campgrounds.selectedCampground.isLoading,
 });
 
 export default connect(mapStateToProps)(CampgroundDetail);

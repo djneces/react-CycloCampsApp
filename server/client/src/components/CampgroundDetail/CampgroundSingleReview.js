@@ -3,6 +3,7 @@ import moment from 'moment';
 import { connect } from 'react-redux';
 
 import Modal from '../UIElements/Modal';
+import Button from '../FormElements/Button';
 import CampgroundUpdateReviewForm from '../CampgroundUpdateReviewForm/CampgroundUpdateReviewForm';
 import SpinnerLoader from '../UIElements/SpinnerLoader';
 import * as reviewActions from '../../store/actions/review';
@@ -26,37 +27,58 @@ const CampgroundSingleReview = ({
 }) => {
   const [isDeleted, setIsDeleted] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
 
-  const handleToggleModal = () => {
-    setOpenModal(!openModal);
-    // Hiding the underlying form when modal is open
+  const handleToggleModal = (type) => {
     disableForm();
+    if (type === 'delete') setOpenDeleteModal((prevState) => !prevState);
+    if (type === 'edit') setOpenEditModal((prevState) => !prevState);
 
-    if (openModal) {
+    if (openEditModal) {
       clearForm();
     }
   };
 
   const handleEdit = () => {
     fetchOneReview(campgroundId, reviewId);
-    handleToggleModal();
+    handleToggleModal('edit');
     setIsEdited(true);
   };
 
+  const handleDelete = () => {
+    setIsDeleted(true);
+    handleToggleModal('delete');
+    handleDeleteReview(reviewId);
+  };
+
   useEffect(() => {
-    if (!openModal) {
+    if (!openEditModal) {
       setTimeout(() => {
         setIsEdited(false);
       }, 2000);
     }
-  }, [openModal]);
+  }, [openEditModal]);
 
   return (
     <>
+      {/* Delete Modal  */}
       <Modal
-        show={openModal}
-        onCancel={handleToggleModal}
+        show={openDeleteModal}
+        onCancel={() => handleToggleModal('delete')}
+        header='Are you sure to delete this record?'
+      >
+        <div className='CreatedCampground__deleteModal'>
+          <Button onClick={() => handleDelete()}>Yes</Button>
+          <Button inverse onClick={() => handleToggleModal('delete')}>
+            No
+          </Button>
+        </div>
+      </Modal>
+      {/* Edit Modal  */}
+      <Modal
+        show={openEditModal}
+        onCancel={() => handleToggleModal('edit')}
         header='Update your review'
       >
         <CampgroundUpdateReviewForm
@@ -93,10 +115,7 @@ const CampgroundSingleReview = ({
                   <div className={`CampgroundSingleReview-controls--delete`}>
                     <i
                       className='far fa-trash-alt'
-                      onClick={() => {
-                        handleDeleteReview(reviewId);
-                        setIsDeleted(true);
-                      }}
+                      onClick={() => handleToggleModal('delete')}
                     ></i>
                     {isDeleted && <SpinnerLoader />}
                   </div>

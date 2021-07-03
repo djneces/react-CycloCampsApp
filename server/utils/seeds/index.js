@@ -1,7 +1,7 @@
 // RUNNING SEEDS SEPARATELY FROM THE APP.JS  -> seeds data into the database
 const mongoose = require('mongoose');
 const cities = require('./cities');
-const { places, descriptors } = require('./seedHelpers');
+const { places, descriptors, campingWords } = require('./seedHelpers');
 const Campground = require('../../models/CampgroundModel');
 
 //DB connection via Mongoose
@@ -32,7 +32,11 @@ const seedDB = async () => {
       author: '60c6303a94fe3ecd0dc2442b',
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
       title: `${sample(descriptors)} ${sample(places)}`,
-      images: { url: 'https://source.unsplash.com/collection/483251' },
+      images: {
+        url: `https://source.unsplash.com/random/?${sample(
+          campingWords
+        )},sig=${random1000}`,
+      },
       description:
         'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora quae nemo harum optio voluptas dolor incidunt ex quis, saepe excepturi.',
       price: price,
