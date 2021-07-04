@@ -1,3 +1,7 @@
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const mapBoxToken = process.env.MAPBOX_API_KEY;
+const geoCoder = mbxGeocoding({ accessToken: mapBoxToken });
+
 const Campground = require('../models/CampgroundModel');
 const Review = require('../models/ReviewModel');
 const factory = require('./handlerFactory');
@@ -7,6 +11,17 @@ const AppError = require('../utils/appError');
 exports.setUserIds = (req, res, next) => {
   // Need to include author of the campground
   if (!req.body.author) req.body.author = req.user.id;
+  next();
+};
+
+exports.setGeoData = async (req, res, next) => {
+  const geoData = await geoCoder
+    .forwardGeocode({
+      query: req.body.location,
+      limit: 1, //1 result
+    })
+    .send();
+  req.body.geometry = geoData.body.features[0].geometry;
   next();
 };
 

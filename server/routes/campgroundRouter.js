@@ -24,6 +24,7 @@ router
   .post(
     authController.isLoggedIn,
     campgroundController.setUserIds,
+    campgroundController.setGeoData,
     campgroundController.createCampground
   );
 

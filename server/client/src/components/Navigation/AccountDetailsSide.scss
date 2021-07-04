@@ -93,6 +93,11 @@
             }
         }
 
+        &--newCampground {
+            &::before {
+                content: '2' !important;
+            }
+        }
 
         &--logout {
             text-align: center;
@@ -103,7 +108,7 @@
             }
 
             &::before {
-                content: '2' !important;
+                content: '3' !important;
             }
 
             &::after {

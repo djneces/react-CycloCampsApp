@@ -98,6 +98,7 @@ const Map = ({ fetchedCampgrounds, selectedCampgroundCoords }) => {
       >
         {fetchedCampgrounds.map((campground) => {
           const { geometry, title } = campground;
+
           return (
             <Marker
               key={campground._id}

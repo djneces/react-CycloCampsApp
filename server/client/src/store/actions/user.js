@@ -5,6 +5,9 @@ import {
   UPDATE_USER_START,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAIL,
+  DELETE_USER_START,
+  DELETE_USER_SUCCESS,
+  DELETE_USER_FAIL,
 } from './actionTypes';
 import { clearForm } from './form';
 
@@ -71,6 +74,46 @@ export const updateCurrentUser = (username, email) => async (dispatch) => {
         dispatch(submitEditedUserFail(error.response.data.message));
       } else {
         dispatch(submitEditedUserFail(error.message));
+      }
+    });
+};
+
+//******************************* */
+// Start deleting user
+export const deleteUserStart = () => ({
+  type: DELETE_USER_START,
+});
+
+// Delete user success
+export const deleteUserSuccess = () => {
+  return {
+    type: DELETE_USER_SUCCESS,
+  };
+};
+
+// Delete user fail
+export const deleteUserFail = (error) => ({
+  type: DELETE_USER_FAIL,
+  payload: error,
+});
+
+// Delete user
+export const deleteUser = () => async (dispatch) => {
+  dispatch(deleteUserStart());
+  axios
+    .delete(`api/users/current_user`)
+    .then((res) => {
+      //TODO alert
+      dispatch(deleteUserSuccess());
+    })
+    .catch((error) => {
+      if (error.response) {
+        console.error(error.response.data.message);
+        dispatch(deleteUserFail(error.response.data.message));
+        //TODO alert
+      } else {
+        console.error(error.message);
+        dispatch(deleteUserFail(error.message));
       }
     });
 };

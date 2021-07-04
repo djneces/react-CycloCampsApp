@@ -15,11 +15,11 @@
     border: 2px solid transparent;
     border-bottom: none;
     position: relative;
+    box-shadow: $box-shadow;
 
     &.hovered {
         border: 2px solid $color-orange;
         border-bottom: none;
-        box-shadow: $box-shadow;
     }
 
     &__image {

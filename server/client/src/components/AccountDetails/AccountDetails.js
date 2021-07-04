@@ -10,6 +10,7 @@ import SpinnerLoader from '../UIElements/SpinnerLoader';
 import AccountDetailsForm from './AccountDetailsForm';
 import * as formActions from '../../store/actions/form';
 import * as userActions from '../../store/actions/user';
+import * as authActions from '../../store/actions/auth';
 
 import './AccountDetails.scss';
 
@@ -18,12 +19,16 @@ const AccountDetails = ({
   validateForm,
   fetchFormData,
   updateCurrentUser,
+  deleteUser,
   userIsLoading,
+  signOutUser,
 }) => {
-  const [openModal, setOpenModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openEditModal, setOpenEditModal] = useState(false);
 
-  const handleToggleModal = () => {
-    setOpenModal(!openModal);
+  const handleToggleModal = (type) => {
+    if (type === 'delete') setOpenDeleteModal((prevState) => !prevState);
+    if (type === 'edit') setOpenEditModal((prevState) => !prevState);
   };
 
   const handleAccountUpdateSubmit = (newUsername, newEmail) => {
@@ -37,14 +42,34 @@ const AccountDetails = ({
     [validateForm]
   );
 
+  const handleDeleteAccount = () => {
+    deleteUser();
+    handleToggleModal('delete');
+    signOutUser();
+  };
+
   const renderAccountDetails = () => {
     if (currentUser) {
       const { username, email, registeredAt } = currentUser;
       return (
         <>
+          {/* Delete Modal  */}
           <Modal
-            show={openModal}
-            onCancel={handleToggleModal}
+            show={openDeleteModal}
+            onCancel={() => handleToggleModal('delete')}
+            header='Are you sure to delete your account?'
+          >
+            <div className='AccountDetails__deleteModal'>
+              <Button onClick={() => handleDeleteAccount()}>Yes</Button>
+              <Button inverse onClick={() => handleToggleModal('delete')}>
+                No
+              </Button>
+            </div>
+          </Modal>
+          {/* Edit Modal  */}
+          <Modal
+            show={openEditModal}
+            onCancel={() => handleToggleModal('edit')}
             header='Update your details'
           >
             <AccountDetailsForm
@@ -52,7 +77,7 @@ const AccountDetails = ({
                 handleAccountUpdateSubmit(newUsername, newEmail)
               }
               inputReviewHandler={inputReviewHandler}
-              handleToggleModal={handleToggleModal}
+              handleToggleModal={() => handleToggleModal('edit')}
             />
           </Modal>
           <div>
@@ -77,16 +102,28 @@ const AccountDetails = ({
               </div>
             </div>
             <div className='AccountDetails__footer'>
-              <Button
-                onClick={() => {
-                  handleToggleModal();
-                  fetchFormData({ username, email }, 'account');
-                }}
-              >
-                Edit your details
-              </Button>
-              <div className='AccountDetails__footer-spinner'>
-                {userIsLoading && <SpinnerLoader />}
+              <div>
+                <Button
+                  onClick={() => {
+                    handleToggleModal('edit');
+                    fetchFormData({ username, email }, 'account');
+                  }}
+                >
+                  Edit your details
+                </Button>
+                <div className='AccountDetails__footer-spinner'>
+                  {userIsLoading && <SpinnerLoader />}
+                </div>
+              </div>
+              <div>
+                <Button
+                  inverse
+                  onClick={() => {
+                    handleToggleModal('delete');
+                  }}
+                >
+                  Delete your account
+                </Button>
               </div>
             </div>
           </div>
@@ -112,6 +149,8 @@ const mapStateToProps = ({ auth, user }) => ({
   userIsLoading: user.isLoading,
 });
 
-export default connect(mapStateToProps, { ...formActions, ...userActions })(
-  AccountDetails
-);
+export default connect(mapStateToProps, {
+  ...formActions,
+  ...userActions,
+  ...authActions,
+})(AccountDetails);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ import Button from '../FormElements/Button';
 import Image from '../UIElements/Image';
 import Modal from '../UIElements/Modal';
 import SpinnerLoader from '../UIElements/SpinnerLoader';
-import CampgroundUpdateForm from './CampgroundUpdateForm';
+import CampgroundCreateForm from './CampgroundCreateForm';
 
 import './CreatedCampground.scss';
 
@@ -98,7 +98,7 @@ const CreatedCampground = ({
         header='Please edit the details'
       >
         <div className='CreatedCampground__editModal'>
-          <CampgroundUpdateForm />
+          <CampgroundCreateForm />
           <Button
             inverse
             disabled={!campgroundFormIsValid}
@@ -118,7 +118,11 @@ const CreatedCampground = ({
               <i className='fas fa-spinner fa-pulse'></i>
             </div>
           )}
-          <Image image={images[0].url} alt={title} imageLoaded={imageLoaded} />
+          <Image
+            image={images.length > 0 ? images[0].url : undefined}
+            alt={title}
+            imageLoaded={imageLoaded}
+          />
         </div>
         <div onClick={() => history.push(`/campgrounds/${campgroundId}`)}>
           <div className='CreatedCampground__title'>{title}</div>

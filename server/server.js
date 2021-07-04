@@ -37,13 +37,13 @@ const server = app.listen(port, () => {
 });
 
 //listening for an unhandled Rejection
-process.on('unhandledRejection', (err) => {
-  console.error('UNHANDLED REJECTION! Shutting down...');
-  console.error(err.name, err.message);
-  server.close(() => {
-    process.exit(1);
-  });
-});
+// process.on('unhandledRejection', (err) => {
+//   console.error('UNHANDLED REJECTION! Shutting down...');
+//   console.error(err.name, err.message);
+//   server.close(() => {
+//     process.exit(1);
+//   });
+// });
 
 //Heroku Sigterm
 process.on('SIGTERM', () => {

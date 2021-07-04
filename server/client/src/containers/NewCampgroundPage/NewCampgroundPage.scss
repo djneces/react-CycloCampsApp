@@ -1,0 +1,12 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.NewCampgroundPage {
+    width: 100%;
+    height: 92vh;
+    position: relative;
+    margin-top: $margin-top-header;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}

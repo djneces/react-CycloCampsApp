@@ -40,8 +40,13 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: false,
     saveUninitialized: false,
-    //false for http
-    cookie: { secure: false },
+    cookie: {
+      //false for http
+      secure: false,
+      httpOnly: true,
+      SameSite: 'None',
+      maxAge: 60 * 60 * 24 * 1000,
+    },
     unset: 'destroy',
     store: MongoStore.create({
       mongoUrl: process.env.DATABASE,

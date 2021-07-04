@@ -19,6 +19,11 @@ const AccountDetailsSide = ({ signOutUser }) => {
             <span>- your campgrounds</span>
           </Link>
         </div>
+        <div className='AccountDetailsSide__navLinks--newCampground'>
+          <Link to='/new-campground'>
+            <span>Create new campground</span>
+          </Link>
+        </div>
         <div className='AccountDetailsSide__navLinks--logout'>
           <Link to='/logout' onClick={signOutUser}>
             Logout

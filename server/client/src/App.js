@@ -8,6 +8,7 @@ import CampgroundsPage from './containers/CampgroundsPage/CampgroundsPage';
 import CampgroundPage from './containers/CampgroundPage/CampgroundPage';
 import AccountDetailsPage from './containers/AccountDetailsPage/AccountDetailsPage';
 import NavigationMenu from './components/Navigation/NavigationMenu';
+import NewCampgroundPage from './containers/NewCampgroundPage/NewCampgroundPage';
 import { fetchUser } from './store/actions/user';
 
 import './App.scss';
@@ -30,6 +31,7 @@ const App = ({ fetchUser }) => {
           />
           {/* TODO is loggedIn */}
           <Route exact path='/your-account' component={AccountDetailsPage} />
+          <Route exact path='/new-campground' component={NewCampgroundPage} />
           {/* <Redirect to='/' /> */}
         </Switch>
       </div>

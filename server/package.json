@@ -19,6 +19,7 @@
   "author": "Jiri Necesanek",
   "license": "ISC",
   "dependencies": {
+    "@mapbox/mapbox-sdk": "^0.13.0",
     "bcrypt": "^5.0.1",
     "bcryptjs": "^2.4.3",
     "concurrently": "^6.2.0",

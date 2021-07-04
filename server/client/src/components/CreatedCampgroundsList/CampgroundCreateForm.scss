@@ -1,24 +1,48 @@
 @import '../../assets/styles/colors';
 @import '../../assets/styles/utils';
 
-.CampgroundUpdateForm {
+.CampgroundCreateForm {
+    background-color: $color-orange;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+
+    &>div:first-of-type {
+        width: 95%;
+
+        &>div {
+            margin-bottom: 1.2rem;
+        }
+    }
+
     .Input {
         position: relative;
 
         input,
         textarea {
-            margin: 0.5rem 0 1.8rem 0;
+            margin: 0
+        }
+
+        input:not(:placeholder-shown),
+        textarea:not(:placeholder-shown) {
+            border-bottom: 2px solid $color-primary;
+        }
+
+        &--invalid input {
+            border: 2px solid $color-primary;
+            ;
         }
 
         textarea {
             resize: none;
             width: 100%;
             font-family: inherit;
-            padding: 0;
         }
 
         input[type=number] {
-            width: 5rem;
+            width: 3rem;
             margin: 0;
         }
 
@@ -29,10 +53,10 @@
         }
 
         &__label {
-            color: $color-muted;
+            color: darken($color-white, 10);
+            font-size: 0.8rem;
             width: 100%;
-            background-color: $color-white;
-            padding: 0.5rem;
+            padding: 0.5rem 0;
         }
     }
 
