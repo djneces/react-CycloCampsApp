@@ -27,7 +27,7 @@ const CampgroundDetail = ({
     description = selectedCampground.description;
     location = selectedCampground.location;
     price = selectedCampground.price;
-    image = selectedCampground.images[0].url;
+    image = selectedCampground.images[0];
     ratingsAverage = selectedCampground.ratingsAverage;
     ratingsQuantity = selectedCampground.ratingsQuantity;
   }

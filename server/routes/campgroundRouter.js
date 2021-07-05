@@ -4,6 +4,11 @@ const authController = require('../controllers/authController');
 const reviewRouter = require('../routes/reviewRouter');
 const Campground = require('../models/CampgroundModel');
 
+//multer upload images to cloudinary
+const multer = require('multer');
+const { storage } = require('../cloudinary');
+const upload = multer({ storage });
+
 const router = express.Router();
 
 //nested review under each campground
@@ -15,6 +20,10 @@ router
     campgroundController.aliasTopCampgrounds,
     campgroundController.getAllCampgrounds
   );
+
+router
+  .route('/upload-images')
+  .post(upload.array('uploadedImages'), campgroundController.uploadImages);
 
 router.route('/campground-stats').get(campgroundController.getCampgroundStats);
 

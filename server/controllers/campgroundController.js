@@ -14,7 +14,8 @@ exports.setUserIds = (req, res, next) => {
   next();
 };
 
-exports.setGeoData = async (req, res, next) => {
+// Geocoding, location => coords
+exports.setGeoData = catchAsync(async (req, res, next) => {
   const geoData = await geoCoder
     .forwardGeocode({
       query: req.body.location,
@@ -22,6 +23,17 @@ exports.setGeoData = async (req, res, next) => {
     })
     .send();
   req.body.geometry = geoData.body.features[0].geometry;
+  next();
+});
+
+// Uploading pictures to Cloudinary
+exports.uploadImages = (req, res, next) => {
+  // multer saves the img files as req.files
+  const imgUrls = req.files.map((file) => file.path);
+  res.status(201).json({
+    status: 'success',
+    data: imgUrls,
+  });
   next();
 };
 

@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const slugify = require('slugify');
 const Schema = mongoose.Schema;
 
-const ImageSchema = new Schema({
-  url: String,
-  filename: String,
-  // required: [true, 'Each campground must have at least 1 image'],
-});
+// const ImageSchema = new Schema({
+//   url: [String],
+//   // filename: String,
+//   // required: [true, 'Each campground must have at least 1 image'],
+// });
 
 //to JSON
 // To have virtual property appear in the object in the console when stringified
@@ -30,7 +30,8 @@ const campgroundSchema = new Schema(
     },
     slug: String,
     // Separate Schema
-    images: [ImageSchema],
+    // images: [ImageSchema],
+    images: [String],
     price: {
       type: Number,
       required: [true, 'Please input the price'],

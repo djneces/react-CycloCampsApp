@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { connect } from 'react-redux';
 
 import CampgroundsListItem from './CampgroundsListItem';
+import SpinnerLoader from '../UIElements/SpinnerLoader';
 import Button from '../FormElements/Button';
 import * as campgroundActions from '../../store/actions/campgrounds';
 
@@ -18,6 +19,7 @@ const CampgroundsList = ({
   allCampgrounds,
   fetchAllCampgrounds,
   history,
+  campgroundIsLoading,
 }) => {
   useEffect(() => {
     fetchAllCampgrounds(LIMIT, 1);
@@ -118,24 +120,34 @@ const CampgroundsList = ({
       {campgrounds.length > 0 ? (
         <>
           {renderList()}
-          <div className='CampgroundsList__pagination'>
-            <Button onClick={handleClickLeft} disabled={startingPage < 2}>
-              <i className='fas fa-chevron-left'></i>
-            </Button>
+          {numberPages > PAGINATION_NUMBER && (
+            <div className='CampgroundsList__pagination'>
+              <Button onClick={handleClickLeft} disabled={startingPage < 2}>
+                <i className='fas fa-chevron-left'></i>
+              </Button>
 
-            {renderPagination()}
-            <Button
-              onClick={handleClickRight}
-              disabled={!(startingPage + (PAGINATION_NUMBER - 1) < numberPages)}
-            >
-              <i className='fas fa-chevron-right'></i>
-            </Button>
-          </div>
+              {renderPagination()}
+              <Button
+                onClick={handleClickRight}
+                disabled={
+                  !(startingPage + (PAGINATION_NUMBER - 1) < numberPages)
+                }
+              >
+                <i className='fas fa-chevron-right'></i>
+              </Button>
+            </div>
+          )}
         </>
       ) : (
-        <div className='CampgroundsList__error'>
-          Data not loaded, please refresh the page
-        </div>
+        <>
+          {campgroundIsLoading && <SpinnerLoader />}
+          {!campgroundIsLoading && (
+            <div className='CampgroundsList__error'>
+              <span>Data not loaded, please refresh the page</span>
+              <i className='fas fa-redo-alt'></i>
+            </div>
+          )}
+        </>
       )}
     </div>
   );
@@ -144,6 +156,7 @@ const CampgroundsList = ({
 const mapStateToProps = ({ campgrounds }) => ({
   campgrounds: campgrounds.campgrounds,
   allCampgrounds: campgrounds.allCampgrounds,
+  campgroundIsLoading: campgrounds.isLoading,
 });
 
 export default withRouter(

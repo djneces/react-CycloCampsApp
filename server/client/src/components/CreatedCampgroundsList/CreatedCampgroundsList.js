@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import * as campgroundActions from '../../store/actions/campgrounds';
@@ -48,7 +49,9 @@ const CreatedCampgroundsList = ({
         <div className='CreatedCampgroundsList__resultsNumber--noResults'>
           <h3>Your campgrounds</h3>
           <span>No campgrounds found</span>
-          <Button>Create your first one</Button>
+          <Link to='/new-campground' className={'linkButton'}>
+            Create your first one
+          </Link>
         </div>
       );
     }

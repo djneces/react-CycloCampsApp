@@ -32,7 +32,6 @@ export const usernameSignIn =
   (username, password, history) => async (dispatch) => {
     dispatch(authStart());
     const options = {
-      method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',
@@ -67,7 +66,6 @@ export const registerUser =
     dispatch(authStart());
 
     const options = {
-      method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=UTF-8',
         'Access-Control-Allow-Origin': '*',

@@ -13,7 +13,7 @@ import {
 
 import './CampgroundCreateForm.scss';
 
-const CampgroundCreateForm = ({ validateForm }) => {
+const CampgroundCreateForm = ({ validateForm, handleSetUploadedfiles }) => {
   const inputCampgroundHandler = useCallback(
     (id, reviewFormIsValid) => {
       validateForm(id, reviewFormIsValid, 'campground');
@@ -64,11 +64,18 @@ const CampgroundCreateForm = ({ validateForm }) => {
             formName='campground'
           />
         </div>
+        <input
+          type='file'
+          name='uploadedImages'
+          id='imageUpload'
+          onChange={handleSetUploadedfiles}
+          multiple
+        />
         <div className='CampgroundCreateForm__price'>
           <Input
             element='input'
             type='number'
-            placeholder='price...'
+            placeholder='$'
             label='price (US$):'
             errorText='Min 0$'
             validators={[VALIDATOR_MIN(0)]}
@@ -82,9 +89,4 @@ const CampgroundCreateForm = ({ validateForm }) => {
   );
 };
 
-const mapStateToProps = ({ review, form }) => ({
-  // reviewIsLoading: review.isLoading,
-  // reviewFormIsValid: form.review.isValid,
-});
-
-export default connect(mapStateToProps, formActions)(CampgroundCreateForm);
+export default connect(null, formActions)(CampgroundCreateForm);

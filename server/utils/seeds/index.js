@@ -32,11 +32,11 @@ const seedDB = async () => {
       author: '60c6303a94fe3ecd0dc2442b',
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
       title: `${sample(descriptors)} ${sample(places)}`,
-      images: {
-        url: `https://source.unsplash.com/random/?${sample(
+      images: [
+        `https://source.unsplash.com/random/?${sample(
           campingWords
         )},sig=${random1000}`,
-      },
+      ],
       description:
         'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora quae nemo harum optio voluptas dolor incidunt ex quis, saepe excepturi.',
       price: price,

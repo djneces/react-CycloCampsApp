@@ -24,4 +24,18 @@
             justify-content: center;
         }
     }
+
+    &__error {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 3rem;
+    }
+
+    .SpinnerLoader {
+        color: $color-primary;
+        font-size: 2rem;
+        margin: 2rem 0;
+    }
 }

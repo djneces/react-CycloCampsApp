@@ -64,7 +64,7 @@ const INITIAL_STATE = {
       isValid: false,
     },
     price: {
-      value: 0,
+      value: '',
       isValid: false,
     },
     title: {

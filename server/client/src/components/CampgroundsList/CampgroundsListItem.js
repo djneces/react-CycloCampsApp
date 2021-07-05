@@ -28,7 +28,7 @@ const CampgroundsListItem = ({
 
   let imageUrl;
   if (images.length > 0) {
-    imageUrl = images[0].url;
+    imageUrl = images[0];
   }
 
   return (

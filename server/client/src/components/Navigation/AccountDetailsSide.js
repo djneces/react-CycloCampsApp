@@ -25,7 +25,7 @@ const AccountDetailsSide = ({ signOutUser }) => {
           </Link>
         </div>
         <div className='AccountDetailsSide__navLinks--logout'>
-          <Link to='/logout' onClick={signOutUser}>
+          <Link to='/' onClick={signOutUser}>
             Logout
           </Link>
         </div>

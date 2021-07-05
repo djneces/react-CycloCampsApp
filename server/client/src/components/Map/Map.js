@@ -146,7 +146,7 @@ const Map = ({ fetchedCampgrounds, selectedCampgroundCoords }) => {
               }
             >
               <Image
-                image={selectedCampground.images[0].url}
+                image={selectedCampground.images[0]}
                 alt={selectedCampground.title}
               />
               <div className='Map__popup-body'>

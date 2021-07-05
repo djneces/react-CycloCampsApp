@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { clearForm, fetchFormData } from './form';
+import { uploadImages } from './imageUpload';
 import {
   FETCH_ALL_CAMPGROUNDS,
   FETCH_ONE_CAMPGROUND_START,
@@ -16,6 +17,9 @@ import {
   SUBMIT_EDITED_CAMPGROUND_SUCCESS,
   SUBMIT_EDITED_CAMPGROUND_FAIL,
   FETCH_ONE_CAMPGROUND_COORDS,
+  CREATE_NEW_CAMPGROUND_START,
+  CREATE_NEW_CAMPGROUND_SUCCESS,
+  CREATE_NEW_CAMPGROUND_FAIL,
 } from './actionTypes';
 
 // Start campground fetching
@@ -162,9 +166,15 @@ export const submitEditedCampgroundFail = (error) => ({
 
 // Edit campground
 export const updateCampground =
-  (campgroundId, userId, location, title, description, price) =>
+  (campgroundId, userId, location, title, description, price, formData) =>
   async (dispatch) => {
     dispatch(submitEditedCampgroundStart());
+
+    // First upload pictures to Cloudinary, if any
+    let imgUrl;
+    if (formData) {
+      imgUrl = await dispatch(uploadImages(formData));
+    }
 
     const options = {
       headers: {
@@ -176,7 +186,7 @@ export const updateCampground =
     axios
       .patch(
         `/api/campgrounds/${campgroundId}`,
-        { location, title, description, price },
+        { location, title, description, price, images: imgUrl },
         options
       )
       .then((res) => {
@@ -243,8 +253,70 @@ export const deleteCampground = (campgroundId, userId) => async (dispatch) => {
     });
 };
 
+//******************************* *
 // Fetch one campground coords
 export const fetchOneCampgroundCoords = (coords) => ({
   type: FETCH_ONE_CAMPGROUND_COORDS,
   payload: coords,
 });
+
+//******************************* *
+// Create campground start
+export const createCampgroundStart = () => ({
+  type: CREATE_NEW_CAMPGROUND_START,
+});
+
+// Create campground success
+export const createCampgroundSuccess = () => {
+  return {
+    type: CREATE_NEW_CAMPGROUND_SUCCESS,
+  };
+};
+
+// Create campground fail
+export const createCampgroundFail = (error) => ({
+  type: CREATE_NEW_CAMPGROUND_FAIL,
+  payload: error,
+});
+
+// Create new campground
+export const createCampground =
+  (title, location, description, price, formData, history) =>
+  async (dispatch) => {
+    dispatch(createCampgroundStart());
+    // First upload pictures to Cloudinary
+    const imgUrl = await dispatch(uploadImages(formData));
+
+    const options = {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+        Accept: 'application/json',
+      },
+    };
+    axios
+      .post(
+        `/api/campgrounds`,
+        { title, location, description, price, images: imgUrl },
+        options
+      )
+      .then((res) => {
+        if (res.status === 201) {
+          dispatch(createCampgroundSuccess());
+          return res.data.data.id;
+        } else {
+          new Error('Something went wrong');
+        }
+      })
+      .then((campgroundId) => {
+        if (history) history.push(`/campgrounds/${campgroundId}`);
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.error(error.response.data.message);
+          dispatch(createCampgroundFail(error.response.data.message));
+        } else {
+          dispatch(createCampgroundFail(error.message));
+        }
+      });
+  };

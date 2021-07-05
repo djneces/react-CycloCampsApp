@@ -34,6 +34,7 @@ const CreatedCampground = ({
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState(null);
 
   const history = useHistory();
 
@@ -64,15 +65,35 @@ const CreatedCampground = ({
   };
 
   const handleSubmitEdit = () => {
+    const formData = handleOnUploadImages();
+    console.log('data', formData);
     updateCampground(
       campgroundId,
       currentUser._id,
       newLocation,
       newTitle,
       newDescription,
-      newPrice
+      newPrice,
+      formData
     );
     handleToggleModal('edit');
+  };
+
+  const handleSetUploadedfiles = (e) => {
+    setUploadedFiles(e.target.files);
+  };
+
+  const handleOnUploadImages = () => {
+    if (!uploadedFiles) return;
+    const formData = new FormData();
+
+    // To upload multiple files
+    if (uploadedFiles.length !== 0) {
+      for (const singleImage of uploadedFiles) {
+        formData.append('uploadedImages', singleImage);
+      }
+    }
+    return formData;
   };
 
   return (
@@ -98,7 +119,9 @@ const CreatedCampground = ({
         header='Please edit the details'
       >
         <div className='CreatedCampground__editModal'>
-          <CampgroundCreateForm />
+          <CampgroundCreateForm
+            handleSetUploadedfiles={handleSetUploadedfiles}
+          />
           <Button
             inverse
             disabled={!campgroundFormIsValid}
@@ -119,7 +142,7 @@ const CreatedCampground = ({
             </div>
           )}
           <Image
-            image={images.length > 0 ? images[0].url : undefined}
+            image={images.length > 0 ? images[0] : undefined}
             alt={title}
             imageLoaded={imageLoaded}
           />

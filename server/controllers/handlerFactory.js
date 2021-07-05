@@ -1,6 +1,7 @@
 const catchAsync = require('./../utils/catchAsync');
 const APIFeatures = require('./../utils/apiFeatures');
 const AppError = require('./../utils/appError');
+const { cloudinary } = require('../cloudinary');
 
 const Review = require('./../models/ReviewModel');
 
@@ -98,10 +99,28 @@ exports.deleteMany = (Model) =>
 // UPDATE ONE
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+    let doc;
+
+    // Images are included in the request
+    if (req.body.images) {
+      console.log('runs with images');
+      let objWithoutImages = { ...req.body };
+      delete objWithoutImages.images;
+      doc = await Model.findByIdAndUpdate(req.params.id, objWithoutImages, {
+        new: true,
+        runValidators: true,
+      });
+      // adding imgs to the existing ones
+      doc.images.push(...req.body.images);
+      await doc.save();
+    } else {
+      // If images are not included
+      doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+      });
+      // cloudinary.uploader.destroy('CycloCamps/eq7yncitulhdpbpns08r');
+    }
 
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
