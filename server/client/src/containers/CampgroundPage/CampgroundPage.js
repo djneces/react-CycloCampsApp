@@ -10,7 +10,7 @@ const CampgroundPage = ({ fetchOneCampground }) => {
   const { campgroundId } = useParams();
 
   useEffect(() => {
-    fetchOneCampground(campgroundId);
+    fetchOneCampground(campgroundId, 'noFormDataFetch');
   }, [fetchOneCampground, campgroundId]);
 
   return (

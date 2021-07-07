@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import * as campgroundActions from '../../store/actions/campgrounds';
 import * as formActions from '../../store/actions/form';
+import * as imageActions from '../../store/actions/image';
 import Button from '../FormElements/Button';
 import Image from '../UIElements/Image';
 import Modal from '../UIElements/Modal';
 import SpinnerLoader from '../UIElements/SpinnerLoader';
+import LineLoader from '../UIElements/LineLoader';
 import CampgroundCreateForm from './CampgroundCreateForm';
+import ImageGallery from './ImageGallery/ImageGallery';
 
 import './CreatedCampground.scss';
 
@@ -28,15 +31,30 @@ const CreatedCampground = ({
   newLocation,
   newPrice,
   campgroundIsEditing,
+  campgroundIsLoading,
+  imageIsLoading,
+  imageIsDeleting,
+  deleteImage,
 }) => {
   const [isDeleted, setIsDeleted] = useState(false);
   const [isEdited, setIsEdited] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [openEditModal, setOpenEditModal] = useState(false);
+  const [openImagesModal, setOpenImagesModal] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState(null);
 
   const history = useHistory();
+
+  // Resize images to display
+  const resizedImages = images.map((img) => {
+    // if image coming from Cloudinary, resize (amend the URL), for programmatic seed I use unsplash
+    if (img.includes('cloudinary')) {
+      const imageUrlSplit = img.split('/upload/');
+      return `${imageUrlSplit[0]}/upload/c_fill,g_auto,h_900,w_1600/${imageUrlSplit[1]}`;
+    }
+    return img;
+  });
 
   // Loading image spinner
   const imageLoaded = () => {
@@ -46,6 +64,7 @@ const CreatedCampground = ({
   const handleToggleModal = (type) => {
     if (type === 'delete') setOpenDeleteModal((prevState) => !prevState);
     if (type === 'edit') setOpenEditModal((prevState) => !prevState);
+    if (type === 'images') setOpenImagesModal((prevState) => !prevState);
 
     if (openEditModal) {
       clearForm();
@@ -54,7 +73,7 @@ const CreatedCampground = ({
 
   const handleDelete = () => {
     handleToggleModal('delete');
-    handleDeleteCampground(campgroundId);
+    handleDeleteCampground(campgroundId, images);
     setIsDeleted(true);
   };
 
@@ -62,11 +81,11 @@ const CreatedCampground = ({
     fetchOneCampground(campgroundId);
     handleToggleModal('edit');
     setIsEdited(true);
+    clearForm();
   };
 
   const handleSubmitEdit = () => {
     const formData = handleOnUploadImages();
-    console.log('data', formData);
     updateCampground(
       campgroundId,
       currentUser._id,
@@ -95,6 +114,19 @@ const CreatedCampground = ({
     }
     return formData;
   };
+
+  const handleDeleteImage = (image) => {
+    deleteImage(image, campgroundId, currentUser._id);
+  };
+
+  // Reset edited back to false after while, in case I edit another campground right after
+  useEffect(() => {
+    if (!openEditModal && !imageIsLoading) {
+      setTimeout(() => {
+        setIsEdited(false);
+      }, 2000);
+    }
+  }, [openEditModal, imageIsLoading]);
 
   return (
     <>
@@ -131,18 +163,51 @@ const CreatedCampground = ({
           </Button>
         </div>
       </Modal>
+
+      {/* Images Modal  */}
+      <Modal
+        show={openImagesModal}
+        onCancel={() => handleToggleModal('images')}
+        header='Your pictures'
+      >
+        <div className='CreatedCampground__imagesModal'>
+          <>
+            {imageIsDeleting || imageIsLoading ? (
+              <div className='CreatedCampground__imagesModal-loader'>
+                <LineLoader />
+              </div>
+            ) : null}
+            {campgroundIsLoading ? (
+              <SpinnerLoader />
+            ) : (
+              <ImageGallery
+                images={images}
+                handleDeleteImage={handleDeleteImage}
+                campgroundId={campgroundId}
+                userId={currentUser._id}
+              />
+            )}
+          </>
+        </div>
+      </Modal>
+
       <div className='CreatedCampground'>
         <div
           className='CreatedCampground__image'
           onClick={() => history.push(`/campgrounds/${campgroundId}`)}
         >
+          {campgroundIsEditing && isEdited && imageIsLoading && (
+            <div className='CreatedCampground__loader'>
+              <LineLoader />
+            </div>
+          )}
           {loaded ? null : (
             <div className='CreatedCampground__image-notLoaded'>
               <i className='fas fa-spinner fa-pulse'></i>
             </div>
           )}
           <Image
-            image={images.length > 0 ? images[0] : undefined}
+            image={resizedImages.length > 0 ? resizedImages[0] : undefined}
             alt={title}
             imageLoaded={imageLoaded}
           />
@@ -155,6 +220,14 @@ const CreatedCampground = ({
           <div className='CreatedCampground__controls--edit'>
             <i className='far fa-edit' onClick={handleEdit}></i>
             {isEdited && campgroundIsEditing && <SpinnerLoader />}
+          </div>
+          <div className='CreatedCampground__controls--images'>
+            <i
+              className='far fa-images'
+              onClick={() => {
+                setOpenImagesModal(true);
+              }}
+            ></i>
           </div>
           <div className='CreatedCampground__controls--delete'>
             <i
@@ -171,7 +244,7 @@ const CreatedCampground = ({
   );
 };
 
-const mapStateToProps = ({ campgrounds, form, auth }) => ({
+const mapStateToProps = ({ campgrounds, form, auth, image }) => ({
   selectedCampground: campgrounds.selectedCampground.campground,
   campgroundFormIsValid: form.campground.isValid,
   newDescription: form.campground.description.value,
@@ -180,9 +253,13 @@ const mapStateToProps = ({ campgrounds, form, auth }) => ({
   newLocation: form.campground.location.value,
   currentUser: auth.currentUser?.user,
   campgroundIsEditing: campgrounds.isEditing,
+  campgroundIsLoading: campgrounds.isLoading,
+  imageIsLoading: image.isLoading,
+  imageIsDeleting: image.isDeleting,
 });
 
 export default connect(mapStateToProps, {
   ...formActions,
   ...campgroundActions,
+  ...imageActions,
 })(CreatedCampground);

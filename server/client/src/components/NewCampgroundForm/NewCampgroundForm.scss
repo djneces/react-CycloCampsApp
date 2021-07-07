@@ -20,18 +20,15 @@
         letter-spacing: 3px;
     }
 
+    &__loader {
+        width: 100%;
+    }
+
     &__body {
         width: 100%;
-        // background-color: $color-orange;
     }
 
     &__footer {
         width: 100%;
-    }
-
-    .Input {
-        input {
-            // margin: 0;
-        }
     }
 }

@@ -23,6 +23,7 @@ router
 
 router
   .route('/upload-images')
+  .patch(campgroundController.deleteImage)
   .post(upload.array('uploadedImages'), campgroundController.uploadImages);
 
 router.route('/campground-stats').get(campgroundController.getCampgroundStats);

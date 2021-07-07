@@ -18,6 +18,14 @@
             height: 35px;
             padding: 0.4rem;
         }
+
+        &:hover {
+            background-color: $color-orange;
+        }
+
+        &.highlighted {
+            background-color: $color-orange;
+        }
     }
 
     &__popup {

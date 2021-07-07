@@ -4,7 +4,8 @@ import { useHistory } from 'react-router-dom';
 
 import CampgroundCreateForm from '../CreatedCampgroundsList/CampgroundCreateForm';
 import Button from '../../components/FormElements/Button';
-import * as imageActions from '../../store/actions/imageUpload';
+import LineLoader from '../UIElements/LineLoader';
+import * as imageActions from '../../store/actions/image';
 import * as campgroundActions from '../../store/actions/campgrounds';
 import * as formActions from '../../store/actions/form';
 
@@ -18,6 +19,7 @@ const NewCampgroundForm = ({
   createCampground,
   clearForm,
   formIsValid,
+  campgroundIsCreating,
 }) => {
   const [uploadedFiles, setUploadedFiles] = useState(null);
 
@@ -50,6 +52,11 @@ const NewCampgroundForm = ({
       <div className='NewCampgroundForm__heading'>
         <h3>Create a new campground</h3>
       </div>
+      {campgroundIsCreating && (
+        <div className='NewCampgroundForm__loader'>
+          <LineLoader />
+        </div>
+      )}
       <div className='NewCampgroundForm__body'>
         <CampgroundCreateForm handleSetUploadedfiles={handleSetUploadedfiles} />
       </div>
@@ -66,12 +73,13 @@ const NewCampgroundForm = ({
   );
 };
 
-const mapStateToProps = ({ form }) => ({
+const mapStateToProps = ({ form, campgrounds }) => ({
   title: form.campground.title.value,
   location: form.campground.location.value,
   description: form.campground.description.value,
   price: form.campground.price.value,
   formIsValid: form.campground.isValid,
+  campgroundIsCreating: campgrounds.isCreating,
 });
 
 export default connect(mapStateToProps, {

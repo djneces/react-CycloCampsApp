@@ -1,4 +1,6 @@
 // RUNNING SEEDS SEPARATELY FROM THE APP.JS  -> seeds data into the database
+const DATABASE =
+  'mongodb+srv://userMaster:12345678!@cluster0.e2mbq.mongodb.net/cycloCamps?retryWrites=true&w=majority';
 const mongoose = require('mongoose');
 const cities = require('./cities');
 const { places, descriptors, campingWords } = require('./seedHelpers');
@@ -33,7 +35,7 @@ const seedDB = async () => {
       location: `${cities[random1000].city}, ${cities[random1000].state}`,
       title: `${sample(descriptors)} ${sample(places)}`,
       images: [
-        `https://source.unsplash.com/random/?${sample(
+        `https://source.unsplash.com/random/1600x900/?${sample(
           campingWords
         )},sig=${random1000}`,
       ],

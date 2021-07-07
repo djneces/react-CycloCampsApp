@@ -37,6 +37,8 @@
 
 .Modal__content {
     padding: 1rem 0.5rem;
+    max-height: 550px;
+    position: relative;
 }
 
 .Modal__footer {

@@ -16,17 +16,22 @@ const LandingPage = () => {
       <section className='LandingPage__hero'>
         <Image image={heroImage} alt='HeroImage' />
         <div className='LandingPage__hero-heading'>
-          <h1>Go on adventure, cross Europe on bike </h1>
+          <h1>Go on adventure, cross the USA on a bike </h1>
         </div>
       </section>
       <section className='LandingPage__campReview'>
-        <PreviewCard image={heroImage2} campground='Wagenburg' />
+        <PreviewCard image={heroImage2} campground='Denver' temperature='21°' />
       </section>
       <section className='LandingPage__hero2'>
         <Image image={heroImage3} alt='HeroImage2' />
       </section>
       <section className='LandingPage__campReview'>
-        <PreviewCard image={heroImage4} campground='Herlequins' reverse />
+        <PreviewCard
+          image={heroImage4}
+          campground='SanFrancisco'
+          temperature='32°'
+          reverse
+        />
       </section>
       <section className='LandingPage__hero3'>
         <Image image={heroImage5} alt='HeroImage3' />

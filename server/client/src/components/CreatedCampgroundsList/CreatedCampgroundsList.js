@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import * as campgroundActions from '../../store/actions/campgrounds';
-import Button from '../FormElements/Button';
 import SpinnerLoader from '../UIElements/SpinnerLoader';
 import CreatedCampground from './CreatedCampground';
 
@@ -23,8 +22,8 @@ const CreatedCampgroundsList = ({
     }
   }, [currentUser, fetchAllCampgrounds]);
 
-  const handleDeleteCampground = (campgroundId) => {
-    deleteCampground(campgroundId, currentUser._id);
+  const handleDeleteCampground = (campgroundId, images) => {
+    deleteCampground(campgroundId, currentUser._id, images);
   };
 
   const renderCampgroundsList = () => {
@@ -32,6 +31,7 @@ const CreatedCampgroundsList = ({
       const { campgrounds } = usersCampgrounds;
       return campgrounds.map((campground) => {
         const { title, location, images, _id } = campground;
+
         return (
           <CreatedCampground
             key={_id}

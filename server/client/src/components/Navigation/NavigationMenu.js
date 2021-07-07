@@ -109,7 +109,7 @@ const NavigationMenu = ({
               setToggleRegister(false);
             }}
           ></i>
-          EV6 <span>CycloCamps</span> Network
+          USA <span>CycloCamps</span> Network
         </Link>
       </div>
       <nav className='NavigationMenu__links'>

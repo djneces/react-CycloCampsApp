@@ -8,6 +8,7 @@
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1rem;
+    height: 470px;
 
     &>div:first-of-type {
         width: 95%;
@@ -73,5 +74,10 @@
         display: flex;
         align-items: center;
         margin-bottom: 2rem;
+    }
+
+    #imageUpload {
+        font-family: 'Lato', sans-serif;
+        color: darken($color-white, 10);
     }
 }

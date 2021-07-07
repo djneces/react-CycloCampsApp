@@ -1,6 +1,7 @@
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapBoxToken = process.env.MAPBOX_API_KEY;
 const geoCoder = mbxGeocoding({ accessToken: mapBoxToken });
+const { cloudinary } = require('../cloudinary');
 
 const Campground = require('../models/CampgroundModel');
 const Review = require('../models/ReviewModel');
@@ -36,6 +37,34 @@ exports.uploadImages = (req, res, next) => {
   });
   next();
 };
+
+// Delete image from Cloudinary and the DB
+exports.deleteImage = catchAsync(async (req, res, next) => {
+  console.log(req.body.image);
+  // Remove from Cloudinary
+  // Image uploaded by user (to Cloudinary) can be only deleted
+  if (req.body.image.includes('cloudinary')) {
+    console.log('cloudinary');
+    const splitUrl1 = req.body.image.split('/CycloCamps/');
+    const splitUrl2 = splitUrl1[1].split('.');
+    // converting image url => imageId, e.g. CycloCamps/fozccv2hjs33sgm7ygmg
+    const imageId = `CycloCamps/${splitUrl2[0]}`;
+    await cloudinary.uploader.destroy(imageId);
+  } else {
+    // Seed from unsplash cannot be deleted
+    return next(new AppError('This image cannot be deleted', 422));
+  }
+
+  // Remove from the DB
+  const doc = await Campground.findById(req.body.campgroundId);
+  await doc.images.pull(req.body.image);
+  await doc.save();
+
+  res.status(200).json({
+    status: 'success',
+    data: doc,
+  });
+});
 
 //alias top 5 campgrounds (presets query)
 exports.aliasTopCampgrounds = (req, res, next) => {

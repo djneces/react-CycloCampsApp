@@ -26,13 +26,26 @@ const CampgroundsListItem = ({
     setLoaded(true);
   };
 
+  const handleOnHover = () => {
+    const div = document.getElementById(`btn-${id}`);
+
+    if (!div.classList.contains('open')) {
+      div.classList.toggle('highlighted');
+    }
+  };
+
   let imageUrl;
   if (images.length > 0) {
     imageUrl = images[0];
   }
 
   return (
-    <div className='CampgroundsListItem' id={id}>
+    <div
+      className='CampgroundsListItem'
+      id={id}
+      onMouseOver={handleOnHover}
+      onMouseOut={handleOnHover}
+    >
       <div className='CampgroundsListItem__image'>
         {loaded ? null : (
           <div className='CampgroundsListItem__image-notLoaded'>

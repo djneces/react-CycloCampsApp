@@ -14,6 +14,9 @@ import {
   SUBMIT_EDITED_CAMPGROUND_SUCCESS,
   SUBMIT_EDITED_CAMPGROUND_FAIL,
   FETCH_ONE_CAMPGROUND_COORDS,
+  CREATE_NEW_CAMPGROUND_START,
+  CREATE_NEW_CAMPGROUND_SUCCESS,
+  CREATE_NEW_CAMPGROUND_FAIL,
 } from '../actions/actionTypes';
 
 const INITIAL_STATE = {
@@ -22,6 +25,7 @@ const INITIAL_STATE = {
   isLoading: false,
   isDeleting: false,
   isEditing: false,
+  isCreating: false,
   allCampgrounds: null,
   usersCampgrounds: { campgrounds: [], results: null },
   error: null,
@@ -54,6 +58,12 @@ const campgroundReducer = (state = INITIAL_STATE, action) => {
         isEditing: true,
         error: null,
       };
+    case CREATE_NEW_CAMPGROUND_START:
+      return {
+        ...state,
+        isCreating: true,
+        error: null,
+      };
     case FETCH_CAMPGROUNDS_SUCCESS:
       return {
         ...state,
@@ -68,6 +78,11 @@ const campgroundReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isEditing: false,
+      };
+    case CREATE_NEW_CAMPGROUND_SUCCESS:
+      return {
+        ...state,
+        isCreating: false,
       };
     case FETCH_ALL_CAMPGROUNDS:
       return {
@@ -104,13 +119,15 @@ const campgroundReducer = (state = INITIAL_STATE, action) => {
     case FETCH_CAMPGROUNDS_FAIL:
     case DELETE_CAMPGROUND_FAIL:
     case SUBMIT_EDITED_CAMPGROUND_FAIL:
+    case CREATE_NEW_CAMPGROUND_FAIL:
       return {
         ...state,
         campgrounds: [],
         isLoading: false,
         isDeleting: false,
-        allCampgrounds: null,
         isEditing: false,
+        isCreating: false,
+        allCampgrounds: null,
         error: payload,
       };
     case FETCH_ONE_CAMPGROUND_FAIL:

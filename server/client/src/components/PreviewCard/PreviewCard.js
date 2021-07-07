@@ -7,7 +7,7 @@ import Image from '../UIElements/Image';
 import { QUOTES } from '../../assets/quotesFeed/quotesFeed';
 import './PreviewCard.scss';
 
-const PreviewCard = ({ image, campground, reverse }) => {
+const PreviewCard = ({ image, campground, reverse, temperature }) => {
   const [review, setReview] = useState(1);
 
   const { location, country, season, author, profession, quote1, quote2 } =
@@ -74,7 +74,7 @@ const PreviewCard = ({ image, campground, reverse }) => {
           location={location}
           country={country}
           season={season}
-          temperature='20°'
+          temperature={temperature}
         />
       </div>
     </div>

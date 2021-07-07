@@ -9,6 +9,7 @@ import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_MAXLENGTH,
   VALIDATOR_MIN,
+  VALIDATOR_REQUIRE,
 } from '../../util/validators';
 
 import './CampgroundCreateForm.scss';
@@ -78,7 +79,7 @@ const CampgroundCreateForm = ({ validateForm, handleSetUploadedfiles }) => {
             placeholder='$'
             label='price (US$):'
             errorText='Min 0$'
-            validators={[VALIDATOR_MIN(0)]}
+            validators={[VALIDATOR_MIN(0), VALIDATOR_REQUIRE()]}
             onInput={inputCampgroundHandler}
             id='price'
             formName='campground'

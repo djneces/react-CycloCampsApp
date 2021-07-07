@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import ReactMapGL, { Marker, Popup, FlyToInterpolator } from 'react-map-gl';
 import { connect } from 'react-redux';
@@ -38,17 +39,20 @@ const Map = ({ fetchedCampgrounds, selectedCampgroundCoords }) => {
   }, []);
 
   // Smooth transition to another picked location
-  const changeLocation = (coordinates, zoomLevel = 3) => {
-    setViewport({
-      ...viewport,
-      longitude: coordinates[0],
-      zoom: zoomLevel,
-      latitude: coordinates[1],
-      transitionDuration: 1000,
-      transitionInterpolator: new FlyToInterpolator(),
-      transitionEasing: d3.easeCubic,
-    });
-  };
+  const changeLocation = useCallback(
+    (coordinates, zoomLevel = 3) => {
+      setViewport({
+        ...viewport,
+        longitude: coordinates[0],
+        zoom: zoomLevel,
+        latitude: coordinates[1],
+        transitionDuration: 1000,
+        transitionInterpolator: new FlyToInterpolator(),
+        transitionEasing: d3.easeCubic,
+      });
+    },
+    [viewport]
+  );
 
   useEffect(() => {
     if (selectedCampgroundCoords) {
@@ -106,10 +110,23 @@ const Map = ({ fetchedCampgrounds, selectedCampgroundCoords }) => {
               longitude={geometry.coordinates[0]}
             >
               <button
-                className='Map__iconButton'
+                className={`Map__iconButton ${
+                  popupIsOpen &&
+                  selectedCampground &&
+                  campground._id === selectedCampground._id
+                    ? 'highlighted'
+                    : ''
+                } ${
+                  popupIsOpen &&
+                  selectedCampground &&
+                  campground._id === selectedCampground._id
+                    ? 'open'
+                    : ''
+                }`}
                 onMouseOver={handleOnHover}
                 onMouseOut={handleOnHover}
                 data-btnid={campground._id}
+                id={`btn-${campground._id}`}
                 onClick={(e) => {
                   e.preventDefault();
                   // remove hover style in case other Marker had been previously clicked

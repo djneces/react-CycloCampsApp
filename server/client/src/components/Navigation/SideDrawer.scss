@@ -9,7 +9,7 @@
     height: 55vh;
     max-height: 520px;
     width: 28%;
-    max-width: 360px;
+    min-width: 360px;
     background: $color-white;
     box-shadow: $box-shadow;
 }

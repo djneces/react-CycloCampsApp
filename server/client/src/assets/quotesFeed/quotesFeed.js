@@ -1,9 +1,9 @@
 export const QUOTES = {
-  Wagenburg: [
+  Denver: [
     {
       reviewNumber: 1,
-      location: 'Campingplatz Wagenburg',
-      country: 'Germany',
+      location: 'Cripple Creek',
+      country: 'USA',
       season: 'May - September',
       author: 'Jeremy Keith',
       profession: 'Traveler',
@@ -14,8 +14,8 @@ export const QUOTES = {
     },
     {
       reviewNumber: 2,
-      location: 'Campingplatz Wagenburg',
-      country: 'Germany',
+      location: 'Cripple Creek',
+      country: 'USA',
       season: 'May - September',
       author: 'Bluebird',
       profession: 'Traveler',
@@ -25,20 +25,20 @@ export const QUOTES = {
     },
     {
       reviewNumber: 3,
-      location: 'Campingplatz Wagenburg',
-      country: 'Germany',
+      location: 'Cripple Creek',
+      country: 'USA',
       season: 'May - September',
       author: 'FB99. UK',
       profession: 'Traveler',
       quote1:
-        'Spent one night at this site on the way to the Pyrenees – booked it based on the reviews and then planned our journey around it!',
+        'Spent one night at this site on the way to the South – booked it based on the reviews and then planned our journey around it!',
       quote2:
         'There were very few others staying whilst we were there and we chose a pitch at the far end of the site so really felt like there was no-one else around.',
     },
     {
       reviewNumber: 4,
-      location: 'Campingplatz Wagenburg',
-      country: 'Germany',
+      location: 'Cripple Creek',
+      country: 'USA',
       season: 'May - September',
       author: 'Colin and Carol. Derby, Royaume-Uni',
       profession: 'Travelers',
@@ -48,8 +48,8 @@ export const QUOTES = {
     },
     {
       reviewNumber: 5,
-      location: 'Campingplatz Wagenburg',
-      country: 'Germany',
+      location: 'Cripple Creek',
+      country: 'USA',
       season: 'May - September',
       author: 'johnandden',
       profession: 'Traveler',
@@ -58,11 +58,11 @@ export const QUOTES = {
         'Stayed a week and could easily have stayed longer. The hosts couldn’t be more welcoming or helpful. The cafe/bar area serves great coffee/beer/wine at sensible prices and the food is freshly prepared.',
     },
   ],
-  Herlequins: [
+  SanFrancisco: [
     {
       reviewNumber: 1,
-      location: 'Camping Les Herlequins',
-      country: 'France',
+      location: 'Steep Ravine',
+      country: 'USA',
       season: 'May - October',
       author: 'Chris',
       profession: 'Traveler',
@@ -72,8 +72,8 @@ export const QUOTES = {
     },
     {
       reviewNumber: 2,
-      location: 'Camping Les Herlequins',
-      country: 'France',
+      location: 'Steep Ravine',
+      country: 'USA',
       season: 'May - October',
       author: 'pfsm95',
       profession: 'Traveler',
@@ -84,20 +84,20 @@ export const QUOTES = {
     },
     {
       reviewNumber: 3,
-      location: 'Camping Les Herlequins',
-      country: 'France',
+      location: 'Steep Ravine',
+      country: 'USA',
       season: 'May - October',
       author: 'BridgetC. UK',
       profession: 'Traveler',
       quote1:
-        'A wonderful friendly family campsite with the peace and tranquillity we were looking to experience in the real France. The facilities are superb and very family friendly; so much so my children asked to wash!',
+        'A wonderful friendly family campsite with the peace and tranquillity we were looking to experience at the coast. The facilities are superb and very family friendly; so much so my children asked to wash!',
       quote2:
         'Each pitch has plenty of room without feeling too enclosed by other campers and panoramic views.',
     },
     {
       reviewNumber: 4,
-      location: 'Camping Les Herlequins',
-      country: 'France',
+      location: 'Steep Ravine',
+      country: 'USA',
       season: 'May - October',
       author: 'Fabien. Upie, France',
       profession: 'Traveler',
@@ -108,8 +108,8 @@ export const QUOTES = {
     },
     {
       reviewNumber: 5,
-      location: 'Camping Les Herlequins',
-      country: 'France',
+      location: 'Steep Ravine',
+      country: 'USA',
       season: 'May - October',
       author: 'Nigeljwatson. UK',
       profession: 'Traveler',

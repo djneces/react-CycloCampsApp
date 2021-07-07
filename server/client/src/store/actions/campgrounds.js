@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { clearForm, fetchFormData } from './form';
-import { uploadImages } from './imageUpload';
+import { uploadImages } from './image';
 import {
   FETCH_ALL_CAMPGROUNDS,
   FETCH_ONE_CAMPGROUND_START,
@@ -110,40 +110,46 @@ export const fetchOneCampgroundFail = (error) => ({
 });
 
 // Fetch one campground
-export const fetchOneCampground = (campgroundId) => async (dispatch) => {
-  dispatch(fetchOneCampgroundStart());
-  axios
-    .get(`/api/campgrounds/${campgroundId}`)
-    .then((res) => {
-      if (res.status === 200) {
-        const response = res.data.data;
-        //wait until it's successfully fetched
-        dispatch(fetchOneCampgroundSuccess(response));
-        dispatch(
-          fetchFormData(
-            {
-              description: response.description,
-              price: response.price,
-              title: response.title,
-              location: response.location,
-            },
-            'campground'
-          )
-        );
-      } else {
-        new Error('Something went wrong');
-      }
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.log(error.response.data.message);
-        //dispatch message on error response obj
-        dispatch(fetchOneCampgroundFail(error.response.data.message));
-      } else {
-        dispatch(fetchOneCampgroundFail(error.message));
-      }
-    });
-};
+export const fetchOneCampground =
+  (campgroundId, formDataFetch) => async (dispatch) => {
+    dispatch(fetchOneCampgroundStart());
+    axios
+      .get(`/api/campgrounds/${campgroundId}`)
+      .then((res) => {
+        if (res.status === 200) {
+          const response = res.data.data;
+          //wait until it's successfully fetched
+          dispatch(fetchOneCampgroundSuccess(response));
+
+          if (formDataFetch === 'noFormDataFetch') {
+            return;
+          }
+          // fetching form data together with one campground data only at /your-account
+          dispatch(
+            fetchFormData(
+              {
+                description: response.description,
+                price: response.price,
+                title: response.title,
+                location: response.location,
+              },
+              'campground'
+            )
+          );
+        } else {
+          new Error('Something went wrong');
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.log(error.response.data.message);
+          //dispatch message on error response obj
+          dispatch(fetchOneCampgroundFail(error.response.data.message));
+        } else {
+          dispatch(fetchOneCampgroundFail(error.message));
+        }
+      });
+  };
 
 //******************************* *
 // Start submitting edited campground
@@ -183,12 +189,9 @@ export const updateCampground =
         Accept: 'application/json',
       },
     };
+    const data = { location, title, description, price, images: imgUrl };
     axios
-      .patch(
-        `/api/campgrounds/${campgroundId}`,
-        { location, title, description, price, images: imgUrl },
-        options
-      )
+      .patch(`/api/campgrounds/${campgroundId}`, data, options)
       .then((res) => {
         if (res.status === 200) {
           return dispatch(submitEditedCampgroundSuccess());
@@ -198,6 +201,7 @@ export const updateCampground =
       })
       .then(() => {
         dispatch(clearForm());
+        // limit, page, userId
         dispatch(fetchAllCampgrounds(null, null, userId));
       })
       .catch((error) => {
@@ -230,28 +234,30 @@ export const deleteCampgroundFail = (error) => ({
 });
 
 // Delete campground
-export const deleteCampground = (campgroundId, userId) => async (dispatch) => {
-  dispatch(deleteCampgroundStart());
-  axios
-    .delete(`/api/campgrounds/${campgroundId}`)
-    .then((res) => {
-      //TODO alert
-      dispatch(deleteCampgroundSuccess());
-    })
-    .then(() => {
-      dispatch(fetchAllCampgrounds(null, null, userId));
-    })
-    .catch((error) => {
-      if (error.response) {
-        console.error(error.response.data.message);
-        dispatch(deleteCampgroundFail(error.response.data.message));
+export const deleteCampground =
+  (campgroundId, userId, images) => async (dispatch) => {
+    dispatch(deleteCampgroundStart());
+    axios
+      .delete(`/api/campgrounds/${campgroundId}`)
+      .then((res) => {
         //TODO alert
-      } else {
-        console.error(error.message);
-        dispatch(deleteCampgroundFail(error.message));
-      }
-    });
-};
+        dispatch(deleteCampgroundSuccess());
+      })
+      .then(() => {
+        // limit, page, userId
+        dispatch(fetchAllCampgrounds(null, null, userId));
+      })
+      .catch((error) => {
+        if (error.response) {
+          console.error(error.response.data.message);
+          dispatch(deleteCampgroundFail(error.response.data.message));
+          //TODO alert
+        } else {
+          console.error(error.message);
+          dispatch(deleteCampgroundFail(error.message));
+        }
+      });
+  };
 
 //******************************* *
 // Fetch one campground coords
@@ -303,6 +309,7 @@ export const createCampground =
       .then((res) => {
         if (res.status === 201) {
           dispatch(createCampgroundSuccess());
+          // return campgroundId
           return res.data.data.id;
         } else {
           new Error('Something went wrong');

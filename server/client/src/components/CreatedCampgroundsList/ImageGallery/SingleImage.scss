@@ -1,0 +1,48 @@
+@import '../../../assets/styles/colors';
+@import '../../../assets/styles/utils';
+
+.SingleImage {
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+        img {
+            filter: grayscale(0.96) opacity(0.78) saturate(1.8);
+        }
+    }
+
+    i {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        color: $color-white;
+        font-size: 1.5rem;
+
+        &:hover {
+            color: $color-orange;
+        }
+    }
+
+    // .Image {
+    //     width: 100%;
+    // }
+
+    &__notLoaded {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: $color-muted;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        i {
+            position: initial;
+            //  bottom: initial; 
+            //  right: initial;
+        }
+    }
+
+}

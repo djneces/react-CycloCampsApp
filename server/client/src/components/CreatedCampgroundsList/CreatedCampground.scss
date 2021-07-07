@@ -75,7 +75,8 @@
         }
 
         &--edit,
-        &--delete {
+        &--delete,
+        &--images {
             position: relative;
             display: flex;
             align-items: center;
@@ -101,7 +102,8 @@
         }
 
         &--edit,
-        &--delete {
+        &--delete,
+        &--images {
             .SpinnerLoader {
                 margin: 0;
                 position: absolute;
@@ -120,6 +122,25 @@
         button {
             margin: 0 1rem;
             padding: 0.5rem 2.5rem;
+        }
+    }
+
+    &__imagesModal {
+        height: 500px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        position: relative;
+
+        &-loader {
+            padding: 0 0.5rem;
+            position: fixed;
+            width: 624px;
+            z-index: 10;
+        }
+
+        .SpinnerLoader {
+            color: $color-primary;
+            font-size: 2rem;
         }
     }
 }

@@ -16,7 +16,7 @@ const AccountDetailsSide = ({ signOutUser }) => {
         <div className='AccountDetailsSide__navLinks--accountDetails'>
           <Link to='/your-account'>
             <span>Account Details</span>
-            <span>- your campgrounds</span>
+            <span>- my campgrounds</span>
           </Link>
         </div>
         <div className='AccountDetailsSide__navLinks--newCampground'>
