@@ -9,34 +9,58 @@ import CampgroundPage from './containers/CampgroundPage/CampgroundPage';
 import AccountDetailsPage from './containers/AccountDetailsPage/AccountDetailsPage';
 import NavigationMenu from './components/Navigation/NavigationMenu';
 import NewCampgroundPage from './containers/NewCampgroundPage/NewCampgroundPage';
+import Alert from './components/UIElements/Alert';
 import { fetchUser } from './store/actions/user';
 
 import './App.scss';
 
-const App = ({ fetchUser }) => {
+const App = ({ fetchUser, isAuthenticated }) => {
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
+
+  let routes = (
+    <Switch>
+      <Route exact path='/' component={LandingPage} />
+      <Route exact path='/campgrounds' component={CampgroundsPage} />
+      <Route
+        exact
+        path='/campgrounds/:campgroundId'
+        component={CampgroundPage}
+      />
+      <Redirect to='/' />
+    </Switch>
+  );
+
+  if (isAuthenticated) {
+    routes = (
+      <Switch>
+        <Route exact path='/' component={LandingPage} />
+        <Route exact path='/campgrounds' component={CampgroundsPage} />
+        <Route
+          exact
+          path='/campgrounds/:campgroundId'
+          component={CampgroundPage}
+        />
+        <Route exact path='/your-account' component={AccountDetailsPage} />
+        <Route exact path='/new-campground' component={NewCampgroundPage} />
+        <Redirect to='/' />
+      </Switch>
+    );
+  }
   return (
     <BrowserRouter>
       <div className='App'>
+        <Alert position='bottom-right' />
         <NavigationMenu />
-        <Switch>
-          <Route exact path='/' component={LandingPage} />
-          <Route exact path='/campgrounds' component={CampgroundsPage} />
-          <Route
-            exact
-            path='/campgrounds/:campgroundId'
-            component={CampgroundPage}
-          />
-          {/* TODO is loggedIn */}
-          <Route exact path='/your-account' component={AccountDetailsPage} />
-          <Route exact path='/new-campground' component={NewCampgroundPage} />
-          {/* <Redirect to='/' /> */}
-        </Switch>
+        {routes}
       </div>
     </BrowserRouter>
   );
 };
 
-export default connect(null, { fetchUser })(App);
+const mapStateToProps = ({ auth }) => ({
+  isAuthenticated: auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, { fetchUser })(App);

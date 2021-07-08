@@ -5,6 +5,7 @@ import campgroundReducer from './campgrounds';
 import reviewReducer from './review';
 import userReducer from './user';
 import imageUploadReducer from './image';
+import alertReducer from './alert';
 
 export default combineReducers({
   auth: authReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   review: reviewReducer,
   user: userReducer,
   image: imageUploadReducer,
+  alert: alertReducer,
 });

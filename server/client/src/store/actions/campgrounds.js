@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { clearForm, fetchFormData } from './form';
+import { setAlert } from './alert';
 import { uploadImages } from './image';
 import {
   FETCH_ALL_CAMPGROUNDS,
@@ -203,13 +204,24 @@ export const updateCampground =
         dispatch(clearForm());
         // limit, page, userId
         dispatch(fetchAllCampgrounds(null, null, userId));
+        dispatch(setAlert('Edit Campground', `Edit successful`, 'SUCCESS'));
       })
       .catch((error) => {
         if (error.response) {
           console.error(error.response.data.message);
           dispatch(submitEditedCampgroundFail(error.response.data.message));
+          dispatch(
+            setAlert(
+              'Edit Campground',
+              `${error.response.data.message}`,
+              'DANGER'
+            )
+          );
         } else {
           dispatch(submitEditedCampgroundFail(error.message));
+          dispatch(
+            setAlert('Edit Campground', `Something went wrong`, 'DANGER')
+          );
         }
       });
   };
@@ -240,21 +252,32 @@ export const deleteCampground =
     axios
       .delete(`/api/campgrounds/${campgroundId}`)
       .then((res) => {
-        //TODO alert
         dispatch(deleteCampgroundSuccess());
       })
       .then(() => {
         // limit, page, userId
         dispatch(fetchAllCampgrounds(null, null, userId));
+        dispatch(
+          setAlert('Delete Campground', `Successfully deleted`, 'SUCCESS')
+        );
       })
       .catch((error) => {
         if (error.response) {
           console.error(error.response.data.message);
           dispatch(deleteCampgroundFail(error.response.data.message));
-          //TODO alert
+          dispatch(
+            setAlert(
+              'Delete Campground',
+              `${error.response.data.message}`,
+              'DANGER'
+            )
+          );
         } else {
           console.error(error.message);
           dispatch(deleteCampgroundFail(error.message));
+          dispatch(
+            setAlert('Delete Campground', `Something went wrong`, 'DANGER')
+          );
         }
       });
   };
@@ -317,13 +340,26 @@ export const createCampground =
       })
       .then((campgroundId) => {
         if (history) history.push(`/campgrounds/${campgroundId}`);
+        dispatch(
+          setAlert('Create Campground', `Successfully created`, 'SUCCESS')
+        );
       })
       .catch((error) => {
         if (error.response) {
           console.error(error.response.data.message);
           dispatch(createCampgroundFail(error.response.data.message));
+          dispatch(
+            setAlert(
+              'Create Campground',
+              `${error.response.data.message}`,
+              'DANGER'
+            )
+          );
         } else {
           dispatch(createCampgroundFail(error.message));
+          dispatch(
+            setAlert('Create Campground', `Something went wrong`, 'DANGER')
+          );
         }
       });
   };

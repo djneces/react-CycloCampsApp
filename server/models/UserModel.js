@@ -4,9 +4,11 @@ const { Schema } = mongoose;
 const AppError = require('../utils/AppError');
 
 const userSchema = new Schema({
+  // Input validation via inputValidation.js (express-validator)
   username: {
     type: String,
     required: [true, 'Please provide your username!'],
+    unique: true,
   },
   email: {
     type: String,
@@ -28,8 +30,6 @@ const userSchema = new Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
-
-  // Validation password via inputValidation.js (express-validator)
   password: {
     type: String,
     required: [true, 'Please provide a password'],

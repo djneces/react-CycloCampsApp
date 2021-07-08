@@ -16,6 +16,8 @@ import {
   SUBMIT_EDITED_REVIEW_FAIL,
 } from './actionTypes';
 
+import { setAlert } from './alert';
+
 // Start submitting review
 export const submitReviewStart = () => ({
   type: SUBMIT_REVIEW_START,
@@ -58,19 +60,31 @@ export const submitReview =
           return dispatch(submitReviewSuccess());
         } else {
           new Error('Something went wrong');
+          dispatch(setAlert('Submit Review', `Something went wrong`, 'DANGER'));
         }
       })
       .then(() => {
         dispatch(clearForm());
-        dispatch(fetchOneCampground(campgroundId));
+        dispatch(fetchOneCampground(campgroundId, 'noFormDataFetch'));
+        dispatch(
+          setAlert('Submit Review', `Review successfully submitted`, 'SUCCESS')
+        );
       })
       .catch((error) => {
         if (error.response) {
           console.error(error.response.data.message);
           //dispatch message on error response obj
           dispatch(submitReviewFail(error.response.data.message));
+          dispatch(
+            setAlert(
+              'Submit Review',
+              `${error.response.data.message}`,
+              'DANGER'
+            )
+          );
         } else {
           dispatch(submitReviewFail(error.message));
+          dispatch(setAlert('Submit Review', `Something went wrong`, 'DANGER'));
         }
       });
   };
@@ -116,18 +130,26 @@ export const updateReview =
           return dispatch(submitEditedReviewSuccess());
         } else {
           new Error('Something went wrong');
+          dispatch(setAlert('Edit Review', `Something went wrong`, 'DANGER'));
         }
       })
       .then(() => {
         dispatch(clearForm());
         dispatch(fetchOneCampground(campgroundId));
+        dispatch(
+          setAlert('Edit Review', `Review successfully edited`, 'SUCCESS')
+        );
       })
       .catch((error) => {
         if (error.response) {
           console.error(error.response.data.message);
           dispatch(submitEditedReviewFail(error.response.data.message));
+          dispatch(
+            setAlert('Edit Review', `${error.response.data.message}`, 'DANGER')
+          );
         } else {
           dispatch(submitEditedReviewFail(error.message));
+          dispatch(setAlert('Edit Review', `Something went wrong`, 'DANGER'));
         }
       });
   };
@@ -208,8 +230,10 @@ export const deleteReview = (campgroundId, reviewId) => async (dispatch) => {
   axios
     .delete(`/api/campgrounds/${campgroundId}/reviews/${reviewId}`)
     .then((res) => {
-      //TODO alert
       dispatch(deleteReviewSuccess());
+      dispatch(
+        setAlert('Delete Review', `Review successfully deleted`, 'SUCCESS')
+      );
     })
     .then(() => {
       dispatch(fetchOneCampground(campgroundId));
@@ -218,10 +242,13 @@ export const deleteReview = (campgroundId, reviewId) => async (dispatch) => {
       if (error.response) {
         console.error(error.response.data.message);
         dispatch(deleteReviewFail(error.response.data.message));
-        //TODO alert
+        dispatch(
+          setAlert('Delete Review', `${error.response.data.message}`, 'DANGER')
+        );
       } else {
         console.error(error.message);
         dispatch(deleteReviewFail(error.message));
+        dispatch(setAlert('Delete Review', `Something went wrong`, 'DANGER'));
       }
     });
 };

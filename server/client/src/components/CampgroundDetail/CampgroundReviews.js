@@ -16,6 +16,7 @@ const CampgroundReviews = ({
   submitReview,
   currentUser,
   deleteReview,
+  isAuthenticated,
 }) => {
   // Use of react-usestateref to get the actual correct state
   const [formDisabled, setFormDisabled, refFormDisabled] = useState(false);
@@ -68,13 +69,20 @@ const CampgroundReviews = ({
       <div className='CampgroundReviews__heading'>
         <h3>Campground Reviews</h3>
       </div>
-      <div className='CampgroundReviews__review CampgroundReviews__review-input'>
-        <CampgroundReviewForm
-          handleReviewSubmit={handleReviewSubmit}
-          // hiding the underlying form when editing a review
-          hideFormUnder={refFormDisabled.current}
-        />
-      </div>
+      {isAuthenticated ? (
+        <div className='CampgroundReviews__review CampgroundReviews__review-input'>
+          <CampgroundReviewForm
+            handleReviewSubmit={handleReviewSubmit}
+            // hiding the underlying form when editing a review
+            hideFormUnder={refFormDisabled.current}
+          />
+        </div>
+      ) : (
+        <div className='CampgroundReviews__review-notLogged'>
+          Please login to review
+        </div>
+      )}
+
       {renderReviews()}
     </div>
   );
@@ -84,6 +92,7 @@ const mapStateToProps = ({ form, auth, campgrounds }) => ({
   reviewForm: form.review.review,
   currentUser: auth.currentUser?.user._id,
   reviews: campgrounds.selectedCampground.campground?.reviews,
+  isAuthenticated: auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, reviewActions)(CampgroundReviews);

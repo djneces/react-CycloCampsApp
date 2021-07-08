@@ -10,6 +10,7 @@ import {
   DELETE_USER_FAIL,
 } from './actionTypes';
 import { clearForm } from './form';
+import { setAlert } from './alert';
 
 export const fetchUser = () => async (dispatch) => {
   try {
@@ -61,19 +62,26 @@ export const updateCurrentUser = (username, email) => async (dispatch) => {
         return dispatch(submitEditedUserSuccess());
       } else {
         new Error('Something went wrong');
+        dispatch(setAlert('Update User', `Something went wrong`, 'DANGER'));
       }
     })
     .then(() => {
       dispatch(clearForm());
       dispatch(fetchUser());
+      dispatch(
+        setAlert('Update User', `Your details successfully updated`, 'SUCCESS')
+      );
     })
     .catch((error) => {
-      //TODO duplicate email alert
       if (error.response) {
         console.error(error.response.data.message);
         dispatch(submitEditedUserFail(error.response.data.message));
+        dispatch(
+          setAlert('Update User', `${error.response.data.message}`, 'DANGER')
+        );
       } else {
         dispatch(submitEditedUserFail(error.message));
+        dispatch(setAlert('Update User', `Something went wrong`, 'DANGER'));
       }
     });
 };
@@ -103,17 +111,20 @@ export const deleteUser = () => async (dispatch) => {
   axios
     .delete(`api/users/current_user`)
     .then((res) => {
-      //TODO alert
       dispatch(deleteUserSuccess());
+      dispatch(setAlert('Delete User', `User successfully deleted`, 'SUCCESS'));
     })
     .catch((error) => {
       if (error.response) {
         console.error(error.response.data.message);
         dispatch(deleteUserFail(error.response.data.message));
-        //TODO alert
+        dispatch(
+          setAlert('Delete User', `${error.response.data.message}`, 'DANGER')
+        );
       } else {
         console.error(error.message);
         dispatch(deleteUserFail(error.message));
+        dispatch(setAlert('Delete User', `Something went wrong`, 'DANGER'));
       }
     });
 };

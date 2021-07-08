@@ -1,0 +1,144 @@
+@import '../../assets/styles/colors';
+@import '../../assets/styles/utils';
+
+.Alert {
+    font-size: 14px;
+    position: fixed;
+    z-index: 9999;
+    font-family: 'Lato', sans-serif;
+
+    &.top-right {
+        top: 12px;
+        right: 12px;
+        animation: toast-in-right 0.7s;
+    }
+
+    &.bottom-right {
+        bottom: 12px;
+        right: 12px;
+        animation: toast-in-left 0.7s;
+    }
+
+    &.top-left {
+        top: 12px;
+        left: 12px;
+        animation: toast-in-left 0.7s;
+    }
+
+    &.bottom-left {
+        bottom: 12px;
+        left: 12px;
+        animation: toast-in-left 0.7s;
+    }
+
+    &__notification {
+        background: $color-white;
+        transition: 0.3s ease;
+        position: relative;
+        pointer-events: auto;
+        overflow: hidden;
+        margin: 0 0 15px;
+        padding: 20px;
+        width: 300px;
+        max-height: 100px;
+        box-shadow: $box-shadow-light;
+        color: $color-primary;
+        opacity: 0.9;
+
+        &:hover {
+            box-shadow: $box-shadow;
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        &-title {
+            font-weight: 700;
+            font-size: 16px;
+            text-align: left;
+            margin: 0 0 6px;
+            width: 300px;
+            height: 18px
+        }
+
+        &-message {
+            margin: 0;
+            text-align: left;
+            height: 18px;
+            margin-left: -1px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap
+        }
+
+        &-image {
+            float: left;
+            margin-right: 15px;
+            font-size: 36px;
+        }
+
+        &-toast {
+            &.top-right {
+                top: 12px;
+                right: 12px;
+                animation: toast-in-right 0.7s;
+            }
+
+            &.bottom-right {
+                bottom: 12px;
+                right: 12px;
+                animation: toast-in-right 0.7s;
+            }
+
+            &.top-left {
+                top: 12px;
+                left: 12px;
+                animation: toast-in-left 0.7s;
+            }
+
+            &.bottom-left {
+                bottom: 12px;
+                left: 12px;
+                animation: toast-in-left 0.7s;
+            }
+
+            width: 365px;
+            color: $color-white;
+            padding: 20px 15px 10px 10px;
+        }
+
+        &>div:last-of-type {
+            margin-left: 4rem;
+        }
+
+        &-closeBtn {
+            position: absolute;
+            top: 4px;
+            right: 8px;
+            font-size: 16px;
+
+            &:hover {
+                color: $color-orange;
+            }
+        }
+    }
+
+    @keyframes toast-in-right {
+        from {
+            transform: translateX(100%);
+        }
+
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes toast-in-left {
+        from {
+            transform: translateX(-100%);
+        }
+
+        to {
+            transform: translateX(0);
+        }
+    }
+}

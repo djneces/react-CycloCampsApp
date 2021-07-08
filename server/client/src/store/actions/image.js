@@ -9,6 +9,7 @@ import {
 } from './actionTypes';
 
 import { fetchAllCampgrounds } from './campgrounds';
+import { setAlert } from './alert';
 
 // Start uploading image
 export const uploadImageStart = () => ({
@@ -43,17 +44,25 @@ export const uploadImages = (formData) => async (dispatch) => {
     .then((res) => {
       if (res.status === 'success') {
         dispatch(uploadImageSuccess(res.data));
+        dispatch(
+          setAlert('Upload Image', `Image(s) successfully uploaded`, 'SUCCESS')
+        );
         return res.data;
       } else {
         new Error('Something went wrong');
+        dispatch(setAlert('Upload Image', `Something went wrong`, 'DANGER'));
       }
     })
     .catch((error) => {
       if (error.response) {
         console.error(error.response.data.message);
         dispatch(uploadImageFail(error.response.data.message));
+        dispatch(
+          setAlert('Upload Image', `${error.response.data.message}`, 'DANGER')
+        );
       } else {
         dispatch(uploadImageFail(error.message));
+        dispatch(setAlert('Upload Image', `Something went wrong`, 'DANGER'));
       }
     });
 
@@ -97,11 +106,14 @@ export const deleteImage =
         options
       )
       .then((res) => {
-        //TODO alert
         if (res.status === 200) {
           dispatch(deleteImageSuccess());
+          dispatch(
+            setAlert('Delete Image', `Image successfully deleted`, 'SUCCESS')
+          );
         } else {
           new Error('Something went wrong');
+          dispatch(setAlert('Delete Image', `Something went wrong`, 'DANGER'));
         }
       })
       .then(() => {
@@ -111,10 +123,13 @@ export const deleteImage =
         if (error.response) {
           console.error(error.response.data.message);
           dispatch(deleteImageFail(error.response.data.message));
-          //TODO alert
+          dispatch(
+            setAlert('Delete Image', `${error.response.data.message}`, 'DANGER')
+          );
         } else {
           console.error(error.message);
           dispatch(deleteImageFail(error.message));
+          dispatch(setAlert('Delete Image', `Something went wrong`, 'DANGER'));
         }
       });
   };

@@ -19,10 +19,15 @@
         position: fixed;
         bottom: 7%;
         right: 9%;
-        box-shadow: $box-shadow;
+        box-shadow: $box-shadow-light;
 
         &:hover {
             background-color: lighten($color-orange, 10);
+        }
+
+        &:active {
+            transform: translateY(1px);
+            box-shadow: $box-shadow;
         }
 
         label {

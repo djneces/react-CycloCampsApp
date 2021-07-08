@@ -73,15 +73,21 @@ exports.createOne = (Model) =>
 // DELETE ONE
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    // Delete associated images from Cloudinary
     const docToDelete = await Model.findById(req.params.id);
-    await docToDelete.images.forEach((image) => {
-      const splitUrl1 = image.split('/CycloCamps/');
-      const splitUrl2 = splitUrl1[1].split('.');
-      // e.g. CycloCamps/fozccv2hjs33sgm7ygmg
-      const imageId = `CycloCamps/${splitUrl2[0]}`;
-      cloudinary.uploader.destroy(imageId);
-    });
+
+    // Delete images together with a campground
+    // Delete associated images from Cloudinary
+    if (!req.originalUrl.includes('reviews')) {
+      await docToDelete.images.forEach((image) => {
+        if (image.includes('cloudinary')) {
+          const splitUrl1 = image.split('/CycloCamps/');
+          const splitUrl2 = splitUrl1[1].split('.');
+          // e.g. CycloCamps/fozccv2hjs33sgm7ygmg
+          const imageId = `CycloCamps/${splitUrl2[0]}`;
+          cloudinary.uploader.destroy(imageId);
+        }
+      });
+    }
 
     //permanently delete from the DB
     const doc = await Model.findByIdAndDelete(req.params.id);

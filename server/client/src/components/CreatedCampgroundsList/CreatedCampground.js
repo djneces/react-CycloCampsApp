@@ -121,11 +121,13 @@ const CreatedCampground = ({
 
   // Reset edited back to false after while, in case I edit another campground right after
   useEffect(() => {
+    let changeEditStatus;
     if (!openEditModal && !imageIsLoading) {
-      setTimeout(() => {
+      changeEditStatus = setTimeout(() => {
         setIsEdited(false);
       }, 2000);
     }
+    return () => clearInterval(changeEditStatus);
   }, [openEditModal, imageIsLoading]);
 
   return (
