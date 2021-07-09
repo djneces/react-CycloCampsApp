@@ -1,4 +1,4 @@
-const AppError = require('./../utils/appError');
+const AppError = require('../utils/AppError');
 
 const duplicatedUsernameDb = () => {
   const message = 'User with these credentials already exists!';
