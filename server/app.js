@@ -12,6 +12,7 @@ const viewRouter = require('./routes/viewRouter');
 const userRouter = require('./routes/userRouter');
 const authRouter = require('./routes/authRouter');
 const campgroundRouter = require('./routes/campgroundRouter');
+
 require('./services/passport');
 
 // Start express app

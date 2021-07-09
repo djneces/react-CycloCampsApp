@@ -1,14 +1,19 @@
+/* eslint-disable import/no-webpack-loader-syntax */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import ReactMapGL, { Marker, Popup, FlyToInterpolator } from 'react-map-gl';
+import mapboxgl from 'mapbox-gl';
 import { connect } from 'react-redux';
 import * as d3 from 'd3-ease/dist/d3-ease';
 
 import tentIcon from '../../assets/images/tent.svg';
 import Image from '../UIElements/Image';
-
 import './Map.scss';
+
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass =
+  require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;
 
 const Map = ({ fetchedCampgrounds, selectedCampgroundCoords }) => {
   const [viewport, setViewport] = useState({
