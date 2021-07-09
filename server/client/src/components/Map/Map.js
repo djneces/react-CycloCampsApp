@@ -101,7 +101,7 @@ const Map = ({ fetchedCampgrounds, selectedCampgroundCoords }) => {
       <ReactMapGL
         {...viewport}
         mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_API_KEY}
-        mapStyle='mapbox://styles/mapbox/streets-v11'
+        // mapStyle='mapbox://styles/mapbox/streets-v11'
         onViewportChange={(viewport) => {
           setViewport(viewport);
         }}
