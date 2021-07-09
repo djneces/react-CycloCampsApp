@@ -10,7 +10,7 @@ const Review = require('../models/ReviewModel');
 const User = require('../models/UserModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const AppError = require('../utils/AppError');
 
 exports.setUserIds = (req, res, next) => {
   // Need to include author of the campground

@@ -1,6 +1,6 @@
 const User = require('../models/UserModel');
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
+const AppError = require('../utils/AppError');
 const factory = require('./handlerFactory');
 
 // Func to filter out not permitted fields from the body
