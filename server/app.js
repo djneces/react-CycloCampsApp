@@ -62,12 +62,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Test middleware
-app.use((req, res, next) => {
-  req.requestTime = new Date().toISOString();
-  console.log(req.requestTime);
-  console.log(req.isAuthenticated());
-  next();
-});
+// app.use((req, res, next) => {
+//   req.requestTime = new Date().toISOString();
+//   console.log(req.requestTime);
+//   console.log(req.isAuthenticated());
+//   next();
+// });
 
 // ***** ROUTES *****
 app.use('/api/', viewRouter);

@@ -82,3 +82,6 @@ export const IMAGE_DELETE_FAIL = 'IMAGE_DELETE_FAIL';
 // Notifications
 export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';
 export const DELETE_NOTIFICATION = 'DELETE_NOTIFICATION';
+
+// Sendgrid Welcome email
+export const SEND_WELCOME_EMAIL = 'SEND_WELCOME_EMAIL';

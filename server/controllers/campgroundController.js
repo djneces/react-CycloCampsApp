@@ -1,10 +1,13 @@
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapBoxToken = process.env.MAPBOX_API_KEY;
 const geoCoder = mbxGeocoding({ accessToken: mapBoxToken });
-const { cloudinary } = require('../cloudinary');
 
+const { cloudinary } = require('../cloudinary');
+const Mailer = require('../services/Mailer');
+const emailTemplate = require('../services/emailTemplate');
 const Campground = require('../models/CampgroundModel');
 const Review = require('../models/ReviewModel');
+const User = require('../models/UserModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -63,6 +66,30 @@ exports.deleteImage = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: 'success',
     data: doc,
+  });
+});
+
+// Send welcoming email via Sendgrid
+exports.sendWelcomingEmail = catchAsync(async (req, res, next) => {
+  const survey = {
+    subject: 'Welcome to CycloCamps',
+    recipients: [{ email: req.body.email }],
+  };
+  // ({ subject, recipients }, content)
+  // Send email
+  const mailer = new Mailer(survey, emailTemplate());
+  const response = await mailer.send();
+  console.log('mailer', response);
+  // If successfully send, update the DB
+  if (response.statusCode === 202) {
+    doc = await User.findOneAndUpdate(
+      { email: req.body.email },
+      { welcomeEmailSentAt: Date.now() }
+    );
+  }
+  res.status(200).json({
+    status: 'success',
+    message: 'Email sent successfully',
   });
 });
 

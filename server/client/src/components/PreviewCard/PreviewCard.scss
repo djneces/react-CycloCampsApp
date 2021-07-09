@@ -54,6 +54,14 @@
     .PreviewPlace {
         bottom: -21%;
         left: 0;
+
+        @media (max-width: 1100px) {
+            bottom: -9%;
+        }
+
+        @media (max-width: 800px) {
+            bottom: 0;
+        }
     }
 
     .Image {
@@ -67,6 +75,10 @@
     }
 
     &.reverse {
+        .PreviewCard__container {
+            margin-left: initial;
+        }
+
         .PreviewStory {
             left: initial;
             top: 0;

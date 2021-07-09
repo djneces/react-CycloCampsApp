@@ -23,8 +23,12 @@ router
 
 router
   .route('/upload-images')
-  .patch(campgroundController.deleteImage)
+  .patch( authController.isLoggedIn, campgroundController.deleteImage)
   .post(upload.array('uploadedImages'), campgroundController.uploadImages);
+
+router
+  .route('/send-email')
+  .post(campgroundController.sendWelcomingEmail);
 
 router.route('/campground-stats').get(campgroundController.getCampgroundStats);
 
@@ -35,7 +39,7 @@ router
     authController.isLoggedIn,
     campgroundController.setUserIds,
     campgroundController.setGeoData,
-    campgroundController.createCampground
+    campgroundController.createCampground,
   );
 
 router

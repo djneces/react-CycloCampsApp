@@ -17,6 +17,11 @@
     position: relative;
     box-shadow: $box-shadow;
 
+    @media (max-width: 1100px) {
+        min-height: 180px;
+        height: 180px;
+    }
+
     &.hovered {
         border: 2px solid $color-orange;
         border-bottom: none;

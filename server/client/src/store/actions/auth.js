@@ -9,6 +9,7 @@ import {
 import { fetchUser } from './user';
 import { clearForm } from './form';
 import { setAlert } from './alert';
+import { sendWelcomeEmail } from './email';
 
 // Start authentication
 export const authStart = () => ({
@@ -98,6 +99,7 @@ export const registerUser =
           dispatch(clearForm());
           history.push('/');
           dispatch(setAlert('Register', `You have been registered`, 'SUCCESS'));
+          dispatch(sendWelcomeEmail(email));
         })
         .catch((error) => {
           if (error.response.data.message) {

@@ -6,6 +6,7 @@ import reviewReducer from './review';
 import userReducer from './user';
 import imageUploadReducer from './image';
 import alertReducer from './alert';
+import emailReducer from './email';
 
 export default combineReducers({
   auth: authReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   user: userReducer,
   image: imageUploadReducer,
   alert: alertReducer,
+  email: emailReducer,
 });

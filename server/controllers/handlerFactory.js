@@ -68,6 +68,7 @@ exports.createOne = (Model) =>
       status: 'success',
       data: doc,
     });
+
   });
 
 // DELETE ONE

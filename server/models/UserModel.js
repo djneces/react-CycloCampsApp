@@ -36,6 +36,7 @@ const userSchema = new Schema({
     select: false,
   },
   passwordChangedAt: Date,
+  welcomeEmailSentAt: Date,
   // passwordResetToken: String,
   // passwordResetExpires: Date,
   activeUser: {

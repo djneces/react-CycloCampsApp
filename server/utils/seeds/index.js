@@ -1,6 +1,4 @@
 // RUNNING SEEDS SEPARATELY FROM THE APP.JS  -> seeds data into the database
-const DATABASE =
-  'mongodb+srv://userMaster:12345678!@cluster0.e2mbq.mongodb.net/cycloCamps?retryWrites=true&w=majority';
 const mongoose = require('mongoose');
 const cities = require('./cities');
 const { places, descriptors, campingWords } = require('./seedHelpers');
