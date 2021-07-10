@@ -11,6 +11,7 @@ import tentIcon from '../../assets/images/tent.svg';
 import Image from '../UIElements/Image';
 import './Map.scss';
 
+// Issues with bundling -> this will exclude
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass =
   require('worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker').default;

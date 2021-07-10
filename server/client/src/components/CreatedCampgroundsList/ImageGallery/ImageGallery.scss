@@ -6,6 +6,7 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 0.5rem;
     padding: 0.5rem;
+    min-height: 415px;
 
     &__inputFile {
         width: 4rem;

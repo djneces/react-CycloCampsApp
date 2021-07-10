@@ -39,8 +39,8 @@ const CampgroundDetail = ({
   const [xCoord, setXCoord] = useState(0);
 
   useEffect(() => {
-    if (!profileImg) setProfileImg(image);
-  }, [image, profileImg]);
+    setProfileImg(image);
+  }, [image]);
 
   const imageLoaded = () => {
     setLoaded(true);
@@ -112,7 +112,7 @@ const CampgroundDetail = ({
                 <span>({ratingsQuantity} reviews)</span>
               </div>
               <div className='CampgroundDetail__card-body-author'>
-                created by: {author && author.username}
+                created by: {author ? author.username : 'Anonymous user'}
               </div>
               <div className='CampgroundDetail__card-body-description'>
                 {description}

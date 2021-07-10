@@ -88,10 +88,10 @@ const formReducer =
       case CHANGE_INPUT:
         return {
           ...state,
-          [key]: {
-            ...state[key],
+          [formName]: {
+            ...state[formName],
             [payload.id]: {
-              ...state[key][payload.id],
+              ...state[formName][payload.id],
               value: payload.value,
               isValid: validate(payload.value, validators),
             },
@@ -100,26 +100,26 @@ const formReducer =
       case TOUCH_INPUT:
         return {
           ...state,
-          [key]: {
-            ...state[key],
-            [payload]: { ...state[key][payload], isTouched: true },
+          [formName]: {
+            ...state[formName],
+            [payload]: { ...state[formName][payload], isTouched: true },
           },
         };
       case VALIDATE_FORM:
         let formIsValid = true;
-        for (const inputId in state[key]) {
+        for (const inputId in state[formName]) {
           //remove isValid attribute from the for in loop
           if (inputId === 'isValid') continue;
           if (inputId === payload.inputId) {
             formIsValid = formIsValid && payload.isValid;
           } else {
-            formIsValid = formIsValid && state[key][inputId].isValid;
+            formIsValid = formIsValid && state[formName][inputId].isValid;
           }
         }
         return {
           ...state,
-          [key]: {
-            ...state[key],
+          [formName]: {
+            ...state[formName],
             isValid: formIsValid,
           },
         };

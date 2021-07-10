@@ -144,7 +144,7 @@ export const fetchOneCampground =
       })
       .catch((error) => {
         if (error.response) {
-          console.log(error.response.data.message);
+          // console.error(error.response.data.message);
           //dispatch message on error response obj
           dispatch(fetchOneCampgroundFail(error.response.data.message));
         } else {
@@ -177,6 +177,15 @@ export const updateCampground =
   (campgroundId, userId, location, title, description, price, formData) =>
   async (dispatch) => {
     dispatch(submitEditedCampgroundStart());
+
+    if (location && title && description) {
+      const firstLetterCapital = (word) => {
+        return word[0].toUpperCase() + word.substring(1);
+      };
+      location = firstLetterCapital(location);
+      title = firstLetterCapital(title);
+      description = firstLetterCapital(description);
+    }
 
     // First upload pictures to Cloudinary, if any
     let imgUrl;
@@ -316,6 +325,13 @@ export const createCampground =
     dispatch(createCampgroundStart());
     // First upload pictures to Cloudinary
     const imgUrl = await dispatch(uploadImages(formData));
+
+    const firstLetterCapital = (word) => {
+      return word[0].toUpperCase() + word.substring(1);
+    };
+    location = firstLetterCapital(location);
+    title = firstLetterCapital(title);
+    description = firstLetterCapital(description);
 
     const options = {
       headers: {

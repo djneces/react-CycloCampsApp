@@ -93,7 +93,6 @@ exports.isAuthor = (Model) => async (req, res, next) => {
 exports.isDeactivated = async (req, res, next) => {
   const { email, username, password } = req.body;
 
-  console.log('runs');
   const user = await User.findOne({ username }).select('activeUser');
 
   if (user.activeUser === false) {

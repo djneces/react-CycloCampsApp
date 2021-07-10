@@ -109,7 +109,7 @@ exports.deleteMany = (Model) =>
   catchAsync(async (req, res, next) => {
     //permanently delete multiple records
     const response = await Model.deleteMany({ campground: req.params.id });
-    console.log('success', response.deletedCount);
+    // console.log('success', response.deletedCount);
   });
 
 // UPDATE ONE
@@ -119,7 +119,6 @@ exports.updateOne = (Model) =>
 
     // Images are included in the request
     if (req.body.images) {
-      console.log('runs with images');
       let objWithoutImages = { ...req.body };
       delete objWithoutImages.images;
       doc = await Model.findByIdAndUpdate(req.params.id, objWithoutImages, {

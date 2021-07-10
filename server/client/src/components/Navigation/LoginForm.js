@@ -10,11 +10,11 @@ import SpinnerLoader from '../UIElements/SpinnerLoader';
 import './LoginForm.scss';
 
 const LoginForm = ({
-  toggleMenu,
+  toggleLoginMenu,
   formIsValid,
   handleSubmit,
   inputHandler,
-  setToggleMenu,
+  setToggleLoginMenu,
   setToggleRegister,
   toggleDrawerHandler,
   userIsLoading,
@@ -22,12 +22,12 @@ const LoginForm = ({
   return (
     <div className='LoginForm'>
       <div className='LoginForm__loginMenu'>
-        {!toggleMenu ? (
+        {!toggleLoginMenu ? (
           <>
             <div
               className='LoginForm__loginMenu-login'
               onClick={() => {
-                setToggleMenu(true);
+                setToggleLoginMenu(true);
                 setToggleRegister(false);
               }}
             >
@@ -36,7 +36,7 @@ const LoginForm = ({
             <div
               className='LoginForm__loginMenu-register'
               onClick={() => {
-                setToggleMenu(false);
+                setToggleLoginMenu(false);
                 setToggleRegister(true);
                 toggleDrawerHandler();
               }}
@@ -62,7 +62,7 @@ const LoginForm = ({
               />
               <Input
                 element='input'
-                type='text'
+                type='password'
                 placeholder='password...'
                 errorText='Password should have 8 - 15 characters'
                 validators={[VALIDATOR_MINLENGTH(8), VALIDATOR_MAXLENGTH(15)]}
@@ -76,7 +76,7 @@ const LoginForm = ({
                   <i
                     className='fas fa-times'
                     onClick={() => {
-                      setToggleMenu(false);
+                      setToggleLoginMenu(false);
                     }}
                   ></i>
                 )}

@@ -28,7 +28,7 @@ const NavigationMenu = ({
   registerForm,
   userIsLoading,
 }) => {
-  const [toggleMenu, setToggleMenu] = useState(false);
+  const [toggleLoginMenu, setToggleLoginMenu] = useState(false);
   const [toggleRegister, setToggleRegister] = useState(false);
   const [toggleAccountDetails, setToggleAccountDetails] = useState(false);
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
@@ -40,7 +40,7 @@ const NavigationMenu = ({
 
   const closeDrawerHandler = () => {
     setDrawerIsOpen(!drawerIsOpen);
-    setToggleMenu(false);
+    setToggleLoginMenu(false);
     setToggleRegister(false);
     setToggleAccountDetails(false);
   };
@@ -105,22 +105,28 @@ const NavigationMenu = ({
           <i
             className='fas fa-biking'
             onClick={() => {
-              setToggleMenu(false);
+              setToggleLoginMenu(false);
               setToggleRegister(false);
             }}
           ></i>
-          USA <span>CycloCamps</span> Network
+          <span>USA </span>
+          <span>CycloCamps</span>
+          <span> Network</span>
         </Link>
       </div>
-      <nav className='NavigationMenu__links'>
-        <ul>
-          <li>
-            <Link to='/campgrounds'>
-              <i className='fas fa-chevron-right'></i>All Campgrounds
-            </Link>
-          </li>
-        </ul>
-      </nav>
+      {/* false true */}
+      {toggleLoginMenu && window.innerWidth < 1100 ? null : (
+        <nav className='NavigationMenu__links'>
+          <ul>
+            <li>
+              <Link to='/campgrounds'>
+                <i className='fas fa-chevron-right'></i>All Campgrounds
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      )}
+
       {isAuthenticated ? (
         <div className='NavigationMenu__accountMenu'>
           <div className='NavigationMenu__accountMenu-username'>
@@ -142,12 +148,12 @@ const NavigationMenu = ({
         </div>
       ) : (
         <LoginForm
-          toggleMenu={toggleMenu}
+          toggleLoginMenu={toggleLoginMenu}
           toggleRegister={toggleRegister}
           formIsValid={loginFormIsValid}
           handleSubmit={handleSubmit}
           inputHandler={inputLoginHandler}
-          setToggleMenu={setToggleMenu}
+          setToggleLoginMenu={setToggleLoginMenu}
           setToggleRegister={setToggleRegister}
           toggleDrawerHandler={toggleDrawerHandler}
         />

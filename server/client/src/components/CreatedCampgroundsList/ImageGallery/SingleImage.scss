@@ -4,6 +4,7 @@
 .SingleImage {
     cursor: pointer;
     position: relative;
+    height: 195px;
 
     &:hover {
         img {
@@ -23,9 +24,6 @@
         }
     }
 
-    // .Image {
-    //     width: 100%;
-    // }
 
     &__notLoaded {
         position: absolute;
@@ -40,8 +38,6 @@
 
         i {
             position: initial;
-            //  bottom: initial; 
-            //  right: initial;
         }
     }
 

@@ -49,7 +49,7 @@ const RegisterForm = ({
         />
         <Input
           element='input'
-          type='text'
+          type='password'
           placeholder='password...'
           errorText='Please enter password (8 - 15 characters)'
           validators={[VALIDATOR_MINLENGTH(5), VALIDATOR_MAXLENGTH(15)]}
@@ -59,7 +59,7 @@ const RegisterForm = ({
         />
         <Input
           element='input'
-          type='text'
+          type='password'
           placeholder='confirm password...'
           errorText='Password must match'
           validators={[CONFIRM_PASSWORD(passwordValue)]}

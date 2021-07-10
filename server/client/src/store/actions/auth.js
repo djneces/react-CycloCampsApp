@@ -58,7 +58,6 @@ export const usernameSignIn =
         dispatch(setAlert('Login', `You are logged in`, 'SUCCESS'));
       })
       .catch((error) => {
-        // console.log(error.response.data.message);
         //dispatch message on error response obj
         dispatch(authFail(error.response.data.message));
         dispatch(setAlert('Login', `${error.response.data.message}`, 'DANGER'));

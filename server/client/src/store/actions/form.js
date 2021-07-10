@@ -7,28 +7,28 @@ import {
   FETCH_FORM_DATA,
 } from './actionTypes';
 
-export const changeInput = (e, validators, key) => {
+export const changeInput = (e, validators, formName) => {
   return {
     type: CHANGE_INPUT,
     payload: { id: e.target.id, value: e.target.value },
     validators: validators,
-    key: key,
+    formName: formName,
   };
 };
 
-export const touchInput = (inputId, key) => {
+export const touchInput = (inputId, formName) => {
   return {
     type: TOUCH_INPUT,
     payload: inputId,
-    key: key,
+    formName: formName,
   };
 };
 
-export const validateForm = (inputId, isValid, key) => {
+export const validateForm = (inputId, isValid, formName) => {
   return {
     type: VALIDATE_FORM,
     payload: { inputId, isValid },
-    key: key,
+    formName: formName,
   };
 };
 

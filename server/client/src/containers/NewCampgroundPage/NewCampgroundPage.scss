@@ -3,9 +3,10 @@
 
 .NewCampgroundPage {
     width: 100%;
-    height: 92vh;
+    height: calc(100vh - 2*8vh);
     position: relative;
     margin-top: $margin-top-header;
+    margin-bottom: $margin-top-header;
     display: flex;
     align-items: flex-start;
     justify-content: center;

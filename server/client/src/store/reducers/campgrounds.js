@@ -49,7 +49,11 @@ const campgroundReducer = (state = INITIAL_STATE, action) => {
     case FETCH_ONE_CAMPGROUND_START:
       return {
         ...state,
-        selectedCampground: { ...state.selectedCampground, isLoading: true },
+        selectedCampground: {
+          ...state.selectedCampground,
+          campground: null,
+          isLoading: true,
+        },
         error: null,
       };
     case SUBMIT_EDITED_CAMPGROUND_START:

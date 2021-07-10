@@ -20,13 +20,18 @@ exports.setUserIds = (req, res, next) => {
 
 // Geocoding, location => coords
 exports.setGeoData = catchAsync(async (req, res, next) => {
-  const geoData = await geoCoder
-    .forwardGeocode({
-      query: req.body.location,
-      limit: 1, //1 result
-    })
-    .send();
-  req.body.geometry = geoData.body.features[0].geometry;
+  if (!req.body.location) return next();
+  try {
+    const geoData = await geoCoder
+      .forwardGeocode({
+        query: req.body.location,
+        limit: 1, //1 result
+      })
+      .send();
+    req.body.geometry = geoData.body.features[0].geometry;
+  } catch (error) {
+    return next(new AppError('This location could not be found', 422));
+  }
   next();
 });
 
@@ -43,11 +48,9 @@ exports.uploadImages = (req, res, next) => {
 
 // Delete image from Cloudinary and the DB
 exports.deleteImage = catchAsync(async (req, res, next) => {
-  console.log(req.body.image);
   // Remove from Cloudinary
   // Image uploaded by user (to Cloudinary) can be only deleted
   if (req.body.image.includes('cloudinary')) {
-    console.log('cloudinary');
     const splitUrl1 = req.body.image.split('/CycloCamps/');
     const splitUrl2 = splitUrl1[1].split('.');
     // converting image url => imageId, e.g. CycloCamps/fozccv2hjs33sgm7ygmg
@@ -79,7 +82,6 @@ exports.sendWelcomingEmail = catchAsync(async (req, res, next) => {
   // Send email
   const mailer = new Mailer(survey, emailTemplate());
   const response = await mailer.send();
-  console.log('mailer', response);
   // If successfully send, update the DB
   if (response.statusCode === 202) {
     doc = await User.findOneAndUpdate(

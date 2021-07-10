@@ -44,8 +44,8 @@ const CampgroundCreateForm = ({ validateForm, handleSetUploadedfiles }) => {
             type='text'
             placeholder='location...'
             label='location:'
-            errorText='Location should have 5 - 40 characters'
-            validators={[VALIDATOR_MINLENGTH(5), VALIDATOR_MAXLENGTH(40)]}
+            errorText='Location should have 2 - 40 characters'
+            validators={[VALIDATOR_MINLENGTH(2), VALIDATOR_MAXLENGTH(40)]}
             onInput={inputCampgroundHandler}
             id='location'
             formName='campground'
