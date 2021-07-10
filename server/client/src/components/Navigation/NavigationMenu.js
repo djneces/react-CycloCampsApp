@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
+import useState from 'react-usestateref';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -28,7 +29,8 @@ const NavigationMenu = ({
   registerForm,
   userIsLoading,
 }) => {
-  const [toggleLoginMenu, setToggleLoginMenu] = useState(false);
+  const [toggleLoginMenu, setToggleLoginMenu, refToggleLoginMenu] =
+    useState(false);
   const [toggleRegister, setToggleRegister] = useState(false);
   const [toggleAccountDetails, setToggleAccountDetails] = useState(false);
   const [drawerIsOpen, setDrawerIsOpen] = useState(false);
@@ -53,6 +55,7 @@ const NavigationMenu = ({
         loginForm.password.value,
         history
       );
+      setToggleLoginMenu(false);
     }
     if (toggleRegister) {
       // Await until user is fetched, then toggle the register form
@@ -114,8 +117,8 @@ const NavigationMenu = ({
           <span> Network</span>
         </Link>
       </div>
-      {/* false true */}
-      {toggleLoginMenu && window.innerWidth < 1100 ? null : (
+
+      {refToggleLoginMenu.current && window.innerWidth < 1100 ? null : (
         <nav className='NavigationMenu__links'>
           <ul>
             <li>
