@@ -4,6 +4,7 @@
 .NavigationMenu {
     width: 100%;
     height: $margin-top-header;
+    min-height: 71px;
     display: flex;
     justify-content: space-between;
     align-items: center;
